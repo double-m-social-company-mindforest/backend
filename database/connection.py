@@ -10,13 +10,17 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 if not DATABASE_URL:
     raise ValueError("DATABASE_URL 환경 변수가 설정되어 있지 않습니다.")
 
-print(f"DATABASE_URL: '{DATABASE_URL}'")
+# 로그 출력 변수
+DEBUG = os.getenv("DEBUG", "False").lower() == "true"
+
+if DEBUG:
+    print(f"DATABASE_URL: '{DATABASE_URL}'")
 
 # PostgreSQL 연결 engine
 engine = create_engine(
     DATABASE_URL,
     pool_pre_ping=True,  
-    echo=True,       
+    echo=DEBUG,
     future=True
 )
 
