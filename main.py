@@ -7,6 +7,9 @@ from config.logging import setup_logging
 from routers.health import router as health_router
 from routers.home import router as home_router
 from routers.test import router as test_router
+from routers.types import router as types_router
+from routers.matching import router as matching_router
+from routers.intermediate_types import router as intermediate_types_router
 
 load_dotenv()
 setup_logging()
@@ -24,9 +27,6 @@ app = FastAPI(
     debug=DEBUG
 )
 
-# 정적 파일 서빙
-app.mount("/static", StaticFiles(directory="static"), name="static")
-
 # CORS 미들웨어 설정
 app.add_middleware(
     CORSMiddleware,
@@ -40,3 +40,6 @@ app.add_middleware(
 app.include_router(home_router)
 app.include_router(health_router)
 app.include_router(test_router)
+app.include_router(types_router)
+app.include_router(matching_router)
+app.include_router(intermediate_types_router)
