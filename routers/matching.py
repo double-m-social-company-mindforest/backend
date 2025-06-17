@@ -8,48 +8,96 @@ from database.models import SubKeyword
 
 router = APIRouter()
 
+# 라우터 설정을 위한 태그 및 설명 정보
+tags_metadata = [
+    {
+        "name": "유형 계산",
+        "description": "마음 유형 테스트 계산 및 검증 관련 API",
+    }
+]
+
 
 class KeywordSelectionRequest(BaseModel):
-    selections: Dict[str, List[int]]  # {"1": [69, 70], "2": [41], "3": [21, 19, 12]}
+    """
+    키워드 선택 요청 모델
+    
+    카테고리별로 선택한 키워드 ID 목록을 전달합니다.
+    """
+    selections: Dict[str, List[int]] = {
+        "1": [69, 70],     # 마음 카테고리: 키워드 ID 목록
+        "2": [41],         # 일상 카테고리: 키워드 ID 목록  
+        "3": [21, 19, 12]  # 여유 카테고리: 키워드 ID 목록
+    }
+    
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "selections": {
+                    "1": [69, 70, 71],  # 마음: 걱정, 긴장, 불확실성
+                    "2": [45, 46, 47],  # 일상: 성취, 인정, 경쟁
+                    "3": [22, 15, 24]   # 여유: 건강, 평온, 규칙성
+                }
+            }
+        }
 
 
-@router.post("/test/calculate")
+@router.post(
+    "/test/calculate",
+    summary="🧠 마음 유형 테스트 계산",
+    description="""
+    선택한 키워드를 기반으로 사용자의 마음 유형을 계산합니다.
+    
+    **계산 과정:**
+    1. 3개 카테고리(마음/일상/여유)에서 선택한 키워드 분석
+    2. 16개 중간 유형별 점수 계산 (가중치 적용)
+    3. 상위 2개 유형 조합으로 최종 캐릭터 결정
+    
+    **입력 제한:**
+    - 각 카테고리별 최대 3개 키워드 선택
+    - 최소 1개 키워드는 필수 선택
+    """,
+    response_description="계산된 유형 정보와 상세 결과",
+    responses={
+        200: {
+            "description": "계산 성공",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "status": "success",
+                        "data": {
+                            "primaryType": {
+                                "id": 2,
+                                "name": "불안 극복자",
+                                "score": 14.5
+                            },
+                            "secondaryType": {
+                                "id": 7,
+                                "name": "효율 추구자",
+                                "score": 13.0
+                            },
+                            "finalType": {
+                                "id": 2,
+                                "name": "불안 정복자",
+                                "animal": "고슴도치",
+                                "one_liner": "불안을 두려워하지 않고 행동으로 돌파하는 실천형 전사"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        400: {
+            "description": "잘못된 요청 (키워드 선택 오류)"
+        },
+        500: {
+            "description": "서버 내부 오류"
+        }
+    }
+)
 def calculate_type(
     request: KeywordSelectionRequest,
     db: Session = Depends(get_db)
 ):
-    """
-    마음 유형 테스트 계산 API
-    
-    Request Body:
-    {
-        "selections": {
-            "1": [69, 70],      // category_id: [sub_keyword_ids]
-            "2": [41],
-            "3": [21, 19, 12]
-        }
-    }
-    
-    Response:
-    {
-        "primaryType": {
-            "id": 1,
-            "name": "스트레스 회복자",
-            "score": 12.3
-        },
-        "secondaryType": {
-            "id": 3,
-            "name": "피로 관리자",
-            "score": 10.5
-        },
-        "finalType": {
-            "id": 1,
-            "name": "스트레스 조향사",
-            "animal": "고슴도치",
-            // ... 기타 정보
-        }
-    }
-    """
     try:
         # 입력 유효성 검증
         if not request.selections:
@@ -187,14 +235,24 @@ def demo_calculation(db: Session = Depends(get_db)):
         }
 
 
-@router.post("/test/debug")
+@router.post(
+    "/test/debug",
+    summary="🔍 디버깅 모드 계산",
+    description="""
+    개발자용 디버깅 모드로 계산 과정을 상세히 분석합니다.
+    
+    **디버깅 정보:**
+    - 각 키워드별 원점수 및 가중치 적용 점수
+    - 카테고리별 점수 합산 과정
+    - 16개 유형별 최종 점수 순위
+    - 계산 과정 콘솔 출력
+    """,
+    response_description="상세한 계산 과정 정보 포함"
+)
 def debug_calculation(
     request: KeywordSelectionRequest,
     db: Session = Depends(get_db)
 ):
-    """
-    디버깅 모드 계산 API
-    """
     try:
         result = TypeCalculationService.calculate_final_type(request.selections, db, debug=True)
         
@@ -208,11 +266,40 @@ def debug_calculation(
         raise HTTPException(status_code=500, detail=f"디버깅 계산 중 오류: {str(e)}")
 
 
-@router.get("/test/genealogy/validate/{final_type_id}")
+@router.get(
+    "/test/genealogy/validate/{final_type_id}",
+    summary="🧬 족보 검증",
+    description="""
+    특정 최종 유형의 대표 키워드 조합(족보)이 올바르게 해당 유형을 결과로 내는지 검증합니다.
+    
+    **검증 과정:**
+    1. 해당 유형의 정의된 족보 키워드로 계산 수행
+    2. 결과가 기대하는 유형과 일치하는지 확인
+    3. 불일치 시 점수 조정이 필요한 부분 분석
+    """,
+    responses={
+        200: {
+            "description": "검증 완료",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "status": "success",
+                        "validation": {
+                            "expected_final_type_id": 2,
+                            "calculated_final_type_id": 2,
+                            "is_correct": True
+                        },
+                        "message": "족보 검증 성공"
+                    }
+                }
+            }
+        },
+        404: {
+            "description": "해당 유형의 족보가 정의되지 않음"
+        }
+    }
+)
 def validate_genealogy(final_type_id: int, db: Session = Depends(get_db)):
-    """
-    특정 최종 유형의 족보 검증 API
-    """
     # 32개 유형별 족보 정의
     genealogies = {
         1: {  # 스트레스 조향사
