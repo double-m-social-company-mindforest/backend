@@ -1,12 +1,365 @@
-2025-06-16 12:01:55,280 - config.logging - INFO - Logging configured - Debug: False
-2025-06-16 14:19:23,287 - config.logging - INFO - Logging configured - Debug: False
-2025-06-16 14:19:42,042 - config.logging - INFO - Logging configured - Debug: False
-2025-06-16 14:19:48,264 - config.logging - INFO - Logging configured - Debug: False
-2025-06-16 14:19:55,574 - config.logging - INFO - Logging configured - Debug: False
-2025-06-16 14:20:29,214 - config.logging - INFO - Logging configured - Debug: False
-2025-06-16 14:20:41,805 - config.logging - INFO - Logging configured - Debug: False
-2025-06-17 13:55:08,227 - config.logging - INFO - Logging configured - Debug: False
-2025-06-17 15:36:12,556 - config.logging - INFO - Logging configured - Debug: False
-2025-06-17 15:37:47,178 - config.logging - INFO - Logging configured - Debug: False
-2025-06-17 15:42:38,883 - config.logging - INFO - Logging configured - Debug: False
-2025-06-17 15:49:24,228 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 17:55:37,005 - routers.consultation.websocket - INFO - WebSocket 연결 시도: 상담=8O2F69G0U, 유형=user, 상태=active
+2025-06-30 17:55:37,013 - services.consultation.websocket_manager - INFO - WebSocket 연결됨: 상담 코드=8O2F69G0U, 사용자 유형=user
+2025-06-30 17:55:37,160 - services.consultation.websocket_manager - INFO - WebSocket 연결 해제: 상담 코드=8O2F69G0U, 사용자 유형=user
+2025-06-30 17:55:54,929 - routers.consultation.websocket - INFO - WebSocket 연결 시도: 상담=8O2F69G0U, 유형=user, 상태=active
+2025-06-30 17:55:54,931 - services.consultation.websocket_manager - INFO - WebSocket 연결됨: 상담 코드=8O2F69G0U, 사용자 유형=user
+2025-06-30 17:55:55,053 - services.consultation.websocket_manager - INFO - WebSocket 연결 해제: 상담 코드=8O2F69G0U, 사용자 유형=user
+2025-06-30 17:57:25,018 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 17:57:57,625 - services.counselor.matching_service - INFO - 상담 요청 생성: 상담=HG0P6F4NL, 상담사=김상담
+2025-06-30 18:07:12,624 - services.counselor.matching_service - INFO - 상담사 배정 완료: 상담=HG0P6F4NL, 상담사=김상담
+2025-06-30 18:07:13,171 - services.counselor.request_service - INFO - 상담 요청 수락: 요청=1, 상담사=1
+2025-06-30 19:16:23,241 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:18:22,857 - routers.consultation.websocket - INFO - WebSocket 연결 시도: 상담=HG0P6F4NL, 유형=user, 상태=active
+2025-06-30 19:18:22,858 - services.consultation.websocket_manager - INFO - WebSocket 연결됨: 상담 코드=HG0P6F4NL, 사용자 유형=user
+2025-06-30 19:26:53,844 - services.consultation.websocket_manager - INFO - WebSocket 연결 해제: 상담 코드=HG0P6F4NL, 사용자 유형=user
+2025-06-30 19:26:54,592 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:26:54,592 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:27:00,078 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:27:00,078 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:27:05,354 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:27:05,355 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:27:56,771 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:27:56,772 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:28:12,181 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:28:12,181 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:28:23,731 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:28:23,731 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:28:38,873 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:28:38,873 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:29:01,993 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:29:01,996 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:29:14,059 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:29:14,059 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:29:29,861 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:29:29,861 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:29:47,373 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:29:47,373 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:30:46,931 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:35:46,202 - routers.consultation.websocket - INFO - WebSocket 연결 시도: 상담=HG0P6F4NL, 유형=conselor, 상태=active
+2025-06-30 19:35:46,205 - routers.consultation.websocket - ERROR - WebSocket 연결 중 오류: 'conselor'
+2025-06-30 19:37:54,368 - routers.consultation.websocket - INFO - WebSocket 연결 시도: 상담=HG0P6F4NL, 유형=counselor, 상태=active
+2025-06-30 19:37:54,370 - services.consultation.websocket_manager - INFO - WebSocket 연결됨: 상담 코드=HG0P6F4NL, 사용자 유형=counselor
+2025-06-30 19:39:36,902 - services.consultation.websocket_manager - INFO - WebSocket 연결 해제: 상담 코드=HG0P6F4NL, 사용자 유형=counselor
+2025-06-30 19:39:37,720 - config.logging - INFO - Logging configured - Debug: False
+2025-06-30 19:39:42,891 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 00:10:45,215 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 00:11:55,093 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 00:12:48,786 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 00:13:36,525 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 00:15:56,725 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 00:15:57,216 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 00:16:01,280 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 00:27:01,358 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 00:55:59,753 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/마인드포레스트/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-01 00:58:14,787 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 00:58:14,787 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 00:58:33,402 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 00:58:33,402 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 00:58:55,387 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 00:58:55,387 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 00:59:03,513 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/마인드포레스트/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-01 00:59:03,764 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_counselor, 결과: True
+2025-07-01 00:59:04,031 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kim_counselor
+2025-07-01 00:59:04,474 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: lee_counselor, 결과: True
+2025-07-01 00:59:04,800 - services.counselor.auth_service - INFO - 상담사 로그인 성공: lee_counselor
+2025-07-01 00:59:17,069 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 00:59:17,069 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 00:59:50,640 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/마인드포레스트/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-01 00:59:50,896 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_counselor, 결과: True
+2025-07-01 00:59:51,116 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kim_counselor
+2025-07-01 01:00:01,731 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_counselor, 결과: True
+2025-07-01 01:00:01,949 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kim_counselor
+2025-07-01 01:03:09,371 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:03:09,372 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:03:34,374 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:03:34,375 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:03:58,356 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:03:58,356 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:04:21,945 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:04:21,945 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:04:31,306 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:04:31,306 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:04:44,834 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:04:44,834 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:05:00,051 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:05:00,051 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:05:16,213 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:05:16,213 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:05:40,394 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:05:40,394 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:06:12,412 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:06:12,413 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:06:20,862 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:06:20,863 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:06:31,839 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:06:31,839 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:06:48,779 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:06:48,779 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:07:10,244 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:07:10,244 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:07:35,210 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/마인드포레스트/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-01 01:07:35,481 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_counselor, 결과: True
+2025-07-01 01:07:35,485 - services.counselor.auth_service - ERROR - 로그인 처리 중 오류 발생: Textual SQL expression '\n                INSERT I...' should be explicitly declared as text('\n                INSERT I...')
+2025-07-01 01:08:09,299 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_counselor, 결과: True
+2025-07-01 01:08:09,301 - services.counselor.auth_service - ERROR - 로그인 처리 중 오류 발생: Textual SQL expression '\n                INSERT I...' should be explicitly declared as text('\n                INSERT I...')
+2025-07-01 01:08:20,838 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:08:26,024 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/마인드포레스트/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-01 01:08:26,283 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_counselor, 결과: True
+2025-07-01 01:08:26,288 - services.counselor.auth_service - ERROR - 로그인 처리 중 오류 발생: Textual SQL expression '\n                INSERT I...' should be explicitly declared as text('\n                INSERT I...')
+2025-07-01 01:08:43,884 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: lee_counselor, 결과: True
+2025-07-01 01:08:43,885 - services.counselor.auth_service - ERROR - 로그인 처리 중 오류 발생: Textual SQL expression '\n                INSERT I...' should be explicitly declared as text('\n                INSERT I...')
+2025-07-01 01:09:34,189 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:09:34,189 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:09:44,652 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:09:44,652 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:09:57,442 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:09:57,442 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:10:05,690 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:10:05,772 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:10:18,872 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:10:18,872 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:10:27,517 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:10:27,597 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:10:59,659 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/마인드포레스트/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-01 01:10:59,923 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_counselor, 결과: True
+2025-07-01 01:11:00,676 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kim_counselor
+2025-07-01 01:11:04,777 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_counselor, 결과: True
+2025-07-01 01:11:05,317 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kim_counselor
+2025-07-01 01:24:12,420 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:24:12,420 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:24:23,984 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:24:23,984 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:24:38,518 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:24:38,518 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:24:51,448 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:24:51,448 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:25:04,015 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:25:04,015 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:35:43,170 - services.counselor.auth_service - ERROR - 상담사 등록 중 오류 발생: (psycopg2.errors.UndefinedColumn) column counselors.document_path does not exist
+LINE 1: ...ounseling_fields AS counselors_counseling_fields, counselors...
+                                                             ^
+
+[SQL: SELECT counselors.id AS counselors_id, counselors.username AS counselors_username, counselors.password_hash AS counselors_password_hash, counselors.name AS counselors_name, counselors.gender AS counselors_gender, counselors.birth_date AS counselors_birth_date, counselors.phone AS counselors_phone, counselors.email AS counselors_email, counselors.counseling_fields AS counselors_counseling_fields, counselors.document_path AS counselors_document_path, counselors.is_approved AS counselors_is_approved, counselors.approved_at AS counselors_approved_at, counselors.approved_by AS counselors_approved_by, counselors.bio AS counselors_bio, counselors.license_number AS counselors_license_number, counselors.experience_years AS counselors_experience_years, counselors.specialties AS counselors_specialties, counselors.status AS counselors_status, counselors.max_concurrent_sessions AS counselors_max_concurrent_sessions, counselors.is_active AS counselors_is_active, counselors.created_at AS counselors_created_at, counselors.last_active_at AS counselors_last_active_at 
+FROM counselors 
+WHERE counselors.username = %(username_1)s 
+ LIMIT %(param_1)s]
+[parameters: {'username_1': 'doctor_kim', 'param_1': 1}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-07-01 01:36:51,664 - services.counselor.auth_service - ERROR - 상담사 등록 중 오류 발생: (psycopg2.errors.UndefinedColumn) column counselors.document_path does not exist
+LINE 1: ...ounseling_fields AS counselors_counseling_fields, counselors...
+                                                             ^
+
+[SQL: SELECT counselors.id AS counselors_id, counselors.username AS counselors_username, counselors.password_hash AS counselors_password_hash, counselors.name AS counselors_name, counselors.gender AS counselors_gender, counselors.birth_date AS counselors_birth_date, counselors.phone AS counselors_phone, counselors.email AS counselors_email, counselors.counseling_fields AS counselors_counseling_fields, counselors.document_path AS counselors_document_path, counselors.is_approved AS counselors_is_approved, counselors.approved_at AS counselors_approved_at, counselors.approved_by AS counselors_approved_by, counselors.bio AS counselors_bio, counselors.license_number AS counselors_license_number, counselors.experience_years AS counselors_experience_years, counselors.specialties AS counselors_specialties, counselors.status AS counselors_status, counselors.max_concurrent_sessions AS counselors_max_concurrent_sessions, counselors.is_active AS counselors_is_active, counselors.created_at AS counselors_created_at, counselors.last_active_at AS counselors_last_active_at 
+FROM counselors 
+WHERE counselors.username = %(username_1)s 
+ LIMIT %(param_1)s]
+[parameters: {'username_1': 'doctor_kim', 'param_1': 1}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-07-01 01:37:31,034 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:37:31,034 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:38:08,289 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/마인드포레스트/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-01 01:38:08,811 - services.counselor.auth_service - INFO - 새 상담사 등록 완료: doctor_kim
+2025-07-01 01:45:23,736 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:45:23,736 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:45:42,523 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:45:42,605 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:45:55,606 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:45:55,606 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:46:16,152 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:46:16,153 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:46:45,004 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:46:45,004 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:46:48,728 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:46:48,731 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:47:48,342 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:47:48,342 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:47:52,460 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:47:52,462 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:48:30,690 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:48:30,690 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:48:35,215 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:48:35,219 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:48:40,863 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:48:40,865 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:48:48,641 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:48:48,643 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:48:54,475 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:48:54,477 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:49:26,102 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:49:26,174 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:49:39,282 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:49:39,283 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:49:52,751 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:49:52,772 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:50:01,727 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:50:01,729 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:50:16,237 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:50:16,237 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:50:32,095 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:50:32,095 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:50:58,869 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:50:58,870 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:51:24,129 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:51:24,130 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:53:32,135 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:53:32,135 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:53:37,912 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:53:37,912 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:56:14,257 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:56:14,257 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:56:30,510 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:56:30,520 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:56:37,854 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:56:37,855 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:56:43,259 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:56:43,349 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:56:49,691 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 01:56:49,692 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:07:51,448 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:07:51,448 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:08:52,951 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:08:52,951 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:09:43,415 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:09:43,416 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:10:19,679 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:10:19,679 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:10:41,420 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:10:41,420 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:11:03,906 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:11:03,906 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:11:07,863 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:11:07,863 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:11:12,704 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:11:12,705 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:11:18,495 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:11:18,825 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:12:35,093 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:12:35,093 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:13:02,847 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:13:02,847 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:13:24,585 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:13:24,585 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:13:28,474 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:13:28,485 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:14:15,746 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:14:15,746 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:14:40,266 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 02:14:40,266 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 08:23:04,121 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 08:23:04,122 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 08:25:57,927 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 08:25:58,081 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 08:26:11,522 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 08:26:11,522 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 08:59:02,633 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 08:59:08,318 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 08:59:19,791 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 09:01:26,632 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 09:01:26,665 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 09:01:35,052 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/마인드포레스트/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-01 09:01:35,317 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_counselor, 결과: True
+2025-07-01 09:01:35,466 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kim_counselor
+2025-07-01 09:02:02,357 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 09:02:02,357 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 09:02:10,911 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/마인드포레스트/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-01 09:02:11,180 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_counselor, 결과: True
+2025-07-01 09:02:11,339 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kim_counselor
+2025-07-01 09:02:11,514 - routers.counselor.auth - ERROR - 콜대기 상태 변경 중 오류: (psycopg2.errors.InvalidTextRepresentation) invalid input value for enum counselorstatus: "waiting_for_call"
+LINE 1: UPDATE counselors SET status='waiting_for_call', last_active...
+                                     ^
+
+[SQL: UPDATE counselors SET status=%(status)s, last_active_at=%(last_active_at)s WHERE counselors.id = %(counselors_id)s]
+[parameters: {'status': 'waiting_for_call', 'last_active_at': datetime.datetime(2025, 7, 1, 0, 2, 11, 484879), 'counselors_id': 1}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)
+2025-07-01 09:02:30,704 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_counselor, 결과: True
+2025-07-01 09:02:30,861 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kim_counselor
+2025-07-01 09:02:48,382 - routers.counselor.auth - ERROR - 콜대기 상태 변경 중 오류: (psycopg2.errors.InvalidTextRepresentation) invalid input value for enum counselorstatus: "waiting_for_call"
+LINE 1: UPDATE counselors SET status='waiting_for_call', last_active...
+                                     ^
+
+[SQL: UPDATE counselors SET status=%(status)s, last_active_at=%(last_active_at)s WHERE counselors.id = %(counselors_id)s]
+[parameters: {'status': 'waiting_for_call', 'last_active_at': datetime.datetime(2025, 7, 1, 0, 2, 48, 346258), 'counselors_id': 1}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)
+2025-07-01 09:02:57,638 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 09:02:57,638 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 09:03:03,672 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 09:03:03,673 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 09:03:12,698 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 09:03:12,698 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 09:03:23,120 - routers.counselor.auth - ERROR - 콜대기 상태 변경 중 오류: (psycopg2.errors.InvalidTextRepresentation) invalid input value for enum counselorstatus: "waiting_for_call"
+LINE 1: UPDATE counselors SET status='waiting_for_call', last_active...
+                                     ^
+
+[SQL: UPDATE counselors SET status=%(status)s, last_active_at=now() WHERE counselors.id = %(counselors_id)s]
+[parameters: {'status': 'waiting_for_call', 'counselors_id': 1}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)
+2025-07-01 09:03:53,474 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/마인드포레스트/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-01 09:03:53,722 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_counselor, 결과: True
+2025-07-01 09:03:54,097 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kim_counselor
+2025-07-01 09:03:54,470 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결됨: counselor_id=1
+2025-07-01 09:03:54,471 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결: counselor_id=1
+2025-07-01 09:03:57,001 - services.counselor.matching_service - INFO - 상담 요청 생성: 상담=IPJV5DO7I, 상담사=김상담
+2025-07-01 09:03:57,016 - routers.consultation.consultation - ERROR - 상담 시작 중 오류 발생: no running event loop
+2025-07-01 09:03:57,032 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결 종료: counselor_id=1
+2025-07-01 09:03:57,032 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결 해제: counselor_id=1
+2025-07-01 09:04:06,436 - services.counselor.matching_service - INFO - 상담 요청 생성: 상담=BDAXU7IGM, 상담사=김상담
+2025-07-01 09:04:06,452 - routers.consultation.consultation - ERROR - 상담 시작 중 오류 발생: no running event loop
+2025-07-01 09:04:25,424 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 09:04:25,424 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 09:04:33,219 - services.counselor.matching_service - INFO - 상담 요청 생성: 상담=8WR94LIK4, 상담사=김상담
+2025-07-01 09:04:33,220 - services.counselor.matching_service - WARNING - 이벤트 루프가 없어 WebSocket 알림을 보낼 수 없습니다
+2025-07-01 09:04:40,553 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/마인드포레스트/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-01 09:04:40,820 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_counselor, 결과: True
+2025-07-01 09:04:41,000 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kim_counselor
+2025-07-01 09:04:41,413 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결됨: counselor_id=1
+2025-07-01 09:04:41,414 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결: counselor_id=1
+2025-07-01 09:04:44,294 - services.counselor.matching_service - INFO - 상담 요청 생성: 상담=0GIJP4P6W, 상담사=김상담
+2025-07-01 09:04:44,294 - services.counselor.matching_service - WARNING - 이벤트 루프가 없어 WebSocket 알림을 보낼 수 없습니다
+2025-07-01 09:04:54,475 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결 종료: counselor_id=1
+2025-07-01 09:04:54,476 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결 해제: counselor_id=1
+2025-07-01 09:23:21,485 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 09:23:21,485 - config.logging - INFO - Logging configured - Debug: False
