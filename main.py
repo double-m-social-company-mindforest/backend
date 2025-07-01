@@ -106,3 +106,8 @@ app.include_router(dashboard_router, tags=["counselor-dashboard"])
 app.include_router(counselor_auth_router, tags=["counselor-auth"])
 if ENVIRONMENT == "development":
     app.include_router(dev_router, tags=["dev-tools"])
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
