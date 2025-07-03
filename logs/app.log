@@ -365,3 +365,66 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2025-07-01 09:23:21,485 - config.logging - INFO - Logging configured - Debug: False
 2025-07-01 09:42:49,546 - config.logging - INFO - Logging configured - Debug: False
 2025-07-01 09:42:49,547 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 13:57:33,509 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 14:00:35,958 - services.counselor.matching_service - WARNING - 사용 가능한 상담사가 없음: 상담=D25K2ACGO
+2025-07-01 14:01:06,909 - config.logging - INFO - Logging configured - Debug: False
+2025-07-01 14:01:15,657 - routers.consultation.websocket - INFO - WebSocket 연결 시도: 상담=D25K2ACGO, 유형=user, 상태=waiting
+2025-07-01 14:01:15,658 - services.consultation.websocket_manager - INFO - WebSocket 연결됨: 상담 코드=D25K2ACGO, 사용자 유형=user
+2025-07-01 14:01:16,968 - services.consultation.websocket_manager - INFO - WebSocket 연결 해제: 상담 코드=D25K2ACGO, 사용자 유형=user
+2025-07-01 14:02:32,373 - config.logging - INFO - Logging configured - Debug: False
+2025-07-03 09:17:29,687 - config.logging - INFO - Logging configured - Debug: False
+2025-07-03 09:17:35,061 - config.logging - INFO - Logging configured - Debug: False
+2025-07-03 09:34:16,762 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/마인드포레스트/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-03 09:34:17,020 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_counselor, 결과: True
+2025-07-03 09:34:19,654 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kim_counselor
+2025-07-03 10:25:19,043 - config.logging - INFO - Logging configured - Debug: False
+2025-07-03 10:25:56,063 - config.logging - INFO - Logging configured - Debug: False
+2025-07-03 10:30:35,461 - config.logging - INFO - Logging configured - Debug: False
+2025-07-03 10:35:57,329 - config.logging - INFO - Logging configured - Debug: False
+2025-07-03 10:36:10,242 - config.logging - INFO - Logging configured - Debug: False
+2025-07-03 10:38:39,982 - services.counselor.matching_service - WARNING - 사용 가능한 상담사가 없음: 상담=3U94ZXKKP
+2025-07-03 10:39:07,857 - config.logging - INFO - Logging configured - Debug: False
+2025-07-03 10:44:28,962 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/마인드포레스트/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-03 10:44:29,225 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_counselor, 결과: True
+2025-07-03 10:44:31,885 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kim_counselor
+2025-07-03 10:45:04,538 - services.counselor.matching_service - INFO - 상담사 배정 완료: 상담=0GIJP4P6W, 상담사=김상담
+2025-07-03 10:45:06,344 - services.counselor.request_service - INFO - 상담 요청 수락: 요청=5, 상담사=1
+2025-07-03 10:47:03,074 - routers.consultation.websocket - INFO - WebSocket 연결 시도: 상담=0GIJP4P6W, 유형=counselor, 상태=active
+2025-07-03 10:47:03,079 - services.consultation.websocket_manager - INFO - WebSocket 연결됨: 상담 코드=0GIJP4P6W, 사용자 유형=counselor
+2025-07-03 10:48:12,793 - services.consultation.websocket_manager - INFO - WebSocket 연결 해제: 상담 코드=0GIJP4P6W, 사용자 유형=counselor
+2025-07-03 10:48:38,952 - routers.consultation.websocket - ERROR - 상담 코드를 찾을 수 없음: HG0P6F4NL
+2025-07-03 10:48:49,827 - routers.consultation.websocket - INFO - WebSocket 연결 시도: 상담=0GIJP4P6W, 유형=user, 상태=active
+2025-07-03 10:48:49,831 - services.consultation.websocket_manager - INFO - WebSocket 연결됨: 상담 코드=0GIJP4P6W, 사용자 유형=user
+2025-07-03 10:49:04,300 - routers.consultation.websocket - INFO - WebSocket 연결 시도: 상담=0GIJP4P6W, 유형=counselor, 상태=active
+2025-07-03 10:49:04,302 - services.consultation.websocket_manager - INFO - WebSocket 연결됨: 상담 코드=0GIJP4P6W, 사용자 유형=counselor
+2025-07-03 11:02:11,301 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: lee_counselor, 결과: True
+2025-07-03 11:02:12,772 - services.counselor.auth_service - INFO - 상담사 로그인 성공: lee_counselor
+2025-07-03 11:04:32,993 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_counselor, 결과: True
+2025-07-03 11:04:34,855 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kim_counselor
+2025-07-03 11:05:00,353 - services.counselor.matching_service - INFO - 상담사 배정 완료: 상담=8WR94LIK4, 상담사=김상담
+2025-07-03 11:05:01,272 - services.counselor.request_service - INFO - 상담 요청 수락: 요청=4, 상담사=1
+2025-07-03 11:05:20,935 - routers.consultation.websocket - INFO - WebSocket 연결 시도: 상담=8WR94LIK4, 유형=user, 상태=active
+2025-07-03 11:05:20,936 - services.consultation.websocket_manager - INFO - WebSocket 연결됨: 상담 코드=8WR94LIK4, 사용자 유형=user
+2025-07-03 11:05:31,597 - routers.consultation.websocket - INFO - WebSocket 연결 시도: 상담=8WR94LIK4, 유형=counselor, 상태=active
+2025-07-03 11:05:31,598 - services.consultation.websocket_manager - INFO - WebSocket 연결됨: 상담 코드=8WR94LIK4, 사용자 유형=counselor
+2025-07-03 11:06:56,510 - httpx - INFO - HTTP Request: POST https://api-prod.linkmusic.io/v2/analyze/text "HTTP/1.1 400 Bad Request"
+2025-07-03 11:06:56,516 - services.consultation.music_service - ERROR - Link Music API error: Client error '400 Bad Request' for url 'https://api-prod.linkmusic.io/v2/analyze/text'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2025-07-03 13:55:07,658 - services.consultation.websocket_manager - INFO - WebSocket 연결 해제: 상담 코드=8WR94LIK4, 사용자 유형=counselor
+2025-07-03 13:55:07,691 - services.consultation.websocket_manager - INFO - WebSocket 연결 해제: 상담 코드=0GIJP4P6W, 사용자 유형=user
+2025-07-03 13:55:07,693 - services.consultation.websocket_manager - INFO - WebSocket 연결 해제: 상담 코드=0GIJP4P6W, 사용자 유형=counselor
+2025-07-03 13:55:07,695 - services.consultation.websocket_manager - INFO - WebSocket 연결 해제: 상담 코드=8WR94LIK4, 사용자 유형=user
+2025-07-03 13:55:08,495 - config.logging - INFO - Logging configured - Debug: False
+2025-07-03 13:55:08,495 - config.logging - INFO - Logging configured - Debug: False
+2025-07-03 13:55:19,892 - config.logging - INFO - Logging configured - Debug: False
+2025-07-03 13:55:19,892 - config.logging - INFO - Logging configured - Debug: False
+2025-07-03 13:55:44,306 - httpx - INFO - HTTP Request: POST https://api-prod.linkmusic.io/v2/analyze/text "HTTP/1.1 201 Created"
+2025-07-03 13:56:22,593 - httpx - INFO - HTTP Request: POST https://api-prod.linkmusic.io/v2/analyze/text "HTTP/1.1 201 Created"
