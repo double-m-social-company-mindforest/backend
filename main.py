@@ -89,7 +89,7 @@ app = FastAPI(
 # CORS 미들웨어 설정
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # 개발 환경에서는 모든 오리진 허용
+    allow_origins=CORS_ORIGINS,  # 환경변수에서 허용된 오리진 사용
     allow_credentials=False,  # credentials False로 설정
     allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allow_headers=["*"],
