@@ -307,7 +307,7 @@ app.openapi = custom_openapi
 app.add_middleware(
     CORSMiddleware,
     allow_origins=CORS_ORIGINS,  # 환경변수에서 허용된 오리진 사용
-    allow_credentials=False,  # credentials False로 설정
+    allow_credentials=True,  # JWT 인증을 위해 credentials 허용
     allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allow_headers=["*"],
 )

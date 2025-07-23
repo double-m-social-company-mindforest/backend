@@ -467,3 +467,13 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2025-07-23 16:25:33,340 - config.logging - INFO - Logging configured - Debug: False
 2025-07-23 16:25:39,231 - config.logging - INFO - Logging configured - Debug: False
 2025-07-23 16:25:44,299 - config.logging - INFO - Logging configured - Debug: False
+2025-07-23 16:43:09,620 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/project/mindforest/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-23 16:43:09,875 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_test2, 결과: True
+2025-07-23 16:43:11,893 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kim_test2
+2025-07-23 16:44:16,508 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_test2, 결과: True
+2025-07-23 16:44:18,569 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kim_test2
+2025-07-23 16:59:57,455 - config.logging - INFO - Logging configured - Debug: False
