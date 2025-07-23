@@ -40,25 +40,29 @@ async def login(
     """
     result = AdminAuthService.login(db, login_data, request)
     
-    # 쿠키에 토큰 저장 (보안 설정 포함)
+    # 쿠키에 토큰 저장 (임시로 보안 설정 완화)
     cookie_secure = os.getenv("COOKIE_SECURE", "false").lower() == "true"
     
     response.set_cookie(
         key="access_token",
         value=result.access_token,
         max_age=result.expires_in,
-        httponly=True,  # JavaScript에서 접근 불가 (XSS 방지)
-        secure=cookie_secure,  # 환경변수에 따라 설정
-        samesite="lax"  # CSRF 방지
+        httponly=False,  # 임시로 JavaScript 접근 허용 (테스트용)
+        secure=cookie_secure,
+        samesite="lax",
+        path="/",
+        domain=None
     )
     
     response.set_cookie(
         key="refresh_token", 
         value=result.refresh_token,
         max_age=24 * 60 * 60,  # 1일
-        httponly=True,
+        httponly=False,  # 임시로 JavaScript 접근 허용 (테스트용)
         secure=cookie_secure,
-        samesite="lax"
+        samesite="lax",
+        path="/",
+        domain=None
     )
     
     return result
@@ -88,9 +92,9 @@ async def logout(
     """
     result = AdminAuthService.logout(db, current_admin.id)
     
-    # 쿠키 삭제
-    response.delete_cookie(key="access_token")
-    response.delete_cookie(key="refresh_token")
+    # 쿠키 삭제 (path와 domain을 명시해서 확실히 삭제)
+    response.delete_cookie(key="access_token", path="/")
+    response.delete_cookie(key="refresh_token", path="/")
     
     return result
 
@@ -182,4 +186,18 @@ async def check_email_availability(
     return {
         "available": is_available,
         "message": "사용 가능한 이메일입니다" if is_available else "이미 등록된 이메일입니다"
+    }
+
+
+@router.get("/debug/cookies", summary="쿠키 디버깅")
+async def debug_cookies(request: Request) -> Dict[str, Any]:
+    """
+    현재 요청의 쿠키 상태 확인 (디버깅용)
+    """
+    return {
+        "cookies": dict(request.cookies),
+        "headers": dict(request.headers),
+        "has_access_token": "access_token" in request.cookies,
+        "has_refresh_token": "refresh_token" in request.cookies,
+        "access_token_value": request.cookies.get("access_token", "없음")[:20] + "..." if request.cookies.get("access_token") else None
     }
