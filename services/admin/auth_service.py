@@ -8,6 +8,7 @@ from typing import Optional, Dict, Any
 import logging
 import hashlib
 import secrets
+import os
 
 from database.models import Admin, AdminRefreshToken, AdminRole
 from schemas.admin.auth import (
@@ -25,11 +26,11 @@ logger = logging.getLogger(__name__)
 # 비밀번호 암호화 설정
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-# JWT 설정 (환경변수로 관리하는 것이 좋음)
-SECRET_KEY = "your-secret-key-change-this-in-production"
+# JWT 설정 (환경변수에서 관리)
+SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key-change-this-in-production")
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
-REFRESH_TOKEN_EXPIRE_DAYS = 7
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "5"))
+REFRESH_TOKEN_EXPIRE_DAYS = int(os.getenv("REFRESH_TOKEN_EXPIRE_DAYS", "1"))
 
 
 class AdminAuthService:

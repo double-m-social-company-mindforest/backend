@@ -460,3 +460,10 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2025-07-23 13:02:54,071 - services.admin.auth_service - INFO - 관리자 로그인 성공: admin (역할: super_admin)
 2025-07-23 13:03:11,564 - services.admin.counselor_management_service - INFO - 상담사 일괄 승인 완료: count=1, admin_id=1
 2025-07-23 13:33:51,272 - config.logging - INFO - Logging configured - Debug: False
+2025-07-23 16:24:23,217 - config.logging - INFO - Logging configured - Debug: False
+2025-07-23 16:24:53,050 - config.logging - INFO - Logging configured - Debug: False
+2025-07-23 16:25:00,372 - config.logging - INFO - Logging configured - Debug: False
+2025-07-23 16:25:28,472 - config.logging - INFO - Logging configured - Debug: False
+2025-07-23 16:25:33,340 - config.logging - INFO - Logging configured - Debug: False
+2025-07-23 16:25:39,231 - config.logging - INFO - Logging configured - Debug: False
+2025-07-23 16:25:44,299 - config.logging - INFO - Logging configured - Debug: False
