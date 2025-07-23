@@ -431,3 +431,31 @@ For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/St
 2025-07-03 14:22:47,501 - config.logging - INFO - Logging configured - Debug: False
 2025-07-03 14:22:47,501 - config.logging - INFO - Logging configured - Debug: False
 2025-07-03 14:23:06,061 - config.logging - INFO - Logging configured - Debug: False
+2025-07-21 10:44:01,771 - config.logging - INFO - Logging configured - Debug: False
+2025-07-21 10:46:13,448 - config.logging - INFO - Logging configured - Debug: False
+2025-07-22 10:56:12,414 - config.logging - INFO - Logging configured - Debug: False
+2025-07-22 10:56:46,197 - config.logging - INFO - Logging configured - Debug: False
+2025-07-23 11:02:53,101 - config.logging - INFO - Logging configured - Debug: False
+2025-07-23 11:03:04,501 - config.logging - INFO - Logging configured - Debug: False
+2025-07-23 11:03:10,804 - config.logging - INFO - Logging configured - Debug: False
+2025-07-23 11:03:22,558 - config.logging - INFO - Logging configured - Debug: False
+2025-07-23 11:08:33,393 - config.logging - INFO - Logging configured - Debug: False
+2025-07-23 11:10:07,496 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/project/mindforest/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-23 11:10:07,763 - services.admin.auth_service - INFO - 관리자 비밀번호 검증 결과 - 사용자: admin, 결과: True
+2025-07-23 11:10:10,550 - services.admin.auth_service - INFO - 관리자 로그인 성공: admin (역할: super_admin)
+2025-07-23 11:12:35,880 - services.admin.counselor_management_service - INFO - 상담사 일괄 승인 완료: count=1, admin_id=1
+2025-07-23 11:13:14,824 - services.admin.counselor_management_service - INFO - 상담사 일괄 승인 완료: count=1, admin_id=1
+2025-07-23 11:19:14,338 - services.counselor.matching_service - WARNING - 사용 가능한 상담사가 없음: 상담=MY4IRB89Q
+2025-07-23 11:20:00,352 - services.admin.counselor_management_service - INFO - 상담사 일괄 승인 완료: count=1, admin_id=1
+2025-07-23 11:21:47,478 - services.counselor.matching_service - INFO - 상담 요청 생성: 상담=CH1DUHCVH, 상담사=김테스트
+2025-07-23 11:21:47,479 - services.counselor.matching_service - WARNING - 이벤트 루프가 없어 WebSocket 알림을 보낼 수 없습니다
+2025-07-23 11:22:23,135 - services.counselor.matching_service - WARNING - 사용 가능한 상담사가 없음: 상담=7XSV3SN3K
+2025-07-23 11:22:32,477 - services.counselor.matching_service - WARNING - 사용 가능한 상담사가 없음: 상담=JCZEBWEIA
+2025-07-23 11:25:02,003 - services.counselor.matching_service - WARNING - 사용 가능한 상담사가 없음: 상담=MRJEYAT8H
+2025-07-23 13:02:51,644 - services.admin.auth_service - INFO - 관리자 비밀번호 검증 결과 - 사용자: admin, 결과: True
+2025-07-23 13:02:54,071 - services.admin.auth_service - INFO - 관리자 로그인 성공: admin (역할: super_admin)
+2025-07-23 13:03:11,564 - services.admin.counselor_management_service - INFO - 상담사 일괄 승인 완료: count=1, admin_id=1

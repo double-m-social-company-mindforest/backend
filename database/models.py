@@ -265,3 +265,50 @@ class ConsultationRequest(Base):
     # 관계 설정
     consultation = relationship("Consultation")
     counselor = relationship("Counselor")
+
+
+class AdminRole(str, enum.Enum):
+    """관리자 역할"""
+    super_admin = "super_admin"
+    admin = "admin"
+    moderator = "moderator"
+
+
+class Admin(Base):
+    """관리자 테이블"""
+    __tablename__ = "admins"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    
+    # 기본 정보
+    username = Column(String(50), unique=True, nullable=False, index=True)
+    password_hash = Column(String(255), nullable=False)
+    name = Column(String(100), nullable=False)
+    email = Column(String(255), unique=True, nullable=False, index=True)
+    
+    # 권한 관리
+    role = Column(Enum(AdminRole), default=AdminRole.admin)
+    
+    # 계정 관리
+    is_active = Column(Boolean, default=True)
+    last_login_at = Column(DateTime(timezone=True), nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    created_by = Column(Integer, nullable=True)  # 생성한 관리자 ID
+
+
+class AdminRefreshToken(Base):
+    """관리자 Refresh Token 관리 테이블"""
+    __tablename__ = "admin_refresh_tokens"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    admin_id = Column(Integer, ForeignKey("admins.id"), nullable=False)
+    token_hash = Column(String(255), unique=True, nullable=False, index=True)
+    is_active = Column(Boolean, default=True)
+    expires_at = Column(DateTime(timezone=True), nullable=False)
+    last_used_at = Column(DateTime(timezone=True), nullable=True)
+    user_agent = Column(String(500), nullable=True)
+    ip_address = Column(String(45), nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    
+    # 관계 설정
+    admin = relationship("Admin")
