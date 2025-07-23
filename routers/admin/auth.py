@@ -1,6 +1,7 @@
-from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
 from sqlalchemy.orm import Session
 from typing import Dict, Any
+import os
 
 from database.connection import get_db
 from database.models import Admin
@@ -28,6 +29,7 @@ router = APIRouter(prefix="/auth", tags=["관리자 인증"])
 async def login(
     login_data: AdminLoginRequest,
     request: Request,
+    response: Response,
     db: Session = Depends(get_db)
 ):
     """
@@ -36,7 +38,30 @@ async def login(
     - **username**: 관리자 아이디
     - **password**: 비밀번호
     """
-    return AdminAuthService.login(db, login_data, request)
+    result = AdminAuthService.login(db, login_data, request)
+    
+    # 쿠키에 토큰 저장 (보안 설정 포함)
+    cookie_secure = os.getenv("COOKIE_SECURE", "false").lower() == "true"
+    
+    response.set_cookie(
+        key="access_token",
+        value=result.access_token,
+        max_age=result.expires_in,
+        httponly=True,  # JavaScript에서 접근 불가 (XSS 방지)
+        secure=cookie_secure,  # 환경변수에 따라 설정
+        samesite="lax"  # CSRF 방지
+    )
+    
+    response.set_cookie(
+        key="refresh_token", 
+        value=result.refresh_token,
+        max_age=24 * 60 * 60,  # 1일
+        httponly=True,
+        secure=cookie_secure,
+        samesite="lax"
+    )
+    
+    return result
 
 
 @router.post("/refresh", response_model=TokenRefreshResponse, summary="토큰 갱신")
@@ -54,13 +79,20 @@ async def refresh_token(
 
 @router.post("/logout", summary="관리자 로그아웃")
 async def logout(
+    response: Response,
     current_admin: Admin = Depends(get_current_admin),
     db: Session = Depends(get_db)
 ) -> Dict[str, str]:
     """
     관리자 로그아웃 (모든 Refresh Token 무효화)
     """
-    return AdminAuthService.logout(db, current_admin.id)
+    result = AdminAuthService.logout(db, current_admin.id)
+    
+    # 쿠키 삭제
+    response.delete_cookie(key="access_token")
+    response.delete_cookie(key="refresh_token")
+    
+    return result
 
 
 @router.get("/me", response_model=AdminInfo, summary="현재 관리자 정보 조회")

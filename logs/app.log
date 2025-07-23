@@ -477,3 +477,11 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2025-07-23 16:44:16,508 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_test2, 결과: True
 2025-07-23 16:44:18,569 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kim_test2
 2025-07-23 16:59:57,455 - config.logging - INFO - Logging configured - Debug: False
+2025-07-23 17:20:44,353 - config.logging - INFO - Logging configured - Debug: False
+2025-07-23 17:20:54,540 - config.logging - INFO - Logging configured - Debug: False
+2025-07-23 17:21:00,266 - config.logging - INFO - Logging configured - Debug: False
+2025-07-23 17:21:05,047 - config.logging - INFO - Logging configured - Debug: False
+2025-07-23 17:21:12,035 - config.logging - INFO - Logging configured - Debug: False
+2025-07-23 17:21:25,377 - config.logging - INFO - Logging configured - Debug: False
+2025-07-23 17:21:50,856 - config.logging - INFO - Logging configured - Debug: False
+2025-07-23 17:21:58,879 - config.logging - INFO - Logging configured - Debug: False

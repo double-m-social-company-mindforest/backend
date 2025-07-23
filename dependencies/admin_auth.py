@@ -1,4 +1,4 @@
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status, Request
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 from typing import Optional
@@ -7,15 +7,31 @@ from database.connection import get_db
 from database.models import Admin, AdminRole
 from services.admin.auth_service import AdminAuthService
 
-security = HTTPBearer()
+security = HTTPBearer(auto_error=False)
 
 
 async def get_current_admin(
-    credentials: HTTPAuthorizationCredentials = Depends(security),
+    request: Request,
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security),
     db: Session = Depends(get_db)
 ) -> Admin:
-    """현재 로그인한 관리자 정보 조회"""
-    token = credentials.credentials
+    """현재 로그인한 관리자 정보 조회 (Authorization 헤더 또는 쿠키에서)"""
+    token = None
+    
+    # 1. Authorization 헤더에서 토큰 확인
+    if credentials:
+        token = credentials.credentials
+    
+    # 2. 쿠키에서 토큰 확인
+    elif "access_token" in request.cookies:
+        token = request.cookies["access_token"]
+    
+    if not token:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="인증 토큰이 필요합니다"
+        )
+    
     return AdminAuthService.get_current_admin(db, token)
 
 
