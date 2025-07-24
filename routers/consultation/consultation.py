@@ -68,6 +68,25 @@ def reconnect_consultation(
     )
 
 
+@router.delete("/{consultation_code}/cancel", response_model=Dict[str, Any])
+def cancel_consultation(
+    consultation_code: str,
+    db: Session = Depends(get_db)
+) -> Dict[str, Any]:
+    """
+    상담 취소 (매칭 대기 중 사용자가 나가는 경우)
+    
+    - **consultation_code**: 9자리 상담 코드
+    
+    **취소 처리:**
+    - 대기 중(waiting) 상담만 취소 가능
+    - 상담 데이터와 관련 요청 모두 DB에서 삭제
+    - 상담사가 수락 시 자동으로 없는 것으로 표시됨
+    - 별도의 알림 취소 처리 없음 (사용자 요구사항)
+    """
+    return ConsultationService.cancel_consultation(db, consultation_code)
+
+
 @router.post("/{consultation_code}/end", response_model=Dict[str, Any])
 def end_consultation(
     consultation_code: str,

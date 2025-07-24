@@ -1,11 +1,14 @@
-from typing import Optional, List
+from typing import Optional, List, Dict, Any
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import func
 from fastapi import HTTPException
-from database.models import Consultation, ConsultationStatus, FinalType, Counselor, CounselorStatus
+from database.models import Consultation, ConsultationStatus, FinalType, Counselor, CounselorStatus, ConsultationRequest
 from schemas.consultation import ConsultationStartRequest, ConsultationResponse
 from .code_generator import generate_consultation_code
 import random
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class ConsultationService:
@@ -148,4 +151,59 @@ class ConsultationService:
             "status": consultation.status,
             "completed_at": consultation.completed_at,
             "message": "상담이 정상적으로 종료되었습니다"
+        }
+    
+    @staticmethod
+    def cancel_consultation(
+        db: Session,
+        consultation_code: str
+    ) -> Dict[str, Any]:
+        """
+        상담 취소 (매칭 대기 중 사용자가 나가는 경우)
+        
+        사용자 요구사항에 따라 단순히 DB에서 데이터만 삭제
+        - 상담사들 알림은 수락 시 어차피 없는 것으로 표시되므로 별도 처리 불필요
+        - 상담 데이터와 관련 요청만 삭제
+        
+        Args:
+            db: 데이터베이스 세션
+            consultation_code: 상담 코드
+            
+        Returns:
+            dict: 취소 결과
+        """
+        # 상담 조회
+        consultation = db.query(Consultation).filter(
+            Consultation.consultation_code == consultation_code
+        ).first()
+        
+        if not consultation:
+            raise HTTPException(status_code=404, detail="상담을 찾을 수 없습니다")
+        
+        # 대기 중인 상담만 취소 가능
+        if consultation.status != ConsultationStatus.waiting:
+            raise HTTPException(
+                status_code=400, 
+                detail=f"현재 상태({consultation.status})에서는 취소할 수 없습니다. 대기 중인 상담만 취소 가능합니다."
+            )
+        
+        consultation_id = consultation.id
+        
+        # 관련된 모든 상담 요청 삭제
+        deleted_requests = db.query(ConsultationRequest).filter(
+            ConsultationRequest.consultation_id == consultation_id
+        ).delete(synchronize_session=False)
+        
+        # 상담 삭제
+        db.delete(consultation)
+        
+        # 변경사항 커밋
+        db.commit()
+        
+        logger.info(f"상담 취소 완료: 상담코드={consultation_code}, 삭제된 요청={deleted_requests}개")
+        
+        return {
+            "message": "상담이 취소되었습니다",
+            "consultation_code": consultation_code,
+            "deleted_requests": deleted_requests
         }
