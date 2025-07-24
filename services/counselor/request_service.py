@@ -38,23 +38,46 @@ class RequestService:
         Returns:
             PendingRequestsResponse: 대기 중인 요청 목록
         """
-        # 대기 중인 요청과 관련 정보 조회
-        requests = db.query(
-            ConsultationRequest,
-            Consultation.consultation_code,
-            Consultation.user_nickname,
-            Consultation.character_name,
-            Counselor.name.label('counselor_name')
-        ).join(
-            Consultation, ConsultationRequest.consultation_id == Consultation.id
-        ).join(
-            Counselor, ConsultationRequest.counselor_id == Counselor.id
-        ).filter(
-            and_(
-                ConsultationRequest.counselor_id == counselor_id,
+        # 현재 상담사 정보 조회
+        current_counselor = db.query(Counselor).filter(Counselor.id == counselor_id).first()
+        if not current_counselor:
+            raise HTTPException(status_code=404, detail="상담사를 찾을 수 없습니다")
+        
+        # 콜대기 상태인 상담사는 모든 pending 요청을 볼 수 있음
+        # 다른 상태의 상담사는 본인에게 배정된 요청만 볼 수 있음
+        if current_counselor.status == CounselorStatus.waiting_for_call:
+            # 모든 pending 요청 조회 (콜대기 상담사용)
+            requests = db.query(
+                ConsultationRequest,
+                Consultation.consultation_code,
+                Consultation.user_nickname,
+                Consultation.character_name,
+                Counselor.name.label('counselor_name')
+            ).join(
+                Consultation, ConsultationRequest.consultation_id == Consultation.id
+            ).join(
+                Counselor, ConsultationRequest.counselor_id == Counselor.id
+            ).filter(
                 ConsultationRequest.status == "pending"
-            )
-        ).order_by(ConsultationRequest.requested_at.desc()).all()
+            ).order_by(ConsultationRequest.requested_at.desc()).all()
+        else:
+            # 본인에게 배정된 요청만 조회 (일반 상담사용)
+            requests = db.query(
+                ConsultationRequest,
+                Consultation.consultation_code,
+                Consultation.user_nickname,
+                Consultation.character_name,
+                Counselor.name.label('counselor_name')
+            ).join(
+                Consultation, ConsultationRequest.consultation_id == Consultation.id
+            ).join(
+                Counselor, ConsultationRequest.counselor_id == Counselor.id
+            ).filter(
+                and_(
+                    ConsultationRequest.counselor_id == counselor_id,
+                    ConsultationRequest.status == "pending"
+                )
+            ).order_by(ConsultationRequest.requested_at.desc()).all()
         
         # 응답 객체 생성
         request_details = []
@@ -98,36 +121,43 @@ class RequestService:
         Returns:
             ConsultationRequestDetail: 업데이트된 요청 정보
         """
-        # 요청 조회
+        # 브로드캐스트 시스템: 선착순 수락 처리
+        # 트랜잭션으로 race condition 방지
+        from sqlalchemy import text
+        
+        # 해당 상담의 모든 pending 요청 조회 (선착순 경쟁)
+        consultation_id = db.execute(
+            text("SELECT consultation_id FROM consultation_requests WHERE id = :request_id"),
+            {"request_id": request_id}
+        ).scalar()
+        
+        if not consultation_id:
+            raise HTTPException(
+                status_code=404, 
+                detail=f"요청 ID {request_id}가 존재하지 않습니다"
+            )
+        
+        # 해당 상담이 이미 배정되었는지 확인
+        consultation = db.query(Consultation).filter(Consultation.id == consultation_id).first()
+        if consultation.counselor_id is not None:
+            raise HTTPException(
+                status_code=409, 
+                detail="이미 다른 상담사가 수락한 상담입니다"
+            )
+        
+        # 현재 요청이 여전히 pending인지 확인
         request = db.query(ConsultationRequest).filter(
             and_(
                 ConsultationRequest.id == request_id,
-                ConsultationRequest.counselor_id == counselor_id,
                 ConsultationRequest.status == "pending"
             )
         ).first()
         
         if not request:
-            # 더 자세한 디버깅 정보 제공
-            existing_request = db.query(ConsultationRequest).filter(
-                ConsultationRequest.id == request_id
-            ).first()
-            
-            if not existing_request:
-                raise HTTPException(
-                    status_code=404, 
-                    detail=f"요청 ID {request_id}가 존재하지 않습니다"
-                )
-            elif existing_request.counselor_id != counselor_id:
-                raise HTTPException(
-                    status_code=403, 
-                    detail=f"다른 상담사의 요청입니다. 요청 상담사: {existing_request.counselor_id}, 현재 상담사: {counselor_id}"
-                )
-            else:
-                raise HTTPException(
-                    status_code=400, 
-                    detail=f"이미 처리된 요청입니다. 현재 상태: {existing_request.status}"
-                )
+            raise HTTPException(
+                status_code=410, 
+                detail="요청이 만료되었거나 이미 처리되었습니다"
+            )
         
         # 상담사가 현재 상담 가능한지 확인
         counselor = db.query(Counselor).filter(Counselor.id == counselor_id).first()
@@ -153,6 +183,11 @@ class RequestService:
         request.responded_at = func.now()
         request.response_message = response_data.response_message
         
+        # 다른 상담사가 요청을 수락한 경우 counselor_id 변경
+        if request.counselor_id != counselor_id:
+            logger.info(f"요청 {request_id}을 다른 상담사가 수락: 원래={request.counselor_id}, 수락자={counselor_id}")
+            request.counselor_id = counselor_id
+        
         # 상담사 상태를 busy로 변경
         counselor.status = CounselorStatus.busy
         counselor.last_active_at = func.now()
@@ -162,8 +197,8 @@ class RequestService:
             db, request.consultation_id, counselor_id
         )
         
-        # 같은 상담에 대한 다른 대기 중인 요청들 거절 처리
-        other_requests = db.query(ConsultationRequest).filter(
+        # 브로드캐스트 시스템: 같은 상담에 대한 다른 모든 pending 요청들 자동 취소
+        cancelled_requests = db.query(ConsultationRequest).filter(
             and_(
                 ConsultationRequest.consultation_id == request.consultation_id,
                 ConsultationRequest.id != request_id,
@@ -171,10 +206,14 @@ class RequestService:
             )
         ).all()
         
-        for other_req in other_requests:
-            other_req.status = "rejected"
+        cancelled_count = 0
+        for other_req in cancelled_requests:
+            other_req.status = "cancelled"  # 브로드캐스트 시스템에서는 cancelled 사용
             other_req.responded_at = func.now()
-            other_req.response_message = "다른 상담사가 배정되었습니다"
+            other_req.response_message = f"다른 상담사가 먼저 수락했습니다 (수락자: {counselor.name})"
+            cancelled_count += 1
+        
+        logger.info(f"브로드캐스트 수락 완료: 수락자={counselor.name}, 취소된 요청={cancelled_count}개")
         
         db.commit()
         db.refresh(request)
@@ -216,11 +255,10 @@ class RequestService:
         Returns:
             ConsultationRequestDetail: 업데이트된 요청 정보
         """
-        # 요청 조회
+        # 요청 조회 (콜대기 상담사는 다른 상담사의 요청도 거절 가능)
         request = db.query(ConsultationRequest).filter(
             and_(
                 ConsultationRequest.id == request_id,
-                ConsultationRequest.counselor_id == counselor_id,
                 ConsultationRequest.status == "pending"
             )
         ).first()

@@ -67,35 +67,22 @@ class MatchingService:
         db.commit()
         db.refresh(consultation)
         
-        # 사용 가능한 상담사 찾기
-        available_counselor = MatchingService._find_available_counselor(db)
+        # 모든 사용 가능한 상담사 찾기 (브로드캐스트 방식)
+        available_counselors = MatchingService._find_all_available_counselors(db)
         
-        if available_counselor:
-            logger.info(f"사용 가능한 상담사 찾음: ID={available_counselor.id}, 이름={available_counselor.name}")
-            # 상담사에게 매칭 요청 생성
-            request = MatchingService._create_consultation_request(
-                db, consultation.id, available_counselor.id
-            )
-            logger.info(f"상담 요청 생성 완료: 요청 ID={request.id}, 상담={consultation_code}, 상담사={available_counselor.name}")
+        if available_counselors:
+            logger.info(f"사용 가능한 상담사 {len(available_counselors)}명 찾음")
             
-            # 상담사에게 실시간 알림 전송 (백그라운드 태스크로 처리)
-            try:
-                loop = asyncio.get_event_loop()
-                loop.create_task(
-                    counselor_manager.send_consultation_request(
-                        available_counselor.id,
-                        {
-                            "id": consultation.id,
-                            "code": consultation_code,
-                            "user_nickname": consultation.user_nickname,
-                            "character_name": consultation.character_name,
-                            "request_id": request.id
-                        }
-                    )
-                )
-            except RuntimeError:
-                # 이벤트 루프가 없는 경우 무시 (테스트 환경 등)
-                logger.warning("이벤트 루프가 없어 WebSocket 알림을 보낼 수 없습니다")
+            # 모든 상담사에게 브로드캐스트 요청 생성 및 알림 전송
+            broadcast_success = MatchingService._broadcast_consultation_request(
+                db, consultation.id, consultation_code, consultation.user_nickname,
+                consultation.character_name, available_counselors
+            )
+            
+            if broadcast_success:
+                logger.info(f"브로드캐스트 알림 전송 완료: {len(available_counselors)}명에게 전송")
+            else:
+                logger.warning("브로드캐스트 알림 전송 중 일부 실패")
         else:
             logger.warning(f"사용 가능한 상담사가 없음: 상담={consultation_code}")
             # 사용 가능한 상담사 조건 디버깅
@@ -174,6 +161,126 @@ class MatchingService:
         # 상담 수가 가장 적은 상담사 선택
         counselor_loads.sort(key=lambda x: x[1])
         return counselor_loads[0][0]
+    
+    @staticmethod
+    def _find_all_available_counselors(db: Session) -> List[Counselor]:
+        """
+        모든 사용 가능한 상담사 찾기 (브로드캐스트용)
+        
+        Args:
+            db: 데이터베이스 세션
+            
+        Returns:
+            List[Counselor]: 사용 가능한 모든 상담사 목록
+        """
+        # 현재 활성 상담 수 계산
+        subquery = db.query(
+            Consultation.counselor_id,
+            func.count(Consultation.id).label('active_count')
+        ).filter(
+            Consultation.status.in_([ConsultationStatus.waiting, ConsultationStatus.active])
+        ).group_by(Consultation.counselor_id).subquery()
+        
+        # 콜대기 상태이고 상담 여유가 있는 모든 상담사 조회
+        available_counselors = db.query(Counselor).outerjoin(
+            subquery, Counselor.id == subquery.c.counselor_id
+        ).filter(
+            and_(
+                Counselor.is_active == True,
+                Counselor.is_approved == True,
+                Counselor.status == CounselorStatus.waiting_for_call,
+                or_(
+                    subquery.c.active_count < Counselor.max_concurrent_sessions,
+                    subquery.c.active_count.is_(None)
+                )
+            )
+        ).all()
+        
+        logger.info(f"브로드캐스트 대상 상담사 수: {len(available_counselors)}")
+        for counselor in available_counselors:
+            logger.info(f"  - {counselor.name} (ID: {counselor.id})")
+        
+        return available_counselors
+    
+    @staticmethod
+    def _broadcast_consultation_request(
+        db: Session,
+        consultation_id: int,
+        consultation_code: str,
+        user_nickname: str,
+        character_name: str,
+        counselors: List[Counselor]
+    ) -> bool:
+        """
+        모든 상담사에게 브로드캐스트 요청 생성 및 알림 전송
+        
+        Args:
+            db: 데이터베이스 세션
+            consultation_id: 상담 ID
+            consultation_code: 상담 코드
+            user_nickname: 사용자 닉네임
+            character_name: 캐릭터 이름
+            counselors: 대상 상담사 목록
+            
+        Returns:
+            bool: 전체 브로드캐스트 성공 여부
+        """
+        success_count = 0
+        
+        for counselor in counselors:
+            try:
+                # 각 상담사에게 요청 생성
+                request = MatchingService._create_consultation_request(
+                    db, consultation_id, counselor.id
+                )
+                logger.info(f"브로드캐스트 요청 생성: 상담사={counselor.name}, 요청ID={request.id}")
+                
+                # WebSocket 알림 전송
+                MatchingService._send_websocket_notification(
+                    counselor.id, {
+                        "id": consultation_id,
+                        "code": consultation_code,
+                        "user_nickname": user_nickname,
+                        "character_name": character_name,
+                        "request_id": request.id
+                    }
+                )
+                success_count += 1
+                
+            except Exception as e:
+                logger.error(f"상담사 {counselor.name}에게 브로드캐스트 실패: {e}")
+        
+        logger.info(f"브로드캐스트 결과: {success_count}/{len(counselors)} 성공")
+        return success_count > 0
+    
+    @staticmethod
+    def _send_websocket_notification(counselor_id: int, notification_data: dict):
+        """
+        WebSocket 알림 전송 헬퍼 메서드
+        
+        Args:
+            counselor_id: 상담사 ID
+            notification_data: 알림 데이터
+        """
+        try:
+            try:
+                loop = asyncio.get_event_loop()
+            except RuntimeError:
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+            
+            if loop.is_running():
+                loop.create_task(
+                    counselor_manager.send_consultation_request(counselor_id, notification_data)
+                )
+            else:
+                loop.run_until_complete(
+                    counselor_manager.send_consultation_request(counselor_id, notification_data)
+                )
+            logger.info(f"WebSocket 알림 전송 완료: 상담사={counselor_id}")
+            
+        except Exception as e:
+            logger.error(f"WebSocket 알림 전송 실패 (상담사 {counselor_id}): {e}")
     
     @staticmethod
     def _create_consultation_request(

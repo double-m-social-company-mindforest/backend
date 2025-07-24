@@ -24,6 +24,10 @@ def get_pending_requests(
     
     - **counselor_id**: 상담사 ID
     
+    **조회 권한:**
+    - **콜대기 상태 (waiting_for_call)**: 모든 대기 중인 요청 조회 가능
+    - **다른 상태**: 본인에게 배정된 요청만 조회 가능
+    
     상담사 대시보드에서 새로운 상담 요청을 확인할 때 사용
     """
     return RequestService.get_pending_requests(db, counselor_id)
@@ -42,6 +46,10 @@ def accept_consultation_request(
     - **counselor_id**: 상담사 ID
     - **request_id**: 요청 ID
     - **response_message**: 선택적 응답 메시지
+    
+    **수락 권한:**
+    - **콜대기 상태 상담사**: 모든 대기 중인 요청 수락 가능 (다른 상담사의 요청도 가능)
+    - **다른 상태 상담사**: 본인에게 배정된 요청만 수락 가능
     
     상담사가 상담 요청을 수락하면 해당 상담에 배정되고 상담이 시작됩니다.
     """

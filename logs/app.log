@@ -599,3 +599,165 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2025-07-24 11:31:29,641 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kimsangdam
 2025-07-24 11:32:33,202 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kimsangdam, 결과: True
 2025-07-24 11:32:35,987 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kimsangdam
+2025-07-24 13:25:56,927 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kimsangdam, 결과: True
+2025-07-24 13:25:59,527 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kimsangdam
+2025-07-24 13:26:16,116 - services.counselor.matching_service - INFO - 사용 가능한 상담사 검색 시작...
+2025-07-24 13:26:16,377 - services.counselor.matching_service - INFO - 사용 가능한 상담사 수: 2
+2025-07-24 13:26:16,878 - services.counselor.matching_service - INFO - 사용 가능한 상담사 찾음: ID=14, 이름=최성욱
+2025-07-24 13:26:18,573 - services.counselor.matching_service - INFO - 상담 요청 생성 완료: 요청 ID=44, 상담=DBEC407P0, 상담사=최성욱
+2025-07-24 13:26:18,574 - services.counselor.matching_service - WARNING - 이벤트 루프가 없어 WebSocket 알림을 보낼 수 없습니다
+2025-07-24 13:26:35,262 - services.counselor.matching_service - INFO - 사용 가능한 상담사 검색 시작...
+2025-07-24 13:26:35,516 - services.counselor.matching_service - INFO - 사용 가능한 상담사 수: 2
+2025-07-24 13:26:36,183 - services.counselor.matching_service - INFO - 사용 가능한 상담사 찾음: ID=14, 이름=최성욱
+2025-07-24 13:26:37,753 - services.counselor.matching_service - INFO - 상담 요청 생성 완료: 요청 ID=45, 상담=J0COWKMSI, 상담사=최성욱
+2025-07-24 13:26:37,754 - services.counselor.matching_service - WARNING - 이벤트 루프가 없어 WebSocket 알림을 보낼 수 없습니다
+2025-07-24 13:27:41,654 - services.counselor.matching_service - INFO - 사용 가능한 상담사 검색 시작...
+2025-07-24 13:27:41,914 - services.counselor.matching_service - INFO - 사용 가능한 상담사 수: 2
+2025-07-24 13:27:42,485 - services.counselor.matching_service - INFO - 사용 가능한 상담사 찾음: ID=14, 이름=최성욱
+2025-07-24 13:27:44,124 - services.counselor.matching_service - INFO - 상담 요청 생성 완료: 요청 ID=46, 상담=RNUEM8WNQ, 상담사=최성욱
+2025-07-24 13:27:44,125 - services.counselor.matching_service - WARNING - 이벤트 루프가 없어 WebSocket 알림을 보낼 수 없습니다
+2025-07-24 13:31:24,578 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 13:31:44,697 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 13:31:51,873 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 13:31:58,549 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 13:32:07,274 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 13:32:14,566 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 13:32:26,187 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 13:33:56,236 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결됨: counselor_id=13
+2025-07-24 13:33:56,237 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결: counselor_id=13
+2025-07-24 13:34:10,571 - services.counselor.matching_service - INFO - 사용 가능한 상담사 검색 시작...
+2025-07-24 13:34:10,829 - services.counselor.matching_service - INFO - 사용 가능한 상담사 수: 2
+2025-07-24 13:34:11,332 - services.counselor.matching_service - INFO - 사용 가능한 상담사 찾음: ID=14, 이름=최성욱
+2025-07-24 13:34:12,942 - services.counselor.matching_service - INFO - 상담 요청 생성 완료: 요청 ID=47, 상담=CI1BIW034, 상담사=최성욱
+2025-07-24 13:34:12,942 - services.counselor.matching_service - WARNING - 이벤트 루프가 없어 WebSocket 알림을 보낼 수 없습니다
+2025-07-24 13:35:39,325 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결 종료: counselor_id=13
+2025-07-24 13:35:39,326 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결 해제: counselor_id=13
+2025-07-24 13:35:40,100 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 13:36:25,579 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결됨: counselor_id=13
+2025-07-24 13:36:25,580 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결: counselor_id=13
+2025-07-24 13:36:39,455 - services.counselor.matching_service - INFO - 사용 가능한 상담사 검색 시작...
+2025-07-24 13:36:39,953 - services.counselor.matching_service - INFO - 사용 가능한 상담사 수: 2
+2025-07-24 13:36:40,548 - services.counselor.matching_service - INFO - 사용 가능한 상담사 찾음: ID=14, 이름=최성욱
+2025-07-24 13:36:42,067 - services.counselor.matching_service - INFO - 상담 요청 생성 완료: 요청 ID=48, 상담=1WRFFE29M, 상담사=최성욱
+2025-07-24 13:36:42,068 - services.counselor.matching_service - WARNING - 이벤트 루프가 없어 WebSocket 알림을 보낼 수 없습니다
+2025-07-24 13:38:14,799 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결 종료: counselor_id=13
+2025-07-24 13:38:14,800 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결 해제: counselor_id=13
+2025-07-24 13:38:15,578 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 13:38:42,714 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결됨: counselor_id=14
+2025-07-24 13:38:42,716 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결: counselor_id=14
+2025-07-24 13:38:46,024 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결 종료: counselor_id=14
+2025-07-24 13:38:46,024 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결 해제: counselor_id=14
+2025-07-24 13:38:48,282 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결됨: counselor_id=13
+2025-07-24 13:38:48,285 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결: counselor_id=13
+2025-07-24 13:39:14,257 - services.counselor.matching_service - INFO - 사용 가능한 상담사 검색 시작...
+2025-07-24 13:39:14,529 - services.counselor.matching_service - INFO - 사용 가능한 상담사 수: 2
+2025-07-24 13:39:15,045 - services.counselor.matching_service - INFO - 사용 가능한 상담사 찾음: ID=14, 이름=최성욱
+2025-07-24 13:39:16,650 - services.counselor.matching_service - INFO - 상담 요청 생성 완료: 요청 ID=50, 상담=21MJUXD47, 상담사=최성욱
+2025-07-24 13:39:16,651 - services.counselor.matching_service - WARNING - 이벤트 루프가 없어 WebSocket 알림을 보낼 수 없습니다
+2025-07-24 13:40:17,243 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결 종료: counselor_id=13
+2025-07-24 13:40:17,243 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결 해제: counselor_id=13
+2025-07-24 13:40:17,969 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 13:40:55,575 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 13:40:57,625 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결됨: counselor_id=13
+2025-07-24 13:40:57,626 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결: counselor_id=13
+2025-07-24 13:41:38,840 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결 종료: counselor_id=13
+2025-07-24 13:41:38,841 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결 해제: counselor_id=13
+2025-07-24 13:41:39,580 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 13:42:00,031 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 13:42:10,943 - services.counselor.matching_service - INFO - 사용 가능한 상담사 검색 시작...
+2025-07-24 13:42:11,199 - services.counselor.matching_service - INFO - 사용 가능한 상담사 수: 2
+2025-07-24 13:42:11,699 - services.counselor.matching_service - INFO - 사용 가능한 상담사 찾음: ID=14, 이름=최성욱
+2025-07-24 13:42:13,230 - services.counselor.matching_service - INFO - 상담 요청 생성 완료: 요청 ID=51, 상담=6EWYDYEQM, 상담사=최성욱
+2025-07-24 13:42:13,230 - services.counselor.matching_service - WARNING - 이벤트 루프가 없어 WebSocket 알림을 보낼 수 없습니다
+2025-07-24 13:42:28,761 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결됨: counselor_id=13
+2025-07-24 13:42:28,762 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결: counselor_id=13
+2025-07-24 13:42:35,000 - services.counselor.matching_service - INFO - 사용 가능한 상담사 검색 시작...
+2025-07-24 13:42:35,251 - services.counselor.matching_service - INFO - 사용 가능한 상담사 수: 2
+2025-07-24 13:42:35,774 - services.counselor.matching_service - INFO - 사용 가능한 상담사 찾음: ID=14, 이름=최성욱
+2025-07-24 13:42:37,422 - services.counselor.matching_service - INFO - 상담 요청 생성 완료: 요청 ID=52, 상담=QP2K7Q6R6, 상담사=최성욱
+2025-07-24 13:42:37,423 - services.counselor.matching_service - WARNING - 이벤트 루프가 없어 WebSocket 알림을 보낼 수 없습니다
+2025-07-24 13:42:49,233 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결 종료: counselor_id=13
+2025-07-24 13:42:49,234 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결 해제: counselor_id=13
+2025-07-24 13:42:49,589 - services.counselor.matching_service - INFO - 사용 가능한 상담사 검색 시작...
+2025-07-24 13:42:49,838 - services.counselor.matching_service - INFO - 사용 가능한 상담사 수: 2
+2025-07-24 13:42:50,333 - services.counselor.matching_service - INFO - 사용 가능한 상담사 찾음: ID=14, 이름=최성욱
+2025-07-24 13:42:51,812 - services.counselor.matching_service - INFO - 상담 요청 생성 완료: 요청 ID=53, 상담=Q985B5N6M, 상담사=최성욱
+2025-07-24 13:42:51,813 - services.counselor.matching_service - WARNING - 이벤트 루프가 없어 WebSocket 알림을 보낼 수 없습니다
+2025-07-24 13:42:52,104 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결됨: counselor_id=13
+2025-07-24 13:42:52,105 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결: counselor_id=13
+2025-07-24 13:43:00,749 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결 종료: counselor_id=13
+2025-07-24 13:43:00,750 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결 해제: counselor_id=13
+2025-07-24 13:43:03,548 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결됨: counselor_id=14
+2025-07-24 13:43:03,550 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결: counselor_id=14
+2025-07-24 13:43:10,776 - services.counselor.matching_service - INFO - 사용 가능한 상담사 검색 시작...
+2025-07-24 13:43:11,030 - services.counselor.matching_service - INFO - 사용 가능한 상담사 수: 2
+2025-07-24 13:43:11,612 - services.counselor.matching_service - INFO - 사용 가능한 상담사 찾음: ID=14, 이름=최성욱
+2025-07-24 13:43:13,293 - services.counselor.matching_service - INFO - 상담 요청 생성 완료: 요청 ID=54, 상담=SP9GKTJEX, 상담사=최성욱
+2025-07-24 13:43:13,293 - services.counselor.matching_service - WARNING - 이벤트 루프가 없어 WebSocket 알림을 보낼 수 없습니다
+2025-07-24 13:43:46,589 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결 종료: counselor_id=14
+2025-07-24 13:43:46,591 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결 해제: counselor_id=14
+2025-07-24 13:43:47,268 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 13:43:54,194 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결됨: counselor_id=13
+2025-07-24 13:43:54,195 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결: counselor_id=13
+2025-07-24 13:43:57,683 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결 종료: counselor_id=13
+2025-07-24 13:43:57,683 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결 해제: counselor_id=13
+2025-07-24 13:44:14,244 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결됨: counselor_id=13
+2025-07-24 13:44:14,247 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결: counselor_id=13
+2025-07-24 13:44:20,446 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결 종료: counselor_id=13
+2025-07-24 13:44:20,446 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결 해제: counselor_id=13
+2025-07-24 13:44:21,320 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 13:44:22,974 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결됨: counselor_id=13
+2025-07-24 13:44:22,974 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결: counselor_id=13
+2025-07-24 13:45:01,163 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결 종료: counselor_id=13
+2025-07-24 13:45:01,164 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결 해제: counselor_id=13
+2025-07-24 13:45:01,879 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 13:45:37,640 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결됨: counselor_id=13
+2025-07-24 13:45:37,642 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결: counselor_id=13
+2025-07-24 13:45:39,301 - services.counselor.matching_service - INFO - 사용 가능한 상담사 검색 시작...
+2025-07-24 13:45:39,700 - services.counselor.matching_service - INFO - 사용 가능한 상담사 수: 2
+2025-07-24 13:45:40,185 - services.counselor.matching_service - INFO - 사용 가능한 상담사 찾음: ID=14, 이름=최성욱
+2025-07-24 13:45:41,733 - services.counselor.matching_service - INFO - 상담 요청 생성 완료: 요청 ID=55, 상담=0BERXQW0X, 상담사=최성욱
+2025-07-24 13:45:41,734 - services.counselor.matching_service - WARNING - 이벤트 루프가 없어 WebSocket 알림을 보낼 수 없습니다
+2025-07-24 13:46:10,220 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결 종료: counselor_id=13
+2025-07-24 13:46:10,220 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결 해제: counselor_id=13
+2025-07-24 13:46:10,981 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 13:46:20,453 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결됨: counselor_id=14
+2025-07-24 13:46:20,456 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결: counselor_id=14
+2025-07-24 13:46:22,849 - services.counselor.matching_service - INFO - 사용 가능한 상담사 검색 시작...
+2025-07-24 13:46:23,106 - services.counselor.matching_service - INFO - 사용 가능한 상담사 수: 2
+2025-07-24 13:46:23,605 - services.counselor.matching_service - INFO - 사용 가능한 상담사 찾음: ID=14, 이름=최성욱
+2025-07-24 13:46:25,167 - services.counselor.matching_service - INFO - 상담 요청 생성 완료: 요청 ID=56, 상담=G45H3TRB1, 상담사=최성욱
+2025-07-24 13:46:25,421 - services.consultation.websocket_manager - INFO - 상담 요청 알림 전송 성공: counselor_id=14
+2025-07-24 13:46:25,421 - services.counselor.matching_service - INFO - WebSocket 알림 전송 시도 완료: 상담사=14
+2025-07-24 13:49:32,178 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결 종료: counselor_id=14
+2025-07-24 13:49:32,179 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결 해제: counselor_id=14
+2025-07-24 13:49:32,944 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 13:49:55,024 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 13:50:11,440 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 13:50:24,367 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 13:51:01,682 - services.counselor.matching_service - INFO - 브로드캐스트 대상 상담사 수: 2
+2025-07-24 13:51:01,683 - services.counselor.matching_service - INFO -   - 최성욱 (ID: 14)
+2025-07-24 13:51:01,683 - services.counselor.matching_service - INFO -   - 김상담사 (ID: 13)
+2025-07-24 13:51:01,683 - services.counselor.matching_service - INFO - 사용 가능한 상담사 2명 찾음
+2025-07-24 13:51:03,269 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=최성욱, 요청ID=57
+2025-07-24 13:51:03,270 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=14
+2025-07-24 13:51:05,165 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=김상담사, 요청ID=58
+2025-07-24 13:51:05,166 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=13
+2025-07-24 13:51:05,166 - services.counselor.matching_service - INFO - 브로드캐스트 결과: 2/2 성공
+2025-07-24 13:51:05,166 - services.counselor.matching_service - INFO - 브로드캐스트 알림 전송 완료: 2명에게 전송
+2025-07-24 13:51:35,998 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결됨: counselor_id=14
+2025-07-24 13:51:35,999 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결: counselor_id=14
+2025-07-24 13:52:17,609 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결됨: counselor_id=13
+2025-07-24 13:52:17,610 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결: counselor_id=13
+2025-07-24 13:53:05,020 - services.counselor.matching_service - INFO - 브로드캐스트 대상 상담사 수: 2
+2025-07-24 13:53:05,022 - services.counselor.matching_service - INFO -   - 김상담사 (ID: 13)
+2025-07-24 13:53:05,022 - services.counselor.matching_service - INFO -   - 최성욱 (ID: 14)
+2025-07-24 13:53:05,022 - services.counselor.matching_service - INFO - 사용 가능한 상담사 2명 찾음
+2025-07-24 13:53:06,534 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=김상담사, 요청ID=59
+2025-07-24 13:53:06,534 - services.consultation.websocket_manager - INFO - 상담 요청 알림 전송 성공: counselor_id=13
+2025-07-24 13:53:06,535 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=13
+2025-07-24 13:53:08,428 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=최성욱, 요청ID=60
+2025-07-24 13:53:08,429 - services.consultation.websocket_manager - INFO - 상담 요청 알림 전송 성공: counselor_id=14
+2025-07-24 13:53:08,430 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=14
+2025-07-24 13:53:08,430 - services.counselor.matching_service - INFO - 브로드캐스트 결과: 2/2 성공
+2025-07-24 13:53:08,430 - services.counselor.matching_service - INFO - 브로드캐스트 알림 전송 완료: 2명에게 전송
