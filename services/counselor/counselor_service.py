@@ -1,17 +1,20 @@
 from typing import List, Optional
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from sqlalchemy.sql import func
 from sqlalchemy import and_, or_
 from fastapi import HTTPException
-from database.models import Counselor, CounselorStatus, Consultation, ConsultationStatus
+from database.models import Counselor, CounselorStatus, Consultation, ConsultationStatus, FinalType
 from schemas.counselor import (
     CounselorUpdate, 
     CounselorResponse, 
     CounselorListResponse,
     CounselorStatsResponse,
-    CounselorStatusUpdate
+    CounselorStatusUpdate,
+    ConsultationHistoryItem,
+    ConsultationHistoryResponse
 )
 from datetime import datetime, timedelta
+import math
 
 
 class CounselorService:
@@ -265,4 +268,93 @@ class CounselorService:
             avg_session_duration=avg_duration,
             rating=None,  # 향후 구현
             last_consultation_at=last_consultation_at
+        )
+    
+    @staticmethod
+    def get_consultation_history(
+        db: Session, 
+        counselor_id: int,
+        page: int = 1,
+        page_size: int = 20,
+        status_filter: Optional[str] = None
+    ) -> ConsultationHistoryResponse:
+        """
+        상담사의 상담 이력 조회
+        
+        Args:
+            db: 데이터베이스 세션
+            counselor_id: 상담사 ID
+            page: 페이지 번호 (1부터 시작)
+            page_size: 페이지 크기
+            status_filter: 상태 필터 (optional)
+            
+        Returns:
+            ConsultationHistoryResponse: 상담 이력 목록
+        """
+        # 상담사 확인
+        counselor = db.query(Counselor).filter(Counselor.id == counselor_id).first()
+        if not counselor:
+            raise HTTPException(status_code=404, detail="상담사를 찾을 수 없습니다")
+        
+        # 기본 쿼리
+        query = db.query(Consultation).options(
+            joinedload(Consultation.character_type)
+        ).filter(
+            Consultation.counselor_id == counselor_id
+        )
+        
+        # 상태 필터 적용
+        if status_filter:
+            query = query.filter(Consultation.status == status_filter)
+        
+        # 전체 개수
+        total_count = query.count()
+        
+        # 페이지네이션
+        offset = (page - 1) * page_size
+        consultations = query.order_by(
+            Consultation.created_at.desc()
+        ).offset(offset).limit(page_size).all()
+        
+        # 상태 한글 매핑
+        status_display_map = {
+            ConsultationStatus.completed: "완료",
+            ConsultationStatus.terminated: "중단",
+            ConsultationStatus.active: "진행중",
+            ConsultationStatus.waiting: "대기중"
+        }
+        
+        # 응답 데이터 구성
+        consultation_items = []
+        for consultation in consultations:
+            # 상담 시간 계산
+            duration_minutes = None
+            end_time = None
+            
+            if consultation.completed_at:
+                duration_minutes = int((consultation.completed_at - consultation.created_at).total_seconds() / 60)
+                end_time = consultation.completed_at.strftime("%H:%M")
+            
+            consultation_items.append(ConsultationHistoryItem(
+                consultation_id=consultation.id,
+                consultation_code=consultation.consultation_code,
+                user_nickname=consultation.user_nickname,
+                character_type=consultation.character_type.name if consultation.character_type else "알 수 없음",
+                consultation_date=consultation.created_at.strftime("%Y-%m-%d"),
+                start_time=consultation.created_at.strftime("%H:%M"),
+                end_time=end_time,
+                duration_minutes=duration_minutes,
+                status=consultation.status,
+                status_display=status_display_map.get(consultation.status, consultation.status)
+            ))
+        
+        # 전체 페이지 수 계산
+        total_pages = math.ceil(total_count / page_size)
+        
+        return ConsultationHistoryResponse(
+            consultations=consultation_items,
+            total_count=total_count,
+            page=page,
+            page_size=page_size,
+            total_pages=total_pages
         )

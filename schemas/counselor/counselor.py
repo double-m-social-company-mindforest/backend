@@ -67,3 +67,29 @@ class CounselorStatsResponse(BaseModel):
     avg_session_duration: Optional[float]  # 평균 상담 시간 (분)
     rating: Optional[float]  # 평점 (향후 확장)
     last_consultation_at: Optional[datetime]
+
+
+class ConsultationHistoryItem(BaseModel):
+    """상담 이력 항목"""
+    consultation_id: int
+    consultation_code: str
+    user_nickname: str
+    character_type: str  # 캐릭터 유형 이름
+    consultation_date: str  # YYYY-MM-DD 형식
+    start_time: str  # HH:MM 형식
+    end_time: Optional[str]  # HH:MM 형식 (종료 시간이 있는 경우)
+    duration_minutes: Optional[int]  # 상담 시간 (분)
+    status: str  # completed, terminated, active, waiting
+    status_display: str  # 완료, 중단, 진행중, 대기중
+    
+    class Config:
+        from_attributes = True
+
+
+class ConsultationHistoryResponse(BaseModel):
+    """상담 이력 목록 응답"""
+    consultations: List[ConsultationHistoryItem]
+    total_count: int
+    page: int
+    page_size: int
+    total_pages: int

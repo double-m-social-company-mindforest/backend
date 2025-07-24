@@ -2,15 +2,18 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from typing import Optional, List
 from database.connection import get_db
+from database.models import Counselor
 from schemas.counselor import (
     CounselorUpdate,
     CounselorResponse,
     CounselorListResponse,
     CounselorStatsResponse,
     CounselorStatusUpdate,
-    CounselorStatus
+    CounselorStatus,
+    ConsultationHistoryResponse
 )
 from services.counselor import CounselorService
+from routers.counselor.auth import get_current_counselor
 
 router = APIRouter(
     prefix="/api/v1/counselors",
@@ -103,3 +106,35 @@ def get_counselor_stats(
     상담 건수, 평균 상담 시간, 현재 활성 상담 수 등의 통계 정보를 제공
     """
     return CounselorService.get_counselor_stats(db, counselor_id)
+
+
+@router.get("/{counselor_id}/consultations", response_model=ConsultationHistoryResponse)
+def get_consultation_history(
+    counselor_id: int,
+    page: int = Query(1, ge=1, description="페이지 번호"),
+    page_size: int = Query(20, ge=1, le=100, description="페이지 크기"),
+    status: Optional[str] = Query(None, description="상태 필터 (completed, terminated, active, waiting)"),
+    db: Session = Depends(get_db),
+    current_counselor: Counselor = Depends(get_current_counselor)
+):
+    """
+    상담사의 상담 이력을 조회합니다.
+    
+    - 닉네임: 상담을 받은 사용자의 닉네임
+    - 유형: 사용자가 선택한 캐릭터 유형
+    - 상담 날짜: YYYY-MM-DD 형식
+    - 시작 시간: HH:MM 형식
+    - 종료 시간: HH:MM 형식 (종료된 경우만)
+    - 상태: 완료, 중단, 진행중, 대기중
+    """
+    # 본인의 상담 이력만 조회 가능
+    if current_counselor.id != counselor_id:
+        raise HTTPException(status_code=403, detail="다른 상담사의 이력은 조회할 수 없습니다")
+    
+    return CounselorService.get_consultation_history(
+        db=db,
+        counselor_id=counselor_id,
+        page=page,
+        page_size=page_size,
+        status_filter=status
+    )

@@ -71,11 +71,12 @@ class MatchingService:
         available_counselor = MatchingService._find_available_counselor(db)
         
         if available_counselor:
+            logger.info(f"사용 가능한 상담사 찾음: ID={available_counselor.id}, 이름={available_counselor.name}")
             # 상담사에게 매칭 요청 생성
             request = MatchingService._create_consultation_request(
                 db, consultation.id, available_counselor.id
             )
-            logger.info(f"상담 요청 생성: 상담={consultation_code}, 상담사={available_counselor.name}")
+            logger.info(f"상담 요청 생성 완료: 요청 ID={request.id}, 상담={consultation_code}, 상담사={available_counselor.name}")
             
             # 상담사에게 실시간 알림 전송 (백그라운드 태스크로 처리)
             try:
@@ -97,6 +98,10 @@ class MatchingService:
                 logger.warning("이벤트 루프가 없어 WebSocket 알림을 보낼 수 없습니다")
         else:
             logger.warning(f"사용 가능한 상담사가 없음: 상담={consultation_code}")
+            # 사용 가능한 상담사 조건 디버깅
+            all_counselors = db.query(Counselor).all()
+            for c in all_counselors:
+                logger.info(f"상담사 {c.username}: is_active={c.is_active}, is_approved={c.is_approved}, status={c.status}")
         
         # 응답 생성
         response = ConsultationResponse(
@@ -135,6 +140,7 @@ class MatchingService:
         ).group_by(Consultation.counselor_id).subquery()
         
         # 콜대기 상태이고 상담 여유가 있는 상담사 조회
+        logger.info("사용 가능한 상담사 검색 시작...")
         available_counselors = db.query(Counselor).outerjoin(
             subquery, Counselor.id == subquery.c.counselor_id
         ).filter(
@@ -148,6 +154,8 @@ class MatchingService:
                 )
             )
         ).all()
+        
+        logger.info(f"사용 가능한 상담사 수: {len(available_counselors)}")
         
         if not available_counselors:
             return None

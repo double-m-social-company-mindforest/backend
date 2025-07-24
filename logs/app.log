@@ -491,3 +491,111 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2025-07-23 17:53:36,992 - config.logging - INFO - Logging configured - Debug: False
 2025-07-23 17:54:20,140 - config.logging - INFO - Logging configured - Debug: False
 2025-07-23 17:54:20,618 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 10:50:05,846 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 10:52:52,253 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/project/mindforest/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-24 10:52:52,522 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_test2, 결과: True
+2025-07-24 10:52:55,309 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kim_test2
+2025-07-24 10:54:05,464 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_counselor, 결과: False
+2025-07-24 10:54:12,248 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_counselor, 결과: False
+2025-07-24 10:54:15,845 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_counselor, 결과: False
+2025-07-24 10:54:26,468 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_counselor, 결과: False
+2025-07-24 10:54:29,740 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_counselor, 결과: False
+2025-07-24 10:54:44,997 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_counselor, 결과: False
+2025-07-24 10:54:48,486 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kim_counselor, 결과: False
+2025-07-24 10:54:56,852 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: lee_counselor, 결과: False
+2025-07-24 10:55:00,068 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: lee_counselor, 결과: False
+2025-07-24 10:56:08,653 - services.counselor.matching_service - INFO - 상담 요청 생성: 상담=JNMIYAJSB, 상담사=최성윽
+2025-07-24 10:56:08,655 - services.counselor.matching_service - WARNING - 이벤트 루프가 없어 WebSocket 알림을 보낼 수 없습니다
+2025-07-24 10:57:01,206 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 10:57:25,515 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 10:57:33,009 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 10:57:44,442 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 10:57:56,171 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 10:59:03,730 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 10:59:40,274 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 10:59:54,021 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 11:02:02,011 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/project/mindforest/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-24 11:02:02,281 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kimsangdam, 결과: True
+2025-07-24 11:02:07,673 - services.admin.auth_service - INFO - 관리자 비밀번호 검증 결과 - 사용자: admin, 결과: True
+2025-07-24 11:02:10,281 - services.admin.auth_service - INFO - 관리자 로그인 성공: admin (역할: super_admin)
+2025-07-24 11:02:31,027 - services.admin.counselor_management_service - INFO - 상담사 일괄 승인 완료: count=1, admin_id=1
+2025-07-24 11:02:36,071 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kimsangdam, 결과: True
+2025-07-24 11:02:38,863 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kimsangdam
+2025-07-24 11:02:51,596 - services.counselor.matching_service - WARNING - 사용 가능한 상담사가 없음: 상담=OWVFUR6BJ
+2025-07-24 11:03:38,811 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kimsangdam, 결과: True
+2025-07-24 11:03:41,367 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kimsangdam
+2025-07-24 11:08:15,427 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 11:09:40,854 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 11:09:53,402 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 11:10:25,625 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/project/mindforest/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-24 11:10:25,872 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kimsangdam, 결과: True
+2025-07-24 11:10:28,424 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kimsangdam
+2025-07-24 11:10:58,620 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 11:11:18,664 - services.counselor.matching_service - INFO - 사용 가능한 상담사 검색 시작...
+2025-07-24 11:11:18,945 - services.counselor.matching_service - INFO - 사용 가능한 상담사 수: 1
+2025-07-24 11:11:19,200 - services.counselor.matching_service - INFO - 사용 가능한 상담사 찾음: ID=13, 이름=김상담사
+2025-07-24 11:11:20,885 - services.counselor.matching_service - INFO - 상담 요청 생성 완료: 요청 ID=36, 상담=2UQ8C8UJO, 상담사=김상담사
+2025-07-24 11:11:20,886 - services.counselor.matching_service - WARNING - 이벤트 루프가 없어 WebSocket 알림을 보낼 수 없습니다
+2025-07-24 11:12:16,364 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/project/mindforest/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-24 11:12:16,636 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kimsangdam, 결과: True
+2025-07-24 11:12:19,297 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kimsangdam
+2025-07-24 11:19:37,379 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 11:19:47,802 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/project/mindforest/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-24 11:19:48,071 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kimsangdam, 결과: True
+2025-07-24 11:19:51,015 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kimsangdam
+2025-07-24 11:20:39,031 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 11:21:29,572 - services.counselor.matching_service - INFO - 사용 가능한 상담사 검색 시작...
+2025-07-24 11:21:29,876 - services.counselor.matching_service - INFO - 사용 가능한 상담사 수: 0
+2025-07-24 11:21:29,877 - services.counselor.matching_service - WARNING - 사용 가능한 상담사가 없음: 상담=MFJ2N7FYR
+2025-07-24 11:21:30,185 - services.counselor.matching_service - INFO - 상담사 kimsangdam: is_active=True, is_approved=True, status=busy
+2025-07-24 11:21:35,198 - services.counselor.matching_service - INFO - 사용 가능한 상담사 검색 시작...
+2025-07-24 11:21:35,509 - services.counselor.matching_service - INFO - 사용 가능한 상담사 수: 0
+2025-07-24 11:21:35,510 - services.counselor.matching_service - WARNING - 사용 가능한 상담사가 없음: 상담=7SN4D07RF
+2025-07-24 11:21:35,816 - services.counselor.matching_service - INFO - 상담사 kimsangdam: is_active=True, is_approved=True, status=busy
+2025-07-24 11:21:43,983 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/project/mindforest/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-24 11:21:44,283 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kimsangdam, 결과: True
+2025-07-24 11:21:47,401 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kimsangdam
+2025-07-24 11:24:15,297 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 11:24:48,632 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 11:27:07,512 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 11:27:55,421 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 11:28:42,798 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 11:28:52,189 - config.logging - INFO - Logging configured - Debug: False
+2025-07-24 11:31:22,048 - services.counselor.matching_service - INFO - 사용 가능한 상담사 검색 시작...
+2025-07-24 11:31:22,376 - services.counselor.matching_service - INFO - 사용 가능한 상담사 수: 1
+2025-07-24 11:31:22,787 - services.counselor.matching_service - INFO - 사용 가능한 상담사 찾음: ID=13, 이름=김상담사
+2025-07-24 11:31:24,589 - services.counselor.matching_service - INFO - 상담 요청 생성 완료: 요청 ID=40, 상담=C91A87CSA, 상담사=김상담사
+2025-07-24 11:31:24,590 - services.counselor.matching_service - WARNING - 이벤트 루프가 없어 WebSocket 알림을 보낼 수 없습니다
+2025-07-24 11:31:26,848 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/project/mindforest/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-24 11:31:27,116 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kimsangdam, 결과: True
+2025-07-24 11:31:29,641 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kimsangdam
+2025-07-24 11:32:33,202 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kimsangdam, 결과: True
+2025-07-24 11:32:35,987 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kimsangdam

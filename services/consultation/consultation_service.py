@@ -2,7 +2,7 @@ from typing import Optional, List
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import func
 from fastapi import HTTPException
-from database.models import Consultation, ConsultationStatus, FinalType
+from database.models import Consultation, ConsultationStatus, FinalType, Counselor, CounselorStatus
 from schemas.consultation import ConsultationStartRequest, ConsultationResponse
 from .code_generator import generate_consultation_code
 import random
@@ -132,6 +132,13 @@ class ConsultationService:
         # 상담 종료 처리
         consultation.status = ConsultationStatus.completed
         consultation.completed_at = func.now()
+        
+        # 상담사가 배정되어 있다면 상담사 상태를 콜대기로 변경
+        if consultation.counselor_id:
+            counselor = db.query(Counselor).filter(Counselor.id == consultation.counselor_id).first()
+            if counselor and counselor.status == CounselorStatus.busy:
+                counselor.status = CounselorStatus.waiting_for_call
+                counselor.last_active_at = func.now()
         
         db.commit()
         db.refresh(consultation)
