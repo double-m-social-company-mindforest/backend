@@ -29,15 +29,9 @@ def delete_all_consultation_data():
         db.query(Consultation).delete()
         logger.info(f"✅ 상담 {consultation_count}개 삭제됨")
         
-        # 3. 모든 상담사 상태를 waiting_for_call로 초기화
-        busy_counselors = db.query(Counselor).filter(
-            Counselor.status == CounselorStatus.busy
-        ).all()
-        
-        for counselor in busy_counselors:
-            counselor.status = CounselorStatus.waiting_for_call
-            
-        logger.info(f"✅ {len(busy_counselors)}명의 상담사 상태를 콜대기로 변경")
+        # 3. 상담사 상태 확인 (이제 busy 상태가 없으므로 확인만)
+        all_counselors = db.query(Counselor).all()
+        logger.info(f"✅ {len(all_counselors)}명의 상담사가 있습니다 (busy 상태 로직 제거됨)")
         
         # 변경사항 커밋
         db.commit()

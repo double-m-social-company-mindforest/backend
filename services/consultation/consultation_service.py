@@ -136,12 +136,12 @@ class ConsultationService:
         consultation.status = ConsultationStatus.completed
         consultation.completed_at = func.now()
         
-        # 상담사가 배정되어 있다면 상담사 상태를 콜대기로 변경
-        if consultation.counselor_id:
-            counselor = db.query(Counselor).filter(Counselor.id == consultation.counselor_id).first()
-            if counselor and counselor.status == CounselorStatus.busy:
-                counselor.status = CounselorStatus.waiting_for_call
-                counselor.last_active_at = func.now()
+        # 상담사 상태는 항상 waiting_for_call로 유지되므로 별도 처리 불필요
+        # if consultation.counselor_id:
+        #     counselor = db.query(Counselor).filter(Counselor.id == consultation.counselor_id).first()
+        #     if counselor and counselor.status == CounselorStatus.busy:
+        #         counselor.status = CounselorStatus.waiting_for_call
+        #         counselor.last_active_at = func.now()
         
         db.commit()
         db.refresh(consultation)

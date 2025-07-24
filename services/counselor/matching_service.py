@@ -118,27 +118,13 @@ class MatchingService:
         Returns:
             Optional[Counselor]: 사용 가능한 상담사 (없으면 None)
         """
-        # 현재 활성 상담 수 계산
-        subquery = db.query(
-            Consultation.counselor_id,
-            func.count(Consultation.id).label('active_count')
-        ).filter(
-            Consultation.status.in_([ConsultationStatus.waiting, ConsultationStatus.active])
-        ).group_by(Consultation.counselor_id).subquery()
-        
-        # 콜대기 상태이고 상담 여유가 있는 상담사 조회
+        # 콜대기 상태인 상담사 조회 (동시 상담 수 제한 없음)
         logger.info("사용 가능한 상담사 검색 시작...")
-        available_counselors = db.query(Counselor).outerjoin(
-            subquery, Counselor.id == subquery.c.counselor_id
-        ).filter(
+        available_counselors = db.query(Counselor).filter(
             and_(
                 Counselor.is_active == True,
                 Counselor.is_approved == True,  # 승인된 상담사만
-                Counselor.status == CounselorStatus.waiting_for_call,  # 콜대기 상태만
-                or_(
-                    subquery.c.active_count < Counselor.max_concurrent_sessions,
-                    subquery.c.active_count.is_(None)
-                )
+                Counselor.status == CounselorStatus.waiting_for_call  # 콜대기 상태만
             )
         ).all()
         
@@ -147,20 +133,9 @@ class MatchingService:
         if not available_counselors:
             return None
         
-        # 상담 수가 적은 상담사 우선 선택 (로드 밸런싱)
-        counselor_loads = []
-        for counselor in available_counselors:
-            active_count = db.query(Consultation).filter(
-                and_(
-                    Consultation.counselor_id == counselor.id,
-                    Consultation.status.in_([ConsultationStatus.waiting, ConsultationStatus.active])
-                )
-            ).count()
-            counselor_loads.append((counselor, active_count))
-        
-        # 상담 수가 가장 적은 상담사 선택
-        counselor_loads.sort(key=lambda x: x[1])
-        return counselor_loads[0][0]
+        # 랜덤하게 상담사 선택 (동시 상담 수 제한 없으므로)
+        import random
+        return random.choice(available_counselors)
     
     @staticmethod
     def _find_all_available_counselors(db: Session) -> List[Counselor]:
@@ -173,26 +148,12 @@ class MatchingService:
         Returns:
             List[Counselor]: 사용 가능한 모든 상담사 목록
         """
-        # 현재 활성 상담 수 계산
-        subquery = db.query(
-            Consultation.counselor_id,
-            func.count(Consultation.id).label('active_count')
-        ).filter(
-            Consultation.status.in_([ConsultationStatus.waiting, ConsultationStatus.active])
-        ).group_by(Consultation.counselor_id).subquery()
-        
-        # 콜대기 상태이고 상담 여유가 있는 모든 상담사 조회
-        available_counselors = db.query(Counselor).outerjoin(
-            subquery, Counselor.id == subquery.c.counselor_id
-        ).filter(
+        # 콜대기 상태인 모든 상담사 조회 (동시 상담 수 제한 없음)
+        available_counselors = db.query(Counselor).filter(
             and_(
                 Counselor.is_active == True,
                 Counselor.is_approved == True,
-                Counselor.status == CounselorStatus.waiting_for_call,
-                or_(
-                    subquery.c.active_count < Counselor.max_concurrent_sessions,
-                    subquery.c.active_count.is_(None)
-                )
+                Counselor.status == CounselorStatus.waiting_for_call
             )
         ).all()
         

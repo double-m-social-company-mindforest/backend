@@ -167,16 +167,16 @@ class RequestService:
         if counselor.status not in [CounselorStatus.online, CounselorStatus.waiting_for_call]:
             raise HTTPException(status_code=400, detail="현재 상담 불가능한 상태입니다")
         
-        # 동시 상담 수 확인
-        active_count = db.query(Consultation).filter(
-            and_(
-                Consultation.counselor_id == counselor_id,
-                Consultation.status.in_([ConsultationStatus.waiting, ConsultationStatus.active])
-            )
-        ).count()
-        
-        if active_count >= counselor.max_concurrent_sessions:
-            raise HTTPException(status_code=400, detail="동시 상담 가능 수를 초과했습니다")
+        # 동시 상담 수 제한 제거 - 상담사는 항상 waiting_for_call 상태 유지
+        # active_count = db.query(Consultation).filter(
+        #     and_(
+        #         Consultation.counselor_id == counselor_id,
+        #         Consultation.status.in_([ConsultationStatus.waiting, ConsultationStatus.active])
+        #     )
+        # ).count()
+        # 
+        # if active_count >= counselor.max_concurrent_sessions:
+        #     raise HTTPException(status_code=400, detail="동시 상담 가능 수를 초과했습니다")
         
         # 요청 수락 처리
         request.status = "accepted"
@@ -188,8 +188,8 @@ class RequestService:
             logger.info(f"요청 {request_id}을 다른 상담사가 수락: 원래={request.counselor_id}, 수락자={counselor_id}")
             request.counselor_id = counselor_id
         
-        # 상담사 상태를 busy로 변경
-        counselor.status = CounselorStatus.busy
+        # 상담사 상태는 busy로 변경하지 않음 (waiting_for_call 유지)
+        # counselor.status = CounselorStatus.busy  # 제거됨
         counselor.last_active_at = func.now()
         
         # 상담에 상담사 배정
