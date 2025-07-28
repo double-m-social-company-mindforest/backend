@@ -256,6 +256,44 @@ class TypeCalculationService:
                     # ID 26 (마음 나눔가) 직접 반환
                     return db.query(FinalType).filter(FinalType.id == 26).first()
             
+            # 불안 정복자 특별 처리: (2,7) 조합에서 특정 키워드 패턴이면 불안 정복자로 매핑
+            if (primary_type_id == 2 and secondary_type_id == 7 and 
+                selected_keyword_ids and type_scores):
+                
+                # 불안 정복자 특징적 키워드 패턴 확인
+                # 여유: 평온(15) 포함 (vs 안정 낙관주의자는 자유(18) 포함)
+                leisure_keywords = selected_keyword_ids.get("3", [])
+                
+                # 불안 정복자 특징: 평온 키워드 포함
+                has_peace = 15 in leisure_keywords  # 평온
+                
+                # 평온 키워드가 있으면 불안 정복자로 매핑
+                if has_peace:
+                    # ID 2 (불안 정복자) 직접 반환
+                    return db.query(FinalType).filter(FinalType.id == 2).first()
+            
+            # 피로 관리자 특별 처리: (3,1) 조합에서 특정 키워드 패턴이면 피로 관리자로 매핑
+            if (primary_type_id == 3 and secondary_type_id == 1 and 
+                selected_keyword_ids and type_scores):
+                
+                # 피로 관리자 특징적 키워드 패턴 확인
+                # 마음: 불안정(57), 허전함(63) 포함 (vs 안정 피로전사는 감정 기복(59), 의미 없음(56))
+                # 일상: 워라밸(44) 포함 (vs 안정 피로전사는 루틴(32))
+                # 여유: 수면(13), 재충전(16) 포함 (vs 안정 피로전사는 건강(22), 힐링 게임(4))
+                mind_keywords = selected_keyword_ids.get("1", [])
+                daily_keywords = selected_keyword_ids.get("2", [])
+                leisure_keywords = selected_keyword_ids.get("3", [])
+                
+                # 피로 관리자 특징: 불안정/허전함 + 워라밸 + 수면/재충전
+                has_instability = 57 in mind_keywords or 63 in mind_keywords  # 불안정, 허전함
+                has_worklife_balance = 44 in daily_keywords  # 워라밸
+                has_rest_recharge = 13 in leisure_keywords or 16 in leisure_keywords  # 수면, 재충전
+                
+                # 피로 관리자 특징적 키워드가 있으면 피로 관리자로 매핑
+                if has_instability and has_worklife_balance and has_rest_recharge:
+                    # ID 3 (피로 관리자) 직접 반환
+                    return db.query(FinalType).filter(FinalType.id == 3).first()
+            
             return final_type
         
         # 기본값으로 1번 최종 유형 반환
