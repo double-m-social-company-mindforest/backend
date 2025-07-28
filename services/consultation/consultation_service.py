@@ -166,7 +166,7 @@ class ConsultationService:
         return {
             "consultation_code": consultation.consultation_code,
             "status": consultation.status,
-            "completed_at": consultation.completed_at,
+            "completed_at": convert_utc_to_kst(consultation.completed_at),
             "message": "상담이 정상적으로 종료되었습니다"
         }
     

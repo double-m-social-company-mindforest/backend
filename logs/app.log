@@ -969,3 +969,44 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2025-07-28 17:28:40,219 - config.logging - INFO - Logging configured - Debug: False
 2025-07-28 17:29:05,113 - config.logging - INFO - Logging configured - Debug: False
 2025-07-28 17:29:08,786 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:32:46,118 - services.counselor.matching_service - INFO - 브로드캐스트 대상 상담사 수: 3
+2025-07-28 17:32:46,119 - services.counselor.matching_service - INFO -   - 김상담사 (ID: 13)
+2025-07-28 17:32:46,119 - services.counselor.matching_service - INFO -   - 최성욱 (ID: 14)
+2025-07-28 17:32:46,119 - services.counselor.matching_service - INFO -   - 박찬영 (ID: 15)
+2025-07-28 17:32:46,119 - services.counselor.matching_service - INFO - 사용 가능한 상담사 3명 찾음
+2025-07-28 17:32:47,312 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=김상담사, 요청ID=239
+2025-07-28 17:32:47,313 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=13
+2025-07-28 17:32:48,681 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=최성욱, 요청ID=240
+2025-07-28 17:32:48,682 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=14
+2025-07-28 17:32:50,047 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=박찬영, 요청ID=241
+2025-07-28 17:32:50,048 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=15
+2025-07-28 17:32:50,048 - services.counselor.matching_service - INFO - 브로드캐스트 결과: 3/3 성공
+2025-07-28 17:32:50,048 - services.counselor.matching_service - INFO - 브로드캐스트 알림 전송 완료: 3명에게 전송
+2025-07-28 17:34:41,684 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:35:23,117 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:35:31,674 - services.counselor.matching_service - INFO - 브로드캐스트 대상 상담사 수: 3
+2025-07-28 17:35:31,677 - services.counselor.matching_service - INFO -   - 김상담사 (ID: 13)
+2025-07-28 17:35:31,677 - services.counselor.matching_service - INFO -   - 박찬영 (ID: 15)
+2025-07-28 17:35:31,677 - services.counselor.matching_service - INFO -   - 최성욱 (ID: 14)
+2025-07-28 17:35:31,678 - services.counselor.matching_service - INFO - 사용 가능한 상담사 3명 찾음
+2025-07-28 17:35:32,886 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=김상담사, 요청ID=242
+2025-07-28 17:35:32,887 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=13
+2025-07-28 17:35:34,258 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=박찬영, 요청ID=243
+2025-07-28 17:35:34,258 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=15
+2025-07-28 17:35:35,758 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=최성욱, 요청ID=244
+2025-07-28 17:35:35,758 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=14
+2025-07-28 17:35:35,759 - services.counselor.matching_service - INFO - 브로드캐스트 결과: 3/3 성공
+2025-07-28 17:35:35,759 - services.counselor.matching_service - INFO - 브로드캐스트 알림 전송 완료: 3명에게 전송
+2025-07-28 17:36:40,262 - services.counselor.matching_service - INFO - 브로드캐스트 대상 상담사 수: 3
+2025-07-28 17:36:40,265 - services.counselor.matching_service - INFO -   - 김상담사 (ID: 13)
+2025-07-28 17:36:40,265 - services.counselor.matching_service - INFO -   - 박찬영 (ID: 15)
+2025-07-28 17:36:40,266 - services.counselor.matching_service - INFO -   - 최성욱 (ID: 14)
+2025-07-28 17:36:40,266 - services.counselor.matching_service - INFO - 사용 가능한 상담사 3명 찾음
+2025-07-28 17:36:41,449 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=김상담사, 요청ID=245
+2025-07-28 17:36:41,450 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=13
+2025-07-28 17:36:42,844 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=박찬영, 요청ID=246
+2025-07-28 17:36:42,845 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=15
+2025-07-28 17:36:44,217 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=최성욱, 요청ID=247
+2025-07-28 17:36:44,218 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=14
+2025-07-28 17:36:44,218 - services.counselor.matching_service - INFO - 브로드캐스트 결과: 3/3 성공
+2025-07-28 17:36:44,218 - services.counselor.matching_service - INFO - 브로드캐스트 알림 전송 완료: 3명에게 전송
