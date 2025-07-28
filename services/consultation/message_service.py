@@ -2,6 +2,8 @@ from typing import List, Optional
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import func
 from database.models import ConsultationMessage, Consultation, MessageType, SenderType
+from datetime import datetime
+import pytz
 from schemas.consultation import MessageResponse, MessagesHistoryResponse
 
 
@@ -27,11 +29,13 @@ class MessageService:
         Returns:
             ConsultationMessage: 생성된 메시지
         """
+        kst = pytz.timezone('Asia/Seoul')
         new_message = ConsultationMessage(
             consultation_id=consultation_id,
             sender_type=sender_type,
             message=message,
-            message_type=message_type
+            message_type=message_type,
+            timestamp=datetime.now(kst)  # 한국 시간으로 명시적 설정
         )
         
         db.add(new_message)

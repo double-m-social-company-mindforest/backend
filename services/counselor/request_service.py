@@ -3,6 +3,8 @@ from sqlalchemy.orm import Session
 from sqlalchemy.sql import func
 from sqlalchemy import and_
 from fastapi import HTTPException
+from datetime import datetime
+import pytz
 from database.models import (
     ConsultationRequest, 
     Consultation, 
@@ -179,8 +181,9 @@ class RequestService:
         #     raise HTTPException(status_code=400, detail="동시 상담 가능 수를 초과했습니다")
         
         # 요청 수락 처리
+        kst = pytz.timezone('Asia/Seoul')
         request.status = "accepted"
-        request.responded_at = func.now()
+        request.responded_at = datetime.now(kst)
         request.response_message = response_data.response_message
         
         # 다른 상담사가 요청을 수락한 경우 counselor_id 변경
@@ -209,7 +212,7 @@ class RequestService:
         cancelled_count = 0
         for other_req in cancelled_requests:
             other_req.status = "cancelled"  # 브로드캐스트 시스템에서는 cancelled 사용
-            other_req.responded_at = func.now()
+            other_req.responded_at = datetime.now(kst)
             other_req.response_message = f"다른 상담사가 먼저 수락했습니다 (수락자: {counselor.name})"
             cancelled_count += 1
         
@@ -267,8 +270,9 @@ class RequestService:
             raise HTTPException(status_code=404, detail="요청을 찾을 수 없거나 이미 처리되었습니다")
         
         # 요청 거절 처리
+        kst = pytz.timezone('Asia/Seoul')
         request.status = "rejected"
-        request.responded_at = func.now()
+        request.responded_at = datetime.now(kst)
         request.response_message = response_data.response_message or "상담사가 거절했습니다"
         
         db.commit()
@@ -318,9 +322,10 @@ class RequestService:
             )
         ).all()
         
+        kst = pytz.timezone('Asia/Seoul')
         for request in expired_requests:
             request.status = "expired"
-            request.responded_at = func.now()
+            request.responded_at = datetime.now(kst)
             request.response_message = "요청 시간이 만료되었습니다"
             
             # 만료된 상담에 대해 다른 상담사에게 재요청 시도

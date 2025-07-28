@@ -8,6 +8,8 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from sqlalchemy.orm import Session
 from database.connection import SessionLocal
 from database.models import Counselor, Consultation, ConsultationRequest, ConsultationStatus, CounselorStatus
+from datetime import datetime
+import pytz
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -52,10 +54,12 @@ def create_requests_for_waiting_consultations():
                 continue
             
             # 새 요청 생성
+            kst = pytz.timezone('Asia/Seoul')
             new_request = ConsultationRequest(
                 consultation_id=consultation.id,
                 counselor_id=available_counselor.id,
-                status="pending"
+                status="pending",
+                requested_at=datetime.now(kst)  # 한국 시간으로 명시적 설정
             )
             
             db.add(new_request)

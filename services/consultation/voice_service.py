@@ -5,6 +5,8 @@ from pathlib import Path
 from typing import Optional, Dict, Any
 from sqlalchemy.orm import Session
 from database.models import ConsultationMessage, MessageType, SenderType
+from datetime import datetime
+import pytz
 import logging
 
 logger = logging.getLogger(__name__)
@@ -72,6 +74,7 @@ class VoiceService:
                 f.write(audio_bytes)
             
             # 데이터베이스에 메시지 저장
+            kst = pytz.timezone('Asia/Seoul')
             message = ConsultationMessage(
                 consultation_id=consultation_id,
                 sender_type=sender_type,
@@ -79,7 +82,8 @@ class VoiceService:
                 message_type=MessageType.voice,
                 voice_file_path=str(file_path),
                 voice_duration=duration,
-                voice_file_size=file_size
+                voice_file_size=file_size,
+                timestamp=datetime.now(kst)  # 한국 시간으로 명시적 설정
             )
             
             db.add(message)

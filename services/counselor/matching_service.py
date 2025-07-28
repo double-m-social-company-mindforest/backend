@@ -3,6 +3,8 @@ from sqlalchemy.orm import Session
 from sqlalchemy.sql import func
 from sqlalchemy import and_, or_
 from fastapi import HTTPException
+from datetime import datetime
+import pytz
 from database.models import (
     Counselor, 
     CounselorStatus, 
@@ -54,13 +56,15 @@ class MatchingService:
         consultation_code = generate_consultation_code(db)
         
         # 상담 세션 생성 (상담사 없이)
+        kst = pytz.timezone('Asia/Seoul')
         consultation = Consultation(
             consultation_code=consultation_code,
             user_nickname=request.nickname,
             character_type_id=character_type.id,
             character_name=character_type.name,
             status=ConsultationStatus.waiting,
-            counselor_id=None  # 아직 배정되지 않음
+            counselor_id=None,  # 아직 배정되지 않음
+            created_at=datetime.now(kst)  # 한국 시간으로 명시적 설정
         )
         
         db.add(consultation)
@@ -260,10 +264,12 @@ class MatchingService:
         Returns:
             ConsultationRequest: 생성된 상담 요청
         """
+        kst = pytz.timezone('Asia/Seoul')
         request = ConsultationRequest(
             consultation_id=consultation_id,
             counselor_id=counselor_id,
-            status="pending"
+            status="pending",
+            requested_at=datetime.now(kst)  # 한국 시간으로 명시적 설정
         )
         
         db.add(request)
