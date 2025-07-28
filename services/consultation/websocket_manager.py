@@ -76,7 +76,8 @@ class ConnectionManager:
         message: str,
         websocket: WebSocket,
         sender_type: str = "character",
-        message_type: str = "text"
+        message_type: str = "text",
+        voice_data: Optional[dict] = None
     ):
         """
         특정 연결에 메시지 전송
@@ -97,6 +98,10 @@ class ConnectionManager:
             }
         }
         
+        # 음성 데이터가 있으면 추가
+        if voice_data:
+            data["data"]["voice_data"] = voice_data
+        
         try:
             await websocket.send_json(data)
         except Exception as e:
@@ -110,7 +115,8 @@ class ConnectionManager:
         sender_type: str = "counselor",
         message_type: str = "text",
         exclude_websocket: Optional[WebSocket] = None,
-        target_user_type: Optional[str] = None
+        target_user_type: Optional[str] = None,
+        voice_data: Optional[Dict] = None
     ):
         """
         특정 상담의 연결에 메시지 브로드캐스트
@@ -122,6 +128,7 @@ class ConnectionManager:
             message_type: 메시지 유형
             exclude_websocket: 제외할 WebSocket (발신자)
             target_user_type: 특정 사용자 유형에만 전송 (None이면 모든 연결)
+            voice_data: 음성 메시지 관련 데이터
         """
         if consultation_code in self.active_connections:
             connections_dict = self.active_connections[consultation_code]
@@ -143,7 +150,8 @@ class ConnectionManager:
                         message=message,
                         websocket=connection,
                         sender_type=sender_type,
-                        message_type=message_type
+                        message_type=message_type,
+                        voice_data=voice_data
                     )
                     tasks.append(task)
             

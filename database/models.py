@@ -148,6 +148,7 @@ class MessageType(str, enum.Enum):
     text = "text"
     system = "system"
     image = "image"
+    voice = "voice"
 
 
 class SenderType(str, enum.Enum):
@@ -170,6 +171,11 @@ class Consultation(Base):
     
     counselor_id = Column(Integer, ForeignKey("counselors.id"), nullable=True)
     
+    # 음성 통화 관련 필드
+    voice_call_active = Column(Boolean, default=False)  # 음성 통화 활성 상태
+    voice_call_started_at = Column(DateTime(timezone=True), nullable=True)  # 음성 통화 시작 시간
+    voice_call_ended_at = Column(DateTime(timezone=True), nullable=True)  # 음성 통화 종료 시간
+    
     # 관계 설정
     character_type = relationship("FinalType")
     counselor = relationship("Counselor", back_populates="consultations")
@@ -186,6 +192,11 @@ class ConsultationMessage(Base):
     message = Column(Text, nullable=False)
     timestamp = Column(DateTime(timezone=True), server_default=func.now())
     message_type = Column(Enum(MessageType), default=MessageType.text)
+    
+    # 음성 메시지 관련 필드
+    voice_file_path = Column(String(500), nullable=True)  # 음성 파일 경로
+    voice_duration = Column(Integer, nullable=True)  # 음성 길이 (초)
+    voice_file_size = Column(Integer, nullable=True)  # 파일 크기 (bytes)
     
     # 관계 설정
     consultation = relationship("Consultation", back_populates="messages")

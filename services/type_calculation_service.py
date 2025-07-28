@@ -147,9 +147,10 @@ class TypeCalculationService:
         return first_type, second_type
 
     @classmethod
-    def get_final_type_from_db(cls, primary_type_id: int, secondary_type_id: int, db: Session) -> Optional[FinalType]:
+    def get_final_type_from_db(cls, primary_type_id: int, secondary_type_id: int, db: Session, type_scores: Dict[int, float] = None, selected_keyword_ids: Dict[str, List[int]] = None) -> Optional[FinalType]:
         """
         DB에서 1순위, 2순위 유형 조합으로 최종 캐릭터 조회
+        32개 유형별 조합식에 따라 정확한 매핑 수행
         
         Returns:
             FinalType 객체 또는 None
@@ -162,19 +163,103 @@ class TypeCalculationService:
             )
         ).first()
         
-        # 정방향이 없으면 역방향 확인
-        if not combination:
-            combination = db.query(TypeCombination).filter(
-                and_(
-                    TypeCombination.primary_type_id == secondary_type_id,
-                    TypeCombination.secondary_type_id == primary_type_id
-                )
-            ).first()
-        
         if combination:
-            return db.query(FinalType).filter(FinalType.id == combination.final_type_id).first()
+            final_type = db.query(FinalType).filter(FinalType.id == combination.final_type_id).first()
+            
+            # 활동 해소자 특별 처리: (1,2) 조합이지만 특정 키워드 패턴이면 활동 해소자로 매핑
+            if (primary_type_id == 1 and secondary_type_id == 2 and 
+                selected_keyword_ids and type_scores):
+                
+                # 활동 해소자 특징적 키워드 패턴 확인
+                # 마음: 고립(61), 소외(62) 포함
+                # 여유: 몰입(1), 랭킹(3), 즐거움(2) 포함
+                mind_keywords = selected_keyword_ids.get("1", [])
+                leisure_keywords = selected_keyword_ids.get("3", [])
+                
+                # 활동 해소자 특징: 고립/소외 + 몰입/랭킹/즐거움
+                has_isolation = 61 in mind_keywords or 62 in mind_keywords
+                has_activity_leisure = 1 in leisure_keywords or 3 in leisure_keywords or 2 in leisure_keywords
+                
+                # 몰입형 개방자(16) 점수가 상당히 높은 경우 활동 해소자로 매핑
+                if (has_isolation and has_activity_leisure and 
+                    type_scores.get(16, 0) > 13.0):  # 몰입형 개방자 점수가 높은 경우
+                    
+                    # (1,16) 조합으로 활동 해소자 반환
+                    alt_combination = db.query(TypeCombination).filter(
+                        and_(
+                            TypeCombination.primary_type_id == 1,
+                            TypeCombination.secondary_type_id == 16
+                        )
+                    ).first()
+                    
+                    if alt_combination:
+                        return db.query(FinalType).filter(FinalType.id == alt_combination.final_type_id).first()
+            
+            # 활동 성장가 특별 처리: (6,16) 조합이지만 특정 키워드 패턴이면 활동 성장가로 매핑
+            if (primary_type_id == 6 and secondary_type_id == 16 and 
+                selected_keyword_ids and type_scores):
+                
+                # 활동 성장가 특징적 키워드 패턴 확인
+                # 마음: 방황(55) 포함
+                # 여유: 상상(12), 예술(9) 포함 (창의적 활동)
+                mind_keywords = selected_keyword_ids.get("1", [])
+                leisure_keywords = selected_keyword_ids.get("3", [])
+                
+                # 활동 성장가 특징: 방황 + 창의적 여가 활동
+                has_wandering = 55 in mind_keywords  # 방황
+                has_creative_leisure = 12 in leisure_keywords or 9 in leisure_keywords  # 상상, 예술
+                
+                # 창의적 자유인(14) 점수가 높고 특징적 키워드가 있는 경우 활동 성장가로 매핑
+                if (has_wandering and has_creative_leisure and 
+                    type_scores.get(14, 0) > 18.0):  # 창의적 자유인 점수가 높은 경우
+                    
+                    # (6,14) 조합으로 활동 성장가 반환
+                    alt_combination = db.query(TypeCombination).filter(
+                        and_(
+                            TypeCombination.primary_type_id == 6,
+                            TypeCombination.secondary_type_id == 14
+                        )
+                    ).first()
+                    
+                    if alt_combination:
+                        return db.query(FinalType).filter(FinalType.id == alt_combination.final_type_id).first()
+            
+            # 긍정 대화가 특별 처리: (9,11) 조합에서 특정 키워드 패턴이면 긍정 대화가로 매핑
+            if (primary_type_id == 9 and secondary_type_id == 11 and 
+                selected_keyword_ids and type_scores):
+                
+                # 긍정 대화가 특징적 키워드 패턴 확인
+                # 여유: 공유(7) 포함 (vs 소통 달인은 활동(21) 포함)
+                leisure_keywords = selected_keyword_ids.get("3", [])
+                
+                # 긍정 대화가 특징: 공유 키워드 포함
+                has_sharing = 7 in leisure_keywords  # 공유
+                
+                # 공유 키워드가 있으면 긍정 대화가로 매핑
+                if has_sharing:
+                    # ID 24 (긍정 대화가) 직접 반환
+                    return db.query(FinalType).filter(FinalType.id == 24).first()
+            
+            # 마음 나눔가 특별 처리: (9,12) 조합에서 특정 키워드 패턴이면 마음 나눔가로 매핑
+            if (primary_type_id == 9 and secondary_type_id == 12 and 
+                selected_keyword_ids and type_scores):
+                
+                # 마음 나눔가 특징적 키워드 패턴 확인
+                # 여유: 모임(6) 포함 (vs 관계 복원가는 활동(21) 포함)
+                leisure_keywords = selected_keyword_ids.get("3", [])
+                
+                # 마음 나눔가 특징: 모임 키워드 포함
+                has_gathering = 6 in leisure_keywords  # 모임
+                
+                # 모임 키워드가 있으면 마음 나눔가로 매핑
+                if has_gathering:
+                    # ID 26 (마음 나눔가) 직접 반환
+                    return db.query(FinalType).filter(FinalType.id == 26).first()
+            
+            return final_type
         
         # 기본값으로 1번 최종 유형 반환
+        print(f"경고: 조합 ({primary_type_id}, {secondary_type_id})에 대한 매핑이 없습니다. 기본값 반환.")
         return db.query(FinalType).filter(FinalType.id == 1).first()
 
     @classmethod
@@ -238,7 +323,7 @@ class TypeCalculationService:
         primary_type, secondary_type = cls.get_top_two_types_from_db(type_scores, db)
         
         # 4. 최종 캐릭터 조회
-        final_type = cls.get_final_type_from_db(primary_type.id, secondary_type.id, db)
+        final_type = cls.get_final_type_from_db(primary_type.id, secondary_type.id, db, type_scores, selected_keyword_ids)
         
         # 5. 응답 데이터 구성
         result = {

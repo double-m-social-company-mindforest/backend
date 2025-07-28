@@ -5,6 +5,8 @@ from database.models import Consultation, ConsultationStatus, SenderType, Messag
 from services.consultation.websocket_manager import manager, counselor_manager
 from services.consultation.message_service import MessageService
 from services.consultation.character_ai_service import CharacterAIService
+from services.consultation.voice_service import VoiceService
+from services.consultation.voice_call_service import VoiceCallService
 import json
 import logging
 import asyncio
@@ -116,6 +118,57 @@ async def websocket_endpoint(
                             exclude_websocket=websocket
                         )
                 
+                elif message_type == "voice_message":
+                    # 음성 메시지 처리
+                    voice_data = message_content.get("audio_data", "")
+                    duration = message_content.get("duration")
+                    file_extension = message_content.get("format", ".webm")
+                    
+                    if voice_data and VoiceService.validate_voice_data(voice_data):
+                        try:
+                            # 메시지 발신자 유형 결정
+                            sender_type = SenderType.user if user_type == "user" else SenderType.counselor
+                            
+                            # 음성 메시지 저장
+                            voice_message = VoiceService.save_voice_message(
+                                db=db,
+                                consultation_id=consultation.id,
+                                sender_type=sender_type,
+                                voice_data=voice_data,
+                                file_extension=file_extension,
+                                duration=duration
+                            )
+                            
+                            # 다른 연결에 음성 메시지 알림 브로드캐스트
+                            await manager.send_to_consultation(
+                                consultation_code=consultation_code,
+                                message=f"음성 메시지 ({duration}초)" if duration else "음성 메시지",
+                                sender_type=user_type,
+                                message_type="voice",
+                                exclude_websocket=websocket,
+                                voice_data={
+                                    "message_id": voice_message.id,
+                                    "duration": duration,
+                                    "file_size": voice_message.voice_file_size
+                                }
+                            )
+                            
+                            logger.info(f"음성 메시지 처리 완료: 상담={consultation_code}, 길이={duration}초")
+                            
+                        except Exception as e:
+                            logger.error(f"음성 메시지 처리 실패: {e}")
+                            await manager.send_system_message(
+                                websocket=websocket,
+                                message="음성 메시지 처리 중 오류가 발생했습니다.",
+                                event="error"
+                            )
+                    else:
+                        await manager.send_system_message(
+                            websocket=websocket,
+                            message="유효하지 않은 음성 데이터입니다.",
+                            event="error"
+                        )
+                
                 elif message_type == "typing":
                     # 타이핑 상태 처리
                     is_typing = message_content.get("is_typing", False)
@@ -124,6 +177,71 @@ async def websocket_endpoint(
                         consultation_code=consultation_code,
                         is_typing=is_typing
                     )
+                
+                elif message_type == "voice_call_request":
+                    # 음성 통화 요청
+                    if VoiceCallService.is_voice_call_available(db, consultation_code):
+                        await VoiceCallService.notify_voice_call_event(
+                            consultation_code=consultation_code,
+                            event_type="request",
+                            initiator_type=user_type
+                        )
+                        logger.info(f"음성 통화 요청: 상담={consultation_code}, 요청자={user_type}")
+                    else:
+                        await manager.send_system_message(
+                            websocket=websocket,
+                            message="현재 음성 통화를 시작할 수 없습니다.",
+                            event="voice_call_unavailable"
+                        )
+                
+                elif message_type == "voice_call_accept":
+                    # 음성 통화 수락
+                    if VoiceCallService.start_voice_call(db, consultation_code, user_type):
+                        await VoiceCallService.notify_voice_call_event(
+                            consultation_code=consultation_code,
+                            event_type="start",
+                            initiator_type=user_type
+                        )
+                        logger.info(f"음성 통화 시작: 상담={consultation_code}, 수락자={user_type}")
+                    else:
+                        await manager.send_system_message(
+                            websocket=websocket,
+                            message="음성 통화 시작에 실패했습니다.",
+                            event="voice_call_start_failed"
+                        )
+                
+                elif message_type == "voice_call_reject":
+                    # 음성 통화 거절
+                    await VoiceCallService.notify_voice_call_event(
+                        consultation_code=consultation_code,
+                        event_type="reject",
+                        initiator_type=user_type
+                    )
+                    logger.info(f"음성 통화 거절: 상담={consultation_code}, 거절자={user_type}")
+                
+                elif message_type == "voice_call_end":
+                    # 음성 통화 종료
+                    if VoiceCallService.end_voice_call(db, consultation_code, user_type):
+                        await VoiceCallService.notify_voice_call_event(
+                            consultation_code=consultation_code,
+                            event_type="end",
+                            initiator_type=user_type
+                        )
+                        logger.info(f"음성 통화 종료: 상담={consultation_code}, 종료자={user_type}")
+                    else:
+                        await manager.send_system_message(
+                            websocket=websocket,
+                            message="음성 통화 종료에 실패했습니다.",
+                            event="voice_call_end_failed"
+                        )
+                
+                elif message_type == "voice_call_status":
+                    # 음성 통화 상태 조회
+                    status = VoiceCallService.get_voice_call_status(db, consultation_code)
+                    await websocket.send_json({
+                        "type": "voice_call_status",
+                        "data": status or {"error": "상태 조회 실패"}
+                    })
                 
                 elif message_type == "ping":
                     # 연결 상태 확인 (heartbeat)

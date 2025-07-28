@@ -9,7 +9,7 @@ from routers.keywords import router as keywords_router
 from routers.personality import router as personality_router
 from routers.types import router as types_router
 from routers.intermediate_types import router as intermediate_types_router
-from routers.consultation import consultation_router, websocket_router, messages_router, cards_router
+from routers.consultation import consultation_router, websocket_router, messages_router, cards_router, voice_router
 from routers.consultation.music import router as music_router
 from routers.counselor import counselor_router, dashboard_router
 from routers.counselor.auth import router as counselor_auth_router
@@ -323,6 +323,7 @@ app.include_router(consultation_router, tags=["consultations"])
 app.include_router(websocket_router)
 app.include_router(messages_router, tags=["consultations"])
 app.include_router(cards_router, tags=["consultations"])
+app.include_router(voice_router, prefix="/api/consultation", tags=["voice"])
 app.include_router(music_router, tags=["consultation-music"])
 app.include_router(counselor_router, tags=["counselors"])
 app.include_router(dashboard_router, tags=["counselor-dashboard"])
