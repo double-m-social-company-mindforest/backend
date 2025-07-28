@@ -1,6 +1,7 @@
 import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
 from config.logging import setup_logging
 from routers.health import router as health_router
@@ -311,6 +312,9 @@ app.add_middleware(
     allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allow_headers=["*"],
 )
+
+# Static 파일 제공 설정
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # 라우터 등록
 app.include_router(home_router, tags=["system"])

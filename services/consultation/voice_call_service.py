@@ -2,6 +2,7 @@ from typing import Optional, Dict, Any
 from datetime import datetime, timezone
 from sqlalchemy.orm import Session
 from sqlalchemy import func
+import pytz
 from database.models import Consultation, ConsultationStatus
 from services.consultation.websocket_manager import manager
 import logging
@@ -49,7 +50,8 @@ class VoiceCallService:
             
             # 음성 통화 시작
             consultation.voice_call_active = True
-            consultation.voice_call_started_at = func.now()
+            kst = pytz.timezone('Asia/Seoul')
+            consultation.voice_call_started_at = datetime.now(kst)
             consultation.voice_call_ended_at = None
             
             db.commit()
@@ -96,7 +98,8 @@ class VoiceCallService:
             
             # 음성 통화 종료
             consultation.voice_call_active = False
-            consultation.voice_call_ended_at = func.now()
+            kst = pytz.timezone('Asia/Seoul')
+            consultation.voice_call_ended_at = datetime.now(kst)
             
             db.commit()
             db.refresh(consultation)

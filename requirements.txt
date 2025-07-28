@@ -37,6 +37,7 @@ python-dotenv==1.0.1
 python-jose==3.5.0
 python-multipart==0.0.20
 PyYAML==6.0.2
+pytz==2024.1
 requests==2.32.4
 rsa==4.9.1
 six==1.17.0

@@ -2,6 +2,8 @@ from typing import Optional, List, Dict, Any
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import func
 from fastapi import HTTPException
+from datetime import datetime
+import pytz
 from database.models import Consultation, ConsultationStatus, FinalType, Counselor, CounselorStatus, ConsultationRequest
 from schemas.consultation import ConsultationStartRequest, ConsultationResponse
 from .code_generator import generate_consultation_code
@@ -134,7 +136,9 @@ class ConsultationService:
         
         # 상담 종료 처리
         consultation.status = ConsultationStatus.completed
-        consultation.completed_at = func.now()
+        # 한국 시간으로 설정
+        kst = pytz.timezone('Asia/Seoul')
+        consultation.completed_at = datetime.now(kst)
         
         # 상담사 상태는 항상 waiting_for_call로 유지되므로 별도 처리 불필요
         # if consultation.counselor_id:
