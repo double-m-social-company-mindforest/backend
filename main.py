@@ -90,7 +90,7 @@ def custom_openapi():
     
     openapi_schema = get_openapi(
         title="🌲 MindForest API",
-        version="1.0.0",
+        version="1.1.0",
         description="키워드 기반 성격 유형 분석과 실시간 상담 서비스 API",
         routes=app.routes,
         tags=tags_metadata,
