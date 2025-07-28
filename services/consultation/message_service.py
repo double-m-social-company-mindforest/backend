@@ -7,6 +7,19 @@ import pytz
 from schemas.consultation import MessageResponse, MessagesHistoryResponse
 
 
+def convert_utc_to_kst(utc_time):
+    """UTC 시간을 한국 시간으로 변환"""
+    if utc_time is None:
+        return None
+    
+    if utc_time.tzinfo is None:
+        # naive datetime을 UTC로 간주
+        utc_time = utc_time.replace(tzinfo=pytz.UTC)
+    
+    kst = pytz.timezone('Asia/Seoul')
+    return utc_time.astimezone(kst)
+
+
 class MessageService:
     @staticmethod
     def create_message(
@@ -98,7 +111,7 @@ class MessageService:
                 consultation_id=msg.consultation_id,
                 sender_type=msg.sender_type,
                 message=msg.message,
-                timestamp=msg.timestamp,
+                timestamp=convert_utc_to_kst(msg.timestamp),
                 message_type=msg.message_type
             )
             for msg in messages

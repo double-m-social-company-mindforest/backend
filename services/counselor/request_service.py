@@ -24,6 +24,19 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+def convert_utc_to_kst(utc_time):
+    """UTC 시간을 한국 시간으로 변환"""
+    if utc_time is None:
+        return None
+    
+    if utc_time.tzinfo is None:
+        # naive datetime을 UTC로 간주
+        utc_time = utc_time.replace(tzinfo=pytz.UTC)
+    
+    kst = pytz.timezone('Asia/Seoul')
+    return utc_time.astimezone(kst)
+
+
 class RequestService:
     @staticmethod
     def get_pending_requests(
@@ -89,8 +102,8 @@ class RequestService:
                 consultation_id=req.consultation_id,
                 counselor_id=req.counselor_id,
                 status=req.status,
-                requested_at=req.requested_at,
-                responded_at=req.responded_at,
+                requested_at=convert_utc_to_kst(req.requested_at),
+                responded_at=convert_utc_to_kst(req.responded_at),
                 response_message=req.response_message,
                 consultation_code=consultation_code,
                 user_nickname=user_nickname,
@@ -230,8 +243,8 @@ class RequestService:
             consultation_id=request.consultation_id,
             counselor_id=request.counselor_id,
             status=request.status,
-            requested_at=request.requested_at,
-            responded_at=request.responded_at,
+            requested_at=convert_utc_to_kst(request.requested_at),
+            responded_at=convert_utc_to_kst(request.responded_at),
             response_message=request.response_message,
             consultation_code=consultation.consultation_code,
             user_nickname=consultation.user_nickname,
@@ -295,8 +308,8 @@ class RequestService:
             consultation_id=request.consultation_id,
             counselor_id=request.counselor_id,
             status=request.status,
-            requested_at=request.requested_at,
-            responded_at=request.responded_at,
+            requested_at=convert_utc_to_kst(request.requested_at),
+            responded_at=convert_utc_to_kst(request.responded_at),
             response_message=request.response_message,
             consultation_code=consultation.consultation_code,
             user_nickname=consultation.user_nickname,

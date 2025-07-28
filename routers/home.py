@@ -4,4 +4,4 @@ router = APIRouter()
 
 @router.get("/")
 def home():
-    return {"message": "Welcome to MindForest API! v1.1.4"}
+    return {"message": "Welcome to MindForest API! v1.1.5"}
