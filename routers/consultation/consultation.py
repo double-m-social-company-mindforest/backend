@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import Dict, Any
 from database.connection import get_db
-from schemas.consultation import (
+from schemas.consultation.consultation import (
     ConsultationStartRequest,
     ConsultationResponse,
     ConsultationReconnectRequest,
@@ -87,11 +87,11 @@ def cancel_consultation(
     return ConsultationService.cancel_consultation(db, consultation_code)
 
 
-@router.post("/{consultation_code}/end", response_model=Dict[str, Any])
+@router.post("/{consultation_code}/end", response_model=ConsultationEndResponse)
 def end_consultation(
     consultation_code: str,
     db: Session = Depends(get_db)
-) -> Dict[str, Any]:
+) -> ConsultationEndResponse:
     """
     상담 종료
     

@@ -83,7 +83,7 @@ class VoiceService:
                 voice_file_path=str(file_path),
                 voice_duration=duration,
                 voice_file_size=file_size,
-                timestamp=datetime.now(kst)  # 한국 시간으로 명시적 설정
+                timestamp=datetime.now(kst)  # 한국 시간으로 저장
             )
             
             db.add(message)

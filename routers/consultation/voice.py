@@ -273,3 +273,138 @@ async def delete_voice_message(
         logger.error(f"음성 메시지 삭제 실패: {e}")
         db.rollback()
         raise HTTPException(status_code=500, detail="음성 메시지 삭제 중 오류가 발생했습니다")
+
+
+@router.get("/consultation/{consultation_code}/webrtc-session")
+async def get_webrtc_session(
+    consultation_code: str,
+    db: Session = Depends(get_db)
+):
+    """
+    WebRTC 세션 정보 조회
+    
+    Args:
+        consultation_code: 상담 코드
+        db: 데이터베이스 세션
+        
+    Returns:
+        Dict: WebRTC 세션 정보
+    """
+    try:
+        # 상담 존재 여부 확인
+        consultation = db.query(Consultation).filter(
+            Consultation.consultation_code == consultation_code
+        ).first()
+        
+        if not consultation:
+            raise HTTPException(status_code=404, detail="상담을 찾을 수 없습니다")
+        
+        # WebRTC 세션 정보 조회
+        session_info = VoiceCallService.get_webrtc_session(consultation_code)
+        
+        if not session_info:
+            return {
+                "consultation_code": consultation_code,
+                "webrtc_session": None,
+                "message": "WebRTC 세션이 없습니다"
+            }
+        
+        return {
+            "consultation_code": consultation_code,
+            "webrtc_session": session_info
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"WebRTC 세션 조회 실패: {e}")
+        raise HTTPException(status_code=500, detail="WebRTC 세션 조회 중 오류가 발생했습니다")
+
+
+@router.post("/consultation/{consultation_code}/webrtc-session")
+async def create_webrtc_session(
+    consultation_code: str,
+    db: Session = Depends(get_db)
+):
+    """
+    WebRTC 세션 생성
+    
+    Args:
+        consultation_code: 상담 코드
+        db: 데이터베이스 세션
+        
+    Returns:
+        Dict: 생성된 WebRTC 세션 정보
+    """
+    try:
+        # 상담 존재 여부 확인
+        consultation = db.query(Consultation).filter(
+            Consultation.consultation_code == consultation_code
+        ).first()
+        
+        if not consultation:
+            raise HTTPException(status_code=404, detail="상담을 찾을 수 없습니다")
+        
+        # 기존 세션 확인
+        existing_session = VoiceCallService.get_webrtc_session(consultation_code)
+        if existing_session:
+            return {
+                "consultation_code": consultation_code,
+                "webrtc_session": existing_session,
+                "message": "기존 WebRTC 세션이 존재합니다"
+            }
+        
+        # 새 WebRTC 세션 생성
+        session_info = VoiceCallService.create_webrtc_session(consultation_code)
+        
+        return {
+            "consultation_code": consultation_code,
+            "webrtc_session": session_info,
+            "message": "WebRTC 세션이 생성되었습니다"
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"WebRTC 세션 생성 실패: {e}")
+        raise HTTPException(status_code=500, detail="WebRTC 세션 생성 중 오류가 발생했습니다")
+
+
+@router.delete("/consultation/{consultation_code}/webrtc-session")
+async def cleanup_webrtc_session(
+    consultation_code: str,
+    db: Session = Depends(get_db)
+):
+    """
+    WebRTC 세션 정리
+    
+    Args:
+        consultation_code: 상담 코드
+        db: 데이터베이스 세션
+        
+    Returns:
+        Dict: 정리 결과
+    """
+    try:
+        # 상담 존재 여부 확인
+        consultation = db.query(Consultation).filter(
+            Consultation.consultation_code == consultation_code
+        ).first()
+        
+        if not consultation:
+            raise HTTPException(status_code=404, detail="상담을 찾을 수 없습니다")
+        
+        # WebRTC 세션 정리
+        success = VoiceCallService.cleanup_webrtc_session(consultation_code)
+        
+        return {
+            "consultation_code": consultation_code,
+            "success": success,
+            "message": "WebRTC 세션이 정리되었습니다" if success else "정리할 WebRTC 세션이 없습니다"
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"WebRTC 세션 정리 실패: {e}")
+        raise HTTPException(status_code=500, detail="WebRTC 세션 정리 중 오류가 발생했습니다")

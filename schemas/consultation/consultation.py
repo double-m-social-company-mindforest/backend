@@ -1,7 +1,8 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from typing import Optional
 from datetime import datetime
 from enum import Enum
+import pytz
 
 
 class ConsultationStatus(str, Enum):
@@ -30,6 +31,22 @@ class ConsultationResponse(BaseModel):
     completed_at: Optional[datetime]
     is_card_issued: bool
 
+    @field_validator('created_at', 'completed_at')
+    @classmethod
+    def convert_to_kst(cls, v):
+        """UTC 시간을 한국 시간으로 변환"""
+        if v is None:
+            return v
+        
+        # UTC로 간주하고 KST로 변환
+        if v.tzinfo is None:
+            v = v.replace(tzinfo=pytz.UTC)
+        elif v.tzinfo != pytz.UTC:
+            v = v.astimezone(pytz.UTC)
+        
+        kst = pytz.timezone('Asia/Seoul')
+        return v.astimezone(kst)
+
     class Config:
         from_attributes = True
 
@@ -43,3 +60,19 @@ class ConsultationEndResponse(BaseModel):
     status: ConsultationStatus
     completed_at: datetime
     message: str
+
+    @field_validator('completed_at')
+    @classmethod
+    def convert_to_kst(cls, v):
+        """UTC 시간을 한국 시간으로 변환"""
+        if v is None:
+            return v
+        
+        # UTC로 간주하고 KST로 변환
+        if v.tzinfo is None:
+            v = v.replace(tzinfo=pytz.UTC)
+        elif v.tzinfo != pytz.UTC:
+            v = v.astimezone(pytz.UTC)
+        
+        kst = pytz.timezone('Asia/Seoul')
+        return v.astimezone(kst)

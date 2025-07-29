@@ -59,7 +59,7 @@ def create_requests_for_waiting_consultations():
                 consultation_id=consultation.id,
                 counselor_id=available_counselor.id,
                 status="pending",
-                requested_at=datetime.now(kst)  # 한국 시간으로 명시적 설정
+                requested_at=datetime.now(kst)  # 한국 시간으로 저장
             )
             
             db.add(new_request)

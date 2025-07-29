@@ -68,7 +68,7 @@ class VoiceChatTester:
             # 상담 코드 생성
             consultation_code = generate_consultation_code(self.db)
             
-            # 테스트 상담 생성
+            # 테스트 상담 생성  
             kst = pytz.timezone('Asia/Seoul')
             consultation = Consultation(
                 consultation_code=consultation_code,
@@ -77,7 +77,7 @@ class VoiceChatTester:
                 character_name=character_type.name,
                 status=ConsultationStatus.active,  # 바로 활성 상태로 설정
                 counselor_id=counselor.id,  # 실제 존재하는 상담사 ID 사용
-                created_at=datetime.now(kst)  # 한국 시간으로 명시적 설정
+                created_at=datetime.now(kst)  # 한국 시간으로 저장
             )
             
             self.db.add(consultation)

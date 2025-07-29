@@ -197,6 +197,9 @@ async def websocket_endpoint(
                 elif message_type == "voice_call_accept":
                     # 음성 통화 수락
                     if VoiceCallService.start_voice_call(db, consultation_code, user_type):
+                        # WebRTC 세션에 참가자 추가
+                        VoiceCallService.add_webrtc_participant(consultation_code, user_type)
+                        
                         await VoiceCallService.notify_voice_call_event(
                             consultation_code=consultation_code,
                             event_type="start",
@@ -222,6 +225,9 @@ async def websocket_endpoint(
                 elif message_type == "voice_call_end":
                     # 음성 통화 종료
                     if VoiceCallService.end_voice_call(db, consultation_code, user_type):
+                        # WebRTC 세션 정리
+                        VoiceCallService.cleanup_webrtc_session(consultation_code)
+                        
                         await VoiceCallService.notify_voice_call_event(
                             consultation_code=consultation_code,
                             event_type="end",
@@ -242,6 +248,80 @@ async def websocket_endpoint(
                         "type": "voice_call_status",
                         "data": status or {"error": "상태 조회 실패"}
                     })
+                
+                elif message_type == "webrtc_offer":
+                    # WebRTC Offer 시그널링
+                    offer_data = message_content.get("offer")
+                    if offer_data:
+                        # WebRTC 세션에 Offer 저장
+                        VoiceCallService.store_webrtc_offer(consultation_code, user_type, offer_data)
+                        
+                        await manager.send_to_consultation(
+                            consultation_code=consultation_code,
+                            message="WebRTC Offer",
+                            sender_type=user_type,
+                            message_type="webrtc_offer",
+                            exclude_websocket=websocket,
+                            voice_data={
+                                "offer": offer_data,
+                                "sender_type": user_type
+                            }
+                        )
+                        logger.info(f"WebRTC Offer 전달: 상담={consultation_code}, 발신자={user_type}")
+                    else:
+                        await manager.send_system_message(
+                            websocket=websocket,
+                            message="유효하지 않은 WebRTC Offer입니다.",
+                            event="webrtc_error"
+                        )
+                
+                elif message_type == "webrtc_answer":
+                    # WebRTC Answer 시그널링
+                    answer_data = message_content.get("answer")
+                    if answer_data:
+                        # WebRTC 세션에 Answer 저장
+                        VoiceCallService.store_webrtc_answer(consultation_code, user_type, answer_data)
+                        
+                        await manager.send_to_consultation(
+                            consultation_code=consultation_code,
+                            message="WebRTC Answer",
+                            sender_type=user_type,
+                            message_type="webrtc_answer",
+                            exclude_websocket=websocket,
+                            voice_data={
+                                "answer": answer_data,
+                                "sender_type": user_type
+                            }
+                        )
+                        logger.info(f"WebRTC Answer 전달: 상담={consultation_code}, 발신자={user_type}")
+                    else:
+                        await manager.send_system_message(
+                            websocket=websocket,
+                            message="유효하지 않은 WebRTC Answer입니다.",
+                            event="webrtc_error"
+                        )
+                
+                elif message_type == "webrtc_ice_candidate":
+                    # WebRTC ICE Candidate 시그널링
+                    candidate_data = message_content.get("candidate")
+                    if candidate_data:
+                        # WebRTC 세션에 ICE Candidate 추가
+                        VoiceCallService.add_ice_candidate(consultation_code, user_type, candidate_data)
+                        
+                        await manager.send_to_consultation(
+                            consultation_code=consultation_code,
+                            message="WebRTC ICE Candidate",
+                            sender_type=user_type,
+                            message_type="webrtc_ice_candidate",
+                            exclude_websocket=websocket,
+                            voice_data={
+                                "candidate": candidate_data,
+                                "sender_type": user_type
+                            }
+                        )
+                        logger.debug(f"WebRTC ICE Candidate 전달: 상담={consultation_code}, 발신자={user_type}")
+                    else:
+                        logger.warning(f"빈 ICE Candidate 수신: 상담={consultation_code}, 발신자={user_type}")
                 
                 elif message_type == "ping":
                     # 연결 상태 확인 (heartbeat)

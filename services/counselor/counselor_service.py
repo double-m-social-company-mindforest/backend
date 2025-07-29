@@ -15,6 +15,7 @@ from schemas.counselor import (
 )
 from datetime import datetime, timedelta
 import math
+import pytz
 
 
 class CounselorService:
@@ -326,22 +327,28 @@ class CounselorService:
         
         # 응답 데이터 구성
         consultation_items = []
+        kst = pytz.timezone('Asia/Seoul')
+        
         for consultation in consultations:
             # 상담 시간 계산
             duration_minutes = None
             end_time = None
             
+            # UTC 시간을 KST로 변환
+            created_at_kst = consultation.created_at.replace(tzinfo=pytz.UTC).astimezone(kst)
+            
             if consultation.completed_at:
                 duration_minutes = int((consultation.completed_at - consultation.created_at).total_seconds() / 60)
-                end_time = consultation.completed_at.strftime("%H:%M")
+                completed_at_kst = consultation.completed_at.replace(tzinfo=pytz.UTC).astimezone(kst)
+                end_time = completed_at_kst.strftime("%H:%M")
             
             consultation_items.append(ConsultationHistoryItem(
                 consultation_id=consultation.id,
                 consultation_code=consultation.consultation_code,
                 user_nickname=consultation.user_nickname,
                 character_type=consultation.character_type.name if consultation.character_type else "알 수 없음",
-                consultation_date=consultation.created_at.strftime("%Y-%m-%d"),
-                start_time=consultation.created_at.strftime("%H:%M"),
+                consultation_date=created_at_kst.strftime("%Y-%m-%d"),
+                start_time=created_at_kst.strftime("%H:%M"),
                 end_time=end_time,
                 duration_minutes=duration_minutes,
                 status=consultation.status,

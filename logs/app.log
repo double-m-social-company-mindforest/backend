@@ -1010,3 +1010,166 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2025-07-28 17:36:44,218 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=14
 2025-07-28 17:36:44,218 - services.counselor.matching_service - INFO - 브로드캐스트 결과: 3/3 성공
 2025-07-28 17:36:44,218 - services.counselor.matching_service - INFO - 브로드캐스트 알림 전송 완료: 3명에게 전송
+2025-07-28 17:40:43,835 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:41:06,223 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:41:15,872 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:41:20,854 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:41:26,533 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:41:31,730 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:41:36,408 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:41:41,080 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:41:47,672 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:41:54,685 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:41:59,763 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:42:04,425 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:42:10,739 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:42:19,081 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:42:28,238 - services.counselor.matching_service - INFO - 브로드캐스트 대상 상담사 수: 3
+2025-07-28 17:42:28,240 - services.counselor.matching_service - INFO -   - 김상담사 (ID: 13)
+2025-07-28 17:42:28,240 - services.counselor.matching_service - INFO -   - 박찬영 (ID: 15)
+2025-07-28 17:42:28,240 - services.counselor.matching_service - INFO -   - 최성욱 (ID: 14)
+2025-07-28 17:42:28,240 - services.counselor.matching_service - INFO - 사용 가능한 상담사 3명 찾음
+2025-07-28 17:42:29,486 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=김상담사, 요청ID=254
+2025-07-28 17:42:29,487 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=13
+2025-07-28 17:42:30,933 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=박찬영, 요청ID=255
+2025-07-28 17:42:30,935 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=15
+2025-07-28 17:42:32,434 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=최성욱, 요청ID=256
+2025-07-28 17:42:32,435 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=14
+2025-07-28 17:42:32,436 - services.counselor.matching_service - INFO - 브로드캐스트 결과: 3/3 성공
+2025-07-28 17:42:32,436 - services.counselor.matching_service - INFO - 브로드캐스트 알림 전송 완료: 3명에게 전송
+2025-07-28 17:43:19,093 - services.counselor.matching_service - INFO - 브로드캐스트 대상 상담사 수: 3
+2025-07-28 17:43:19,094 - services.counselor.matching_service - INFO -   - 김상담사 (ID: 13)
+2025-07-28 17:43:19,095 - services.counselor.matching_service - INFO -   - 박찬영 (ID: 15)
+2025-07-28 17:43:19,095 - services.counselor.matching_service - INFO -   - 최성욱 (ID: 14)
+2025-07-28 17:43:19,095 - services.counselor.matching_service - INFO - 사용 가능한 상담사 3명 찾음
+2025-07-28 17:43:20,346 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=김상담사, 요청ID=257
+2025-07-28 17:43:20,347 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=13
+2025-07-28 17:43:21,798 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=박찬영, 요청ID=258
+2025-07-28 17:43:21,799 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=15
+2025-07-28 17:43:23,292 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=최성욱, 요청ID=259
+2025-07-28 17:43:23,293 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=14
+2025-07-28 17:43:23,294 - services.counselor.matching_service - INFO - 브로드캐스트 결과: 3/3 성공
+2025-07-28 17:43:23,294 - services.counselor.matching_service - INFO - 브로드캐스트 알림 전송 완료: 3명에게 전송
+2025-07-28 17:44:29,588 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:45:52,393 - services.counselor.matching_service - INFO - 브로드캐스트 대상 상담사 수: 3
+2025-07-28 17:45:52,394 - services.counselor.matching_service - INFO -   - 김상담사 (ID: 13)
+2025-07-28 17:45:52,394 - services.counselor.matching_service - INFO -   - 박찬영 (ID: 15)
+2025-07-28 17:45:52,394 - services.counselor.matching_service - INFO -   - 최성욱 (ID: 14)
+2025-07-28 17:45:52,394 - services.counselor.matching_service - INFO - 사용 가능한 상담사 3명 찾음
+2025-07-28 17:45:53,755 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=김상담사, 요청ID=260
+2025-07-28 17:45:53,755 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=13
+2025-07-28 17:45:55,204 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=박찬영, 요청ID=261
+2025-07-28 17:45:55,204 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=15
+2025-07-28 17:45:56,659 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=최성욱, 요청ID=262
+2025-07-28 17:45:56,660 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=14
+2025-07-28 17:45:56,660 - services.counselor.matching_service - INFO - 브로드캐스트 결과: 3/3 성공
+2025-07-28 17:45:56,660 - services.counselor.matching_service - INFO - 브로드캐스트 알림 전송 완료: 3명에게 전송
+2025-07-28 17:46:36,864 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:46:47,592 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:46:53,042 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:47:03,067 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:47:09,305 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:47:13,348 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:47:21,264 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:47:26,929 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:47:33,982 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:47:39,153 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:47:44,345 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:47:50,169 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:48:06,099 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:48:13,702 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:48:18,859 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:48:23,745 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:48:27,721 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:48:32,087 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:50:07,933 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:50:12,736 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:50:16,806 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:50:21,714 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:50:59,354 - services.counselor.matching_service - INFO - 브로드캐스트 대상 상담사 수: 3
+2025-07-28 17:50:59,356 - services.counselor.matching_service - INFO -   - 김상담사 (ID: 13)
+2025-07-28 17:50:59,357 - services.counselor.matching_service - INFO -   - 박찬영 (ID: 15)
+2025-07-28 17:50:59,357 - services.counselor.matching_service - INFO -   - 최성욱 (ID: 14)
+2025-07-28 17:50:59,357 - services.counselor.matching_service - INFO - 사용 가능한 상담사 3명 찾음
+2025-07-28 17:51:00,573 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=김상담사, 요청ID=263
+2025-07-28 17:51:00,574 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=13
+2025-07-28 17:51:01,989 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=박찬영, 요청ID=264
+2025-07-28 17:51:01,990 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=15
+2025-07-28 17:51:03,398 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=최성욱, 요청ID=265
+2025-07-28 17:51:03,399 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=14
+2025-07-28 17:51:03,399 - services.counselor.matching_service - INFO - 브로드캐스트 결과: 3/3 성공
+2025-07-28 17:51:03,399 - services.counselor.matching_service - INFO - 브로드캐스트 알림 전송 완료: 3명에게 전송
+2025-07-28 17:52:37,238 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:52:45,530 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:53:20,248 - services.counselor.matching_service - INFO - 브로드캐스트 대상 상담사 수: 3
+2025-07-28 17:53:20,250 - services.counselor.matching_service - INFO -   - 김상담사 (ID: 13)
+2025-07-28 17:53:20,250 - services.counselor.matching_service - INFO -   - 박찬영 (ID: 15)
+2025-07-28 17:53:20,250 - services.counselor.matching_service - INFO -   - 최성욱 (ID: 14)
+2025-07-28 17:53:20,250 - services.counselor.matching_service - INFO - 사용 가능한 상담사 3명 찾음
+2025-07-28 17:53:21,385 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=김상담사, 요청ID=266
+2025-07-28 17:53:21,386 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=13
+2025-07-28 17:53:22,698 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=박찬영, 요청ID=267
+2025-07-28 17:53:22,699 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=15
+2025-07-28 17:53:24,013 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=최성욱, 요청ID=268
+2025-07-28 17:53:24,014 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=14
+2025-07-28 17:53:24,014 - services.counselor.matching_service - INFO - 브로드캐스트 결과: 3/3 성공
+2025-07-28 17:53:24,014 - services.counselor.matching_service - INFO - 브로드캐스트 알림 전송 완료: 3명에게 전송
+2025-07-28 17:55:08,680 - services.counselor.matching_service - INFO - 브로드캐스트 대상 상담사 수: 3
+2025-07-28 17:55:08,682 - services.counselor.matching_service - INFO -   - 김상담사 (ID: 13)
+2025-07-28 17:55:08,682 - services.counselor.matching_service - INFO -   - 박찬영 (ID: 15)
+2025-07-28 17:55:08,682 - services.counselor.matching_service - INFO -   - 최성욱 (ID: 14)
+2025-07-28 17:55:08,683 - services.counselor.matching_service - INFO - 사용 가능한 상담사 3명 찾음
+2025-07-28 17:55:09,812 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=김상담사, 요청ID=269
+2025-07-28 17:55:09,812 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=13
+2025-07-28 17:55:11,125 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=박찬영, 요청ID=270
+2025-07-28 17:55:11,126 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=15
+2025-07-28 17:55:12,444 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=최성욱, 요청ID=271
+2025-07-28 17:55:12,444 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=14
+2025-07-28 17:55:12,444 - services.counselor.matching_service - INFO - 브로드캐스트 결과: 3/3 성공
+2025-07-28 17:55:12,444 - services.counselor.matching_service - INFO - 브로드캐스트 알림 전송 완료: 3명에게 전송
+2025-07-28 17:55:49,851 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:56:00,523 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:56:05,352 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:56:41,268 - services.counselor.matching_service - INFO - 브로드캐스트 대상 상담사 수: 3
+2025-07-28 17:56:41,269 - services.counselor.matching_service - INFO -   - 김상담사 (ID: 13)
+2025-07-28 17:56:41,269 - services.counselor.matching_service - INFO -   - 박찬영 (ID: 15)
+2025-07-28 17:56:41,269 - services.counselor.matching_service - INFO -   - 최성욱 (ID: 14)
+2025-07-28 17:56:41,269 - services.counselor.matching_service - INFO - 사용 가능한 상담사 3명 찾음
+2025-07-28 17:56:42,785 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=김상담사, 요청ID=272
+2025-07-28 17:56:42,785 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=13
+2025-07-28 17:56:44,628 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=박찬영, 요청ID=273
+2025-07-28 17:56:44,628 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=15
+2025-07-28 17:56:46,532 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=최성욱, 요청ID=274
+2025-07-28 17:56:46,533 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=14
+2025-07-28 17:56:46,533 - services.counselor.matching_service - INFO - 브로드캐스트 결과: 3/3 성공
+2025-07-28 17:56:46,533 - services.counselor.matching_service - INFO - 브로드캐스트 알림 전송 완료: 3명에게 전송
+2025-07-28 17:57:01,389 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:57:05,785 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:57:09,283 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:57:12,637 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:57:16,573 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:57:20,446 - config.logging - INFO - Logging configured - Debug: False
+2025-07-28 17:57:38,352 - services.counselor.matching_service - INFO - 브로드캐스트 대상 상담사 수: 3
+2025-07-28 17:57:38,354 - services.counselor.matching_service - INFO -   - 김상담사 (ID: 13)
+2025-07-28 17:57:38,354 - services.counselor.matching_service - INFO -   - 박찬영 (ID: 15)
+2025-07-28 17:57:38,354 - services.counselor.matching_service - INFO -   - 최성욱 (ID: 14)
+2025-07-28 17:57:38,354 - services.counselor.matching_service - INFO - 사용 가능한 상담사 3명 찾음
+2025-07-28 17:57:39,828 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=김상담사, 요청ID=278
+2025-07-28 17:57:39,830 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=13
+2025-07-28 17:57:41,558 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=박찬영, 요청ID=279
+2025-07-28 17:57:41,558 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=15
+2025-07-28 17:57:43,403 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=최성욱, 요청ID=280
+2025-07-28 17:57:43,404 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=14
+2025-07-28 17:57:43,404 - services.counselor.matching_service - INFO - 브로드캐스트 결과: 3/3 성공
+2025-07-28 17:57:43,404 - services.counselor.matching_service - INFO - 브로드캐스트 알림 전송 완료: 3명에게 전송
+2025-07-28 18:00:38,733 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/project/mindforest/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-28 18:00:39,007 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: kimsangdam, 결과: True
+2025-07-28 18:00:41,526 - services.counselor.auth_service - INFO - 상담사 로그인 성공: kimsangdam
+2025-07-28 18:06:45,714 - config.logging - INFO - Logging configured - Debug: False
+2025-07-29 16:29:29,293 - config.logging - INFO - Logging configured - Debug: False
+2025-07-29 16:29:45,542 - config.logging - INFO - Logging configured - Debug: False
+2025-07-29 16:29:49,230 - config.logging - INFO - Logging configured - Debug: False

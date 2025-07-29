@@ -101,18 +101,18 @@ def custom_openapi():
     openapi_schema["paths"]["/ws/consultation/{consultation_code}"] = {
         "get": {
             "tags": ["consultations"],
-            "summary": "🔌 실시간 상담 WebSocket",
+            "summary": "🔌 실시간 상담 WebSocket (WebRTC 지원)",
             "description": """
-## WebSocket 실시간 상담 연결
+## WebSocket 실시간 상담 연결 (WebRTC 지원)
 
-실시간 채팅을 위한 WebSocket 연결입니다.
+실시간 채팅과 음성 통화를 위한 WebSocket 연결입니다.
 
 ### 연결 방법
 ```javascript
 const ws = new WebSocket('ws://localhost:8000/ws/consultation/{consultation_code}?user_type=user');
 ```
 
-### 메시지 형식
+### 텍스트 메시지 형식
 
 #### 클라이언트 → 서버
 ```json
@@ -137,7 +137,85 @@ const ws = new WebSocket('ws://localhost:8000/ws/consultation/{consultation_code
 }
 ```
 
-#### 타이핑 상태
+### WebRTC 음성 통화 메시지
+
+#### 음성 통화 요청
+```json
+{
+  "type": "voice_call_request",
+  "data": {}
+}
+```
+
+#### 음성 통화 수락
+```json
+{
+  "type": "voice_call_accept", 
+  "data": {}
+}
+```
+
+#### 음성 통화 종료
+```json
+{
+  "type": "voice_call_end",
+  "data": {}
+}
+```
+
+#### WebRTC Offer (시그널링)
+```json
+{
+  "type": "webrtc_offer",
+  "data": {
+    "offer": {
+      "type": "offer",
+      "sdp": "v=0\\r\\no=mozilla...45104 IN IP4 0.0.0.0\\r\\ns=-\\r\\nt=0 0\\r\\n..."
+    }
+  }
+}
+```
+
+#### WebRTC Answer (시그널링)
+```json
+{
+  "type": "webrtc_answer",
+  "data": {
+    "answer": {
+      "type": "answer", 
+      "sdp": "v=0\\r\\no=mozilla...45105 IN IP4 0.0.0.0\\r\\ns=-\\r\\nt=0 0\\r\\n..."
+    }
+  }
+}
+```
+
+#### WebRTC ICE Candidate (시그널링)
+```json
+{
+  "type": "webrtc_ice_candidate",
+  "data": {
+    "candidate": {
+      "candidate": "candidate:1 1 UDP 2130706431 192.168.1.100 54400 typ host",
+      "sdpMid": "0",
+      "sdpMLineIndex": 0
+    }
+  }
+}
+```
+
+### 음성 메시지 (기존 방식)
+```json
+{
+  "type": "voice_message",
+  "data": {
+    "audio_data": "base64_encoded_audio_data",
+    "duration": 15,
+    "format": ".webm"
+  }
+}
+```
+
+### 타이핑 상태
 ```json
 {
   "type": "typing",
@@ -147,21 +225,22 @@ const ws = new WebSocket('ws://localhost:8000/ws/consultation/{consultation_code
 }
 ```
 
-#### 시스템 메시지
-```json
-{
-  "type": "system",
-  "data": {
-    "message": "상담사가 연결되었습니다",
-    "event": "connection_established",
-    "timestamp": "2025-07-22T12:34:56.789Z"
-  }
-}
-```
-
 ### 매개변수
 - **consultation_code** (path): 9자리 상담 코드
 - **user_type** (query): 사용자 유형 ("user" 또는 "counselor")
+
+### WebRTC 음성 통화 플로우
+1. **통화 요청**: `voice_call_request` → 상대방에게 알림
+2. **통화 수락**: `voice_call_accept` → WebRTC 연결 시작
+3. **Offer 교환**: `webrtc_offer` → SDP Offer 전달
+4. **Answer 교환**: `webrtc_answer` → SDP Answer 전달  
+5. **ICE 교환**: `webrtc_ice_candidate` → ICE Candidate 전달
+6. **통화 종료**: `voice_call_end` → 연결 종료
+
+### WebRTC REST API
+- `GET /api/consultation/voice/consultation/{code}/webrtc-session` - 세션 조회
+- `POST /api/consultation/voice/consultation/{code}/webrtc-session` - 세션 생성
+- `DELETE /api/consultation/voice/consultation/{code}/webrtc-session` - 세션 정리
 
 ### 응답 코드
 - **1000**: 정상 연결 종료

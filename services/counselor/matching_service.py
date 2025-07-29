@@ -23,17 +23,6 @@ import asyncio
 logger = logging.getLogger(__name__)
 
 
-def convert_utc_to_kst(utc_time):
-    """UTC 시간을 한국 시간으로 변환"""
-    if utc_time is None:
-        return None
-    
-    if utc_time.tzinfo is None:
-        # naive datetime을 UTC로 간주
-        utc_time = utc_time.replace(tzinfo=pytz.UTC)
-    
-    kst = pytz.timezone('Asia/Seoul')
-    return utc_time.astimezone(kst)
 
 
 class MatchingService:
@@ -77,7 +66,7 @@ class MatchingService:
             character_name=character_type.name,
             status=ConsultationStatus.waiting,
             counselor_id=None,  # 아직 배정되지 않음
-            created_at=datetime.now(kst)  # 한국 시간으로 명시적 설정
+            created_at=datetime.now(kst)  # 한국 시간으로 저장
         )
         
         db.add(consultation)
@@ -117,8 +106,8 @@ class MatchingService:
             character_animal=character_type.animal,
             character_group=character_type.group_name,
             status=consultation.status,
-            created_at=convert_utc_to_kst(consultation.created_at),
-            completed_at=convert_utc_to_kst(consultation.completed_at),
+            created_at=consultation.created_at,
+            completed_at=consultation.completed_at,
             is_card_issued=consultation.is_card_issued
         )
         
@@ -282,7 +271,7 @@ class MatchingService:
             consultation_id=consultation_id,
             counselor_id=counselor_id,
             status="pending",
-            requested_at=datetime.now(kst)  # 한국 시간으로 명시적 설정
+            requested_at=datetime.now(kst)  # 한국 시간으로 저장
         )
         
         db.add(request)
@@ -378,8 +367,8 @@ class MatchingService:
                 character_animal=character_type.animal,
                 character_group=character_type.group_name,
                 status=consultation.status,
-                created_at=convert_utc_to_kst(consultation.created_at),
-                completed_at=convert_utc_to_kst(consultation.completed_at),
+                created_at=consultation.created_at,
+                completed_at=consultation.completed_at,
                 is_card_issued=consultation.is_card_issued
             )
         

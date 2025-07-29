@@ -48,7 +48,7 @@ class MessageService:
             sender_type=sender_type,
             message=message,
             message_type=message_type,
-            timestamp=datetime.now(kst)  # 한국 시간으로 명시적 설정
+            timestamp=datetime.now(kst)  # 한국 시간으로 저장
         )
         
         db.add(new_message)

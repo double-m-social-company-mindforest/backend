@@ -6,11 +6,15 @@ import pytz
 from database.models import Consultation, ConsultationStatus
 from services.consultation.websocket_manager import manager
 import logging
+import json
 
 logger = logging.getLogger(__name__)
 
 class VoiceCallService:
-    """음성 통화 관리 서비스"""
+    """음성 통화 관리 서비스 (WebRTC 지원)"""
+    
+    # WebRTC 연결 상태 저장 (메모리 기반 - 실제 운영에서는 Redis 권장)
+    _webrtc_sessions: Dict[str, Dict[str, Any]] = {}
     
     @staticmethod
     def start_voice_call(
@@ -152,10 +156,11 @@ class VoiceCallService:
             if consultation.voice_call_started_at:
                 if consultation.voice_call_active:
                     # 현재 진행 중인 통화
-                    now = datetime.now(timezone.utc)
+                    kst = pytz.timezone('Asia/Seoul')
+                    now = datetime.now(kst)
                     start_time = consultation.voice_call_started_at
                     if start_time.tzinfo is None:
-                        start_time = start_time.replace(tzinfo=timezone.utc)
+                        start_time = start_time.replace(tzinfo=kst)
                     duration = now - start_time
                     status["duration"] = int(duration.total_seconds())
                 elif consultation.voice_call_ended_at:
@@ -258,4 +263,221 @@ class VoiceCallService:
             
         except Exception as e:
             logger.error(f"음성 통화 가능 여부 확인 실패: {e}")
+            return False
+    
+    @staticmethod
+    def create_webrtc_session(consultation_code: str) -> Dict[str, Any]:
+        """
+        WebRTC 세션 생성
+        
+        Args:
+            consultation_code: 상담 코드
+            
+        Returns:
+            Dict: WebRTC 세션 정보
+        """
+        session_data = {
+            "consultation_code": consultation_code,
+            "created_at": datetime.utcnow().isoformat(),
+            "participants": {},  # user_type -> 연결 상태
+            "ice_candidates": {
+                "user": [],
+                "counselor": []
+            },
+            "offers": {},
+            "answers": {},
+            "status": "initializing"  # initializing, connecting, connected, disconnected
+        }
+        
+        VoiceCallService._webrtc_sessions[consultation_code] = session_data
+        logger.info(f"WebRTC 세션 생성: {consultation_code}")
+        
+        return session_data
+    
+    @staticmethod
+    def get_webrtc_session(consultation_code: str) -> Optional[Dict[str, Any]]:
+        """
+        WebRTC 세션 조회
+        
+        Args:
+            consultation_code: 상담 코드
+            
+        Returns:
+            Dict: WebRTC 세션 정보
+        """
+        return VoiceCallService._webrtc_sessions.get(consultation_code)
+    
+    @staticmethod
+    def add_webrtc_participant(consultation_code: str, user_type: str) -> bool:
+        """
+        WebRTC 세션에 참가자 추가
+        
+        Args:
+            consultation_code: 상담 코드
+            user_type: 사용자 타입
+            
+        Returns:
+            bool: 추가 성공 여부
+        """
+        try:
+            session = VoiceCallService.get_webrtc_session(consultation_code)
+            if not session:
+                session = VoiceCallService.create_webrtc_session(consultation_code)
+            
+            session["participants"][user_type] = {
+                "joined_at": datetime.utcnow().isoformat(),
+                "status": "joined"
+            }
+            
+            logger.info(f"WebRTC 참가자 추가: {consultation_code}, {user_type}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"WebRTC 참가자 추가 실패: {e}")
+            return False
+    
+    @staticmethod
+    def store_webrtc_offer(consultation_code: str, user_type: str, offer: Dict) -> bool:
+        """
+        WebRTC Offer 저장
+        
+        Args:
+            consultation_code: 상담 코드
+            user_type: 발신자 타입
+            offer: WebRTC Offer 데이터
+            
+        Returns:
+            bool: 저장 성공 여부
+        """
+        try:
+            session = VoiceCallService.get_webrtc_session(consultation_code)
+            if not session:
+                session = VoiceCallService.create_webrtc_session(consultation_code)
+            
+            session["offers"][user_type] = {
+                "offer": offer,
+                "created_at": datetime.utcnow().isoformat()
+            }
+            session["status"] = "offer_created"
+            
+            logger.info(f"WebRTC Offer 저장: {consultation_code}, 발신자={user_type}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"WebRTC Offer 저장 실패: {e}")
+            return False
+    
+    @staticmethod
+    def store_webrtc_answer(consultation_code: str, user_type: str, answer: Dict) -> bool:
+        """
+        WebRTC Answer 저장
+        
+        Args:
+            consultation_code: 상담 코드
+            user_type: 응답자 타입
+            answer: WebRTC Answer 데이터
+            
+        Returns:
+            bool: 저장 성공 여부
+        """
+        try:
+            session = VoiceCallService.get_webrtc_session(consultation_code)
+            if not session:
+                logger.error(f"WebRTC 세션을 찾을 수 없음: {consultation_code}")
+                return False
+            
+            session["answers"][user_type] = {
+                "answer": answer,
+                "created_at": datetime.utcnow().isoformat()
+            }
+            session["status"] = "answer_created"
+            
+            logger.info(f"WebRTC Answer 저장: {consultation_code}, 응답자={user_type}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"WebRTC Answer 저장 실패: {e}")
+            return False
+    
+    @staticmethod
+    def add_ice_candidate(consultation_code: str, user_type: str, candidate: Dict) -> bool:
+        """
+        ICE Candidate 추가
+        
+        Args:
+            consultation_code: 상담 코드
+            user_type: 발신자 타입
+            candidate: ICE Candidate 데이터
+            
+        Returns:
+            bool: 추가 성공 여부
+        """
+        try:
+            session = VoiceCallService.get_webrtc_session(consultation_code)
+            if not session:
+                session = VoiceCallService.create_webrtc_session(consultation_code)
+            
+            if user_type not in session["ice_candidates"]:
+                session["ice_candidates"][user_type] = []
+            
+            session["ice_candidates"][user_type].append({
+                "candidate": candidate,
+                "created_at": datetime.utcnow().isoformat()
+            })
+            
+            logger.debug(f"ICE Candidate 추가: {consultation_code}, {user_type}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"ICE Candidate 추가 실패: {e}")
+            return False
+    
+    @staticmethod
+    def update_webrtc_status(consultation_code: str, status: str) -> bool:
+        """
+        WebRTC 연결 상태 업데이트
+        
+        Args:
+            consultation_code: 상담 코드
+            status: 연결 상태
+            
+        Returns:
+            bool: 업데이트 성공 여부
+        """
+        try:
+            session = VoiceCallService.get_webrtc_session(consultation_code)
+            if not session:
+                logger.error(f"WebRTC 세션을 찾을 수 없음: {consultation_code}")
+                return False
+            
+            session["status"] = status
+            session["updated_at"] = datetime.utcnow().isoformat()
+            
+            logger.info(f"WebRTC 상태 업데이트: {consultation_code}, 상태={status}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"WebRTC 상태 업데이트 실패: {e}")
+            return False
+    
+    @staticmethod
+    def cleanup_webrtc_session(consultation_code: str) -> bool:
+        """
+        WebRTC 세션 정리
+        
+        Args:
+            consultation_code: 상담 코드
+            
+        Returns:
+            bool: 정리 성공 여부
+        """
+        try:
+            if consultation_code in VoiceCallService._webrtc_sessions:
+                del VoiceCallService._webrtc_sessions[consultation_code]
+                logger.info(f"WebRTC 세션 정리 완료: {consultation_code}")
+                return True
+            return False
+            
+        except Exception as e:
+            logger.error(f"WebRTC 세션 정리 실패: {e}")
             return False

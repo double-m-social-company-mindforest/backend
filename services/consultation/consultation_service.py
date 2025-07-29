@@ -5,7 +5,7 @@ from fastapi import HTTPException
 from datetime import datetime
 import pytz
 from database.models import Consultation, ConsultationStatus, FinalType, Counselor, CounselorStatus, ConsultationRequest
-from schemas.consultation import ConsultationStartRequest, ConsultationResponse
+from schemas.consultation.consultation import ConsultationStartRequest, ConsultationResponse, ConsultationEndResponse
 from .code_generator import generate_consultation_code
 import random
 import logging
@@ -13,17 +13,6 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def convert_utc_to_kst(utc_time):
-    """UTC 시간을 한국 시간으로 변환"""
-    if utc_time is None:
-        return None
-    
-    if utc_time.tzinfo is None:
-        # naive datetime을 UTC로 간주
-        utc_time = utc_time.replace(tzinfo=pytz.UTC)
-    
-    kst = pytz.timezone('Asia/Seoul')
-    return utc_time.astimezone(kst)
 
 
 class ConsultationService:
@@ -76,8 +65,8 @@ class ConsultationService:
             character_animal=character_type.animal,
             character_group=character_type.group_name,
             status=consultation.status,
-            created_at=convert_utc_to_kst(consultation.created_at),
-            completed_at=convert_utc_to_kst(consultation.completed_at),
+            created_at=consultation.created_at,
+            completed_at=consultation.completed_at,
             is_card_issued=consultation.is_card_issued
         )
     
@@ -126,7 +115,7 @@ class ConsultationService:
     def end_consultation(
         db: Session,
         consultation_code: str
-    ) -> dict:
+    ) -> ConsultationEndResponse:
         """
         상담 종료
         
@@ -149,7 +138,7 @@ class ConsultationService:
         
         # 상담 종료 처리
         consultation.status = ConsultationStatus.completed
-        # 한국 시간으로 설정
+        # 한국 시간으로 저장
         kst = pytz.timezone('Asia/Seoul')
         consultation.completed_at = datetime.now(kst)
         
@@ -163,12 +152,12 @@ class ConsultationService:
         db.commit()
         db.refresh(consultation)
         
-        return {
-            "consultation_code": consultation.consultation_code,
-            "status": consultation.status,
-            "completed_at": convert_utc_to_kst(consultation.completed_at),
-            "message": "상담이 정상적으로 종료되었습니다"
-        }
+        return ConsultationEndResponse(
+            consultation_code=consultation.consultation_code,
+            status=consultation.status,
+            completed_at=consultation.completed_at,
+            message="상담이 정상적으로 종료되었습니다"
+        )
     
     @staticmethod
     def cancel_consultation(
