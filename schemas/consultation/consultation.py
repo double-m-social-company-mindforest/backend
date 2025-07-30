@@ -59,7 +59,6 @@ class ReconsultationRequest(BaseModel):
     """재상담 요청"""
     nickname: str = Field(..., min_length=1, max_length=100, description="사용자 닉네임")
     previous_consultation_code: str = Field(..., description="이전 상담 코드")
-    counselor_id: int = Field(..., description="재상담 요청할 상담사 ID")
 
 
 class ConsultationEndResponse(BaseModel):

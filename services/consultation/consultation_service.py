@@ -220,7 +220,7 @@ class ConsultationService:
         request: ReconsultationRequest
     ) -> ConsultationResponse:
         """
-        이전 상담사와 재상담 시작
+        이전 상담사와 재상담 시작 (상담 코드만으로 매칭)
         
         Args:
             db: 데이터베이스 세션
@@ -237,18 +237,18 @@ class ConsultationService:
         if not previous_consultation:
             raise HTTPException(status_code=404, detail="이전 상담을 찾을 수 없습니다")
         
-        # 상담사 확인
-        if previous_consultation.counselor_id != request.counselor_id:
-            raise HTTPException(status_code=400, detail="요청한 상담사가 이전 상담사와 일치하지 않습니다")
+        # 이전 상담에 상담사가 배정되어 있는지 확인
+        if not previous_consultation.counselor_id:
+            raise HTTPException(status_code=400, detail="이전 상담에 배정된 상담사가 없습니다")
         
-        # 상담사 상태 확인
+        # 상담사 상태 확인 (이전 상담의 상담사 정보 자동 사용)
         counselor = db.query(Counselor).filter(
-            Counselor.id == request.counselor_id,
+            Counselor.id == previous_consultation.counselor_id,
             Counselor.is_active == True
         ).first()
         
         if not counselor:
-            raise HTTPException(status_code=404, detail="상담사를 찾을 수 없습니다")
+            raise HTTPException(status_code=404, detail="이전 상담사를 찾을 수 없거나 비활성 상태입니다")
         
         if counselor.status != CounselorStatus.waiting_for_call:
             raise HTTPException(status_code=400, detail="상담사가 현재 상담 가능한 상태가 아닙니다")
@@ -265,7 +265,7 @@ class ConsultationService:
             user_nickname=request.nickname,
             character_type_id=previous_consultation.character_type_id,
             character_name=previous_consultation.character_name,
-            counselor_id=request.counselor_id,
+            counselor_id=previous_consultation.counselor_id,  # 이전 상담의 상담사 ID 사용
             status=ConsultationStatus.waiting
         )
         
@@ -275,7 +275,7 @@ class ConsultationService:
         # 상담 요청 생성 (특정 상담사에게만)
         consultation_request = ConsultationRequest(
             consultation_id=consultation.id,
-            counselor_id=request.counselor_id,
+            counselor_id=previous_consultation.counselor_id,  # 이전 상담의 상담사 ID 사용
             status="pending"
         )
         
@@ -289,7 +289,7 @@ class ConsultationService:
         
         async def send_notification():
             await counselor_manager.send_reconsultation_request(
-                counselor_id=request.counselor_id,
+                counselor_id=previous_consultation.counselor_id,  # 이전 상담의 상담사 ID 사용
                 consultation_data={
                     "id": consultation.id,
                     "code": consultation.consultation_code,

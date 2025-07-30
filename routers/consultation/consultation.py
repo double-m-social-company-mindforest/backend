@@ -107,17 +107,21 @@ def start_reconsultation(
     db: Session = Depends(get_db)
 ) -> ConsultationResponse:
     """
-    이전 상담사와 재상담 시작
+    이전 상담사와 재상담 시작 (상담 코드만으로 매칭)
     
     - **nickname**: 사용자 닉네임 (필수)
     - **previous_consultation_code**: 이전 상담 코드 (필수)
-    - **counselor_id**: 재상담 요청할 상담사 ID (필수)
     
     **재상담 프로세스:**
-    1. 이전 상담 정보 확인
+    1. 이전 상담 정보 확인 및 상담사 자동 매칭
     2. 상담사 가용성 확인
     3. 새로운 상담 세션 생성
     4. 해당 상담사에게만 WebSocket 알림 전송
+    
+    **특징:**
+    - 상담사 ID를 직접 입력할 필요 없음
+    - 이전 상담 코드에서 상담사 정보를 자동으로 가져옴
+    - 캐릭터 정보도 이전 상담에서 자동 복사
     """
     try:
         return ConsultationService.start_reconsultation(db, request)
