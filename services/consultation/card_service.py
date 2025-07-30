@@ -32,9 +32,9 @@ class CardService:
         if not consultation:
             raise HTTPException(status_code=404, detail="상담 세션을 찾을 수 없습니다")
         
-        # 완료되지 않은 상담은 카드 발급 불가
-        if consultation.status != ConsultationStatus.completed:
-            raise HTTPException(status_code=400, detail="완료된 상담만 카드를 발급할 수 있습니다")
+        # 완료되거나 중단된 상담만 카드 발급 가능
+        if consultation.status not in [ConsultationStatus.completed, ConsultationStatus.terminated]:
+            raise HTTPException(status_code=400, detail="완료되거나 중단된 상담만 카드를 발급할 수 있습니다")
         
         # 이미 카드가 발급된 경우 확인
         existing_card = db.query(ConsultationCard).filter(
@@ -57,7 +57,9 @@ class CardService:
             consultation_code=consultation.consultation_code,
             consultation_date=consultation.created_at.isoformat(),
             hashtags=character_type.hashtags or [],
-            additional_notes=additional_notes
+            additional_notes=additional_notes,
+            counselor_id=consultation.counselor_id,
+            counselor_name=consultation.counselor.name if consultation.counselor else None
         )
         
         # 상담 카드 생성

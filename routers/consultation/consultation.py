@@ -6,7 +6,8 @@ from schemas.consultation.consultation import (
     ConsultationStartRequest,
     ConsultationResponse,
     ConsultationReconnectRequest,
-    ConsultationEndResponse
+    ConsultationEndResponse,
+    ReconsultationRequest
 )
 from services.consultation import ConsultationService
 import logging
@@ -98,3 +99,30 @@ def end_consultation(
     - **consultation_code**: 9자리 상담 코드
     """
     return ConsultationService.end_consultation(db, consultation_code)
+
+
+@router.post("/reconsult", response_model=ConsultationResponse)
+def start_reconsultation(
+    request: ReconsultationRequest,
+    db: Session = Depends(get_db)
+) -> ConsultationResponse:
+    """
+    이전 상담사와 재상담 시작
+    
+    - **nickname**: 사용자 닉네임 (필수)
+    - **previous_consultation_code**: 이전 상담 코드 (필수)
+    - **counselor_id**: 재상담 요청할 상담사 ID (필수)
+    
+    **재상담 프로세스:**
+    1. 이전 상담 정보 확인
+    2. 상담사 가용성 확인
+    3. 새로운 상담 세션 생성
+    4. 해당 상담사에게만 WebSocket 알림 전송
+    """
+    try:
+        return ConsultationService.start_reconsultation(db, request)
+    except Exception as e:
+        logger.error(f"재상담 시작 중 오류 발생: {str(e)}")
+        if isinstance(e, HTTPException):
+            raise e
+        raise HTTPException(status_code=500, detail="재상담 시작 중 오류가 발생했습니다")

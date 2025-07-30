@@ -333,6 +333,37 @@ class CounselorNotificationManager:
         
         return False
     
+    async def send_reconsultation_request(self, counselor_id: int, consultation_data: dict):
+        """상담사에게 재상담 요청 알림 전송"""
+        if counselor_id in self.counselor_connections:
+            websocket = self.counselor_connections[counselor_id]
+            
+            data = {
+                "type": "reconsultation_request",
+                "data": {
+                    "consultation_id": consultation_data.get("id"),
+                    "consultation_code": consultation_data.get("code"),
+                    "user_nickname": consultation_data.get("user_nickname"),
+                    "character_name": consultation_data.get("character_name"),
+                    "request_id": consultation_data.get("request_id"),
+                    "is_reconsultation": True,
+                    "previous_consultation_code": consultation_data.get("previous_consultation_code"),
+                    "timestamp": datetime.utcnow().isoformat() + "Z",
+                    "timeout": 30  # 30초 타임아웃
+                }
+            }
+            
+            try:
+                await websocket.send_json(data)
+                logger.info(f"재상담 요청 알림 전송 성공: counselor_id={counselor_id}")
+                return True
+            except Exception as e:
+                logger.error(f"재상담 요청 알림 전송 실패: {e}")
+                await self.disconnect(websocket)
+                return False
+        
+        return False
+    
     async def send_heartbeat(self, counselor_id: int):
         """상담사 연결 상태 확인용 heartbeat"""
         if counselor_id in self.counselor_connections:

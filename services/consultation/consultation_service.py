@@ -5,7 +5,7 @@ from fastapi import HTTPException
 from datetime import datetime
 import pytz
 from database.models import Consultation, ConsultationStatus, FinalType, Counselor, CounselorStatus, ConsultationRequest
-from schemas.consultation.consultation import ConsultationStartRequest, ConsultationResponse, ConsultationEndResponse
+from schemas.consultation.consultation import ConsultationStartRequest, ConsultationResponse, ConsultationEndResponse, ReconsultationRequest
 from .code_generator import generate_consultation_code
 import random
 import logging
@@ -213,3 +213,114 @@ class ConsultationService:
             "consultation_code": consultation_code,
             "deleted_requests": deleted_requests
         }
+    
+    @staticmethod
+    def start_reconsultation(
+        db: Session,
+        request: ReconsultationRequest
+    ) -> ConsultationResponse:
+        """
+        이전 상담사와 재상담 시작
+        
+        Args:
+            db: 데이터베이스 세션
+            request: 재상담 요청 정보
+            
+        Returns:
+            ConsultationResponse: 생성된 상담 정보
+        """
+        # 이전 상담 확인
+        previous_consultation = db.query(Consultation).filter(
+            Consultation.consultation_code == request.previous_consultation_code
+        ).first()
+        
+        if not previous_consultation:
+            raise HTTPException(status_code=404, detail="이전 상담을 찾을 수 없습니다")
+        
+        # 상담사 확인
+        if previous_consultation.counselor_id != request.counselor_id:
+            raise HTTPException(status_code=400, detail="요청한 상담사가 이전 상담사와 일치하지 않습니다")
+        
+        # 상담사 상태 확인
+        counselor = db.query(Counselor).filter(
+            Counselor.id == request.counselor_id,
+            Counselor.is_active == True
+        ).first()
+        
+        if not counselor:
+            raise HTTPException(status_code=404, detail="상담사를 찾을 수 없습니다")
+        
+        if counselor.status != CounselorStatus.waiting_for_call:
+            raise HTTPException(status_code=400, detail="상담사가 현재 상담 가능한 상태가 아닙니다")
+        
+        # 캐릭터 타입 정보 가져오기
+        character_type = previous_consultation.character_type
+        
+        # 새로운 상담 코드 생성
+        consultation_code = generate_consultation_code()
+        
+        # 상담 세션 생성
+        consultation = Consultation(
+            consultation_code=consultation_code,
+            user_nickname=request.nickname,
+            character_type_id=previous_consultation.character_type_id,
+            character_name=previous_consultation.character_name,
+            counselor_id=request.counselor_id,
+            status=ConsultationStatus.waiting
+        )
+        
+        db.add(consultation)
+        db.flush()
+        
+        # 상담 요청 생성 (특정 상담사에게만)
+        consultation_request = ConsultationRequest(
+            consultation_id=consultation.id,
+            counselor_id=request.counselor_id,
+            status="pending"
+        )
+        
+        db.add(consultation_request)
+        db.commit()
+        db.refresh(consultation)
+        
+        # WebSocket으로 특정 상담사에게만 알림 전송
+        from services.consultation.websocket_manager import counselor_manager
+        import asyncio
+        
+        async def send_notification():
+            await counselor_manager.send_reconsultation_request(
+                counselor_id=request.counselor_id,
+                consultation_data={
+                    "id": consultation.id,
+                    "code": consultation.consultation_code,
+                    "user_nickname": consultation.user_nickname,
+                    "character_name": consultation.character_name,
+                    "request_id": consultation_request.id,
+                    "is_reconsultation": True,
+                    "previous_consultation_code": request.previous_consultation_code
+                }
+            )
+        
+        # 비동기 작업 실행
+        try:
+            loop = asyncio.get_event_loop()
+            if loop.is_running():
+                asyncio.create_task(send_notification())
+            else:
+                loop.run_until_complete(send_notification())
+        except Exception as e:
+            logger.error(f"재상담 알림 전송 중 오류: {e}")
+        
+        return ConsultationResponse(
+            id=consultation.id,
+            consultation_code=consultation.consultation_code,
+            user_nickname=consultation.user_nickname,
+            character_type_id=consultation.character_type_id,
+            character_name=consultation.character_name,
+            character_animal=character_type.animal,
+            character_group=character_type.group_name,
+            status=consultation.status,
+            created_at=consultation.created_at,
+            completed_at=consultation.completed_at,
+            is_card_issued=consultation.is_card_issued
+        )

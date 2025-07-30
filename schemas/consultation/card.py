@@ -18,6 +18,8 @@ class ConsultationCardData(BaseModel):
     consultation_date: str  # ISO 문자열로 저장
     hashtags: List[str]
     additional_notes: str
+    counselor_id: int = None  # 상담사 ID
+    counselor_name: str = None  # 상담사 이름
 
 
 class ConsultationCardResponse(BaseModel):
