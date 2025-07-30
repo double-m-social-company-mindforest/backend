@@ -257,12 +257,12 @@ class ConsultationService:
         character_type = previous_consultation.character_type
         
         # 새로운 상담 코드 생성
-        consultation_code = generate_consultation_code()
+        consultation_code = generate_consultation_code(db)
         
         # 상담 세션 생성
         consultation = Consultation(
             consultation_code=consultation_code,
-            user_nickname=request.nickname,
+            user_nickname=previous_consultation.user_nickname,  # 이전 상담의 닉네임 사용
             character_type_id=previous_consultation.character_type_id,
             character_name=previous_consultation.character_name,
             counselor_id=previous_consultation.counselor_id,  # 이전 상담의 상담사 ID 사용
