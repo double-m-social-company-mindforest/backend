@@ -1188,3 +1188,36 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2025-07-30 10:17:10,693 - services.consultation.consultation_service - ERROR - 재상담 알림 전송 중 오류: There is no current event loop in thread 'AnyIO worker thread'.
 2025-07-30 10:18:22,520 - services.consultation.consultation_service - ERROR - 재상담 알림 전송 중 오류: There is no current event loop in thread 'AnyIO worker thread'.
 2025-07-30 10:18:33,978 - routers.consultation.consultation - ERROR - 재상담 시작 중 오류 발생: 404: 이전 상담을 찾을 수 없습니다
+2025-07-31 10:54:29,183 - config.logging - INFO - Logging configured - Debug: False
+2025-07-31 10:56:09,585 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/project/mindforest/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-07-31 10:56:09,857 - services.counselor.auth_service - INFO - 비밀번호 검증 결과 - 사용자: choi, 결과: True
+2025-07-31 10:56:11,800 - services.counselor.auth_service - INFO - 상담사 로그인 성공: choi
+2025-07-31 10:56:30,507 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결됨: counselor_id=14
+2025-07-31 10:56:30,509 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결: counselor_id=14
+2025-07-31 10:56:39,269 - services.counselor.matching_service - INFO - 브로드캐스트 대상 상담사 수: 3
+2025-07-31 10:56:39,271 - services.counselor.matching_service - INFO -   - 최성욱 (ID: 14)
+2025-07-31 10:56:39,271 - services.counselor.matching_service - INFO -   - 박찬영 (ID: 15)
+2025-07-31 10:56:39,271 - services.counselor.matching_service - INFO -   - 김상담사 (ID: 13)
+2025-07-31 10:56:39,272 - services.counselor.matching_service - INFO - 사용 가능한 상담사 3명 찾음
+2025-07-31 10:56:40,410 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=최성욱, 요청ID=418
+2025-07-31 10:56:40,411 - services.consultation.websocket_manager - INFO - 상담 요청 알림 전송 성공: counselor_id=14
+2025-07-31 10:56:40,412 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=14
+2025-07-31 10:56:41,723 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=박찬영, 요청ID=419
+2025-07-31 10:56:41,723 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=15
+2025-07-31 10:56:43,038 - services.counselor.matching_service - INFO - 브로드캐스트 요청 생성: 상담사=김상담사, 요청ID=420
+2025-07-31 10:56:43,038 - services.counselor.matching_service - INFO - WebSocket 알림 전송 완료: 상담사=13
+2025-07-31 10:56:43,039 - services.counselor.matching_service - INFO - 브로드캐스트 결과: 3/3 성공
+2025-07-31 10:56:43,039 - services.counselor.matching_service - INFO - 브로드캐스트 알림 전송 완료: 3명에게 전송
+2025-07-31 10:57:00,393 - services.counselor.matching_service - INFO - 상담사 배정 완료: 상담=IHYOC6S9J, 상담사=최성욱
+2025-07-31 10:57:00,775 - services.counselor.request_service - INFO - 브로드캐스트 수락 완료: 수락자=최성욱, 취소된 요청=2개
+2025-07-31 10:57:01,913 - services.counselor.request_service - INFO - 상담 요청 수락: 요청=418, 상담사=14
+2025-07-31 10:57:31,243 - services.consultation.websocket_manager - INFO - 재상담 요청 알림 전송 성공: counselor_id=14
+2025-07-31 10:57:48,676 - services.counselor.matching_service - INFO - 상담사 배정 완료: 상담=9G854BE09, 상담사=최성욱
+2025-07-31 10:57:49,060 - services.counselor.request_service - INFO - 브로드캐스트 수락 완료: 수락자=최성욱, 취소된 요청=0개
+2025-07-31 10:57:49,812 - services.counselor.request_service - INFO - 상담 요청 수락: 요청=421, 상담사=14
+2025-07-31 10:58:08,289 - routers.consultation.websocket - INFO - 상담사 알림 WebSocket 연결 종료: counselor_id=14
+2025-07-31 10:58:08,290 - services.consultation.websocket_manager - INFO - 상담사 알림 WebSocket 연결 해제: counselor_id=14

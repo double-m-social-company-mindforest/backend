@@ -265,7 +265,7 @@ class ConsultationService:
             user_nickname=previous_consultation.user_nickname,  # 이전 상담의 닉네임 사용
             character_type_id=previous_consultation.character_type_id,
             character_name=previous_consultation.character_name,
-            counselor_id=previous_consultation.counselor_id,  # 이전 상담의 상담사 ID 사용
+            counselor_id=None,  # 상담사 수락 시 배정되도록 None으로 설정
             status=ConsultationStatus.waiting
         )
         
