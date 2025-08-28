@@ -134,9 +134,11 @@ class CounselorAuthService:
             if counselor_data.email and not CounselorAuthService.check_email_availability(db, counselor_data.email):
                 raise HTTPException(status_code=400, detail="이미 등록된 이메일입니다")
             
-            # 2. 상담 분야 유효성 검사
-            if not CounselorAuthService.validate_counseling_fields(db, counselor_data.counseling_fields):
-                raise HTTPException(status_code=400, detail="유효하지 않은 상담 분야가 포함되어 있습니다")
+            # 2. 상담 분야 유효성 검사 (선택사항으로 변경)
+            # counseling_fields가 제공되고 비어있지 않은 경우에만 검사
+            if counselor_data.counseling_fields and len(counselor_data.counseling_fields) > 0:
+                if not CounselorAuthService.validate_counseling_fields(db, counselor_data.counseling_fields):
+                    raise HTTPException(status_code=400, detail="유효하지 않은 상담 분야가 포함되어 있습니다")
             
             # 3. 비밀번호 해시화
             hashed_password = CounselorAuthService.hash_password(counselor_data.password)
@@ -150,7 +152,7 @@ class CounselorAuthService:
                 birth_date=counselor_data.birth_date,
                 phone=counselor_data.phone,
                 email=counselor_data.email,
-                counseling_fields=counselor_data.counseling_fields,
+                counseling_fields=counselor_data.counseling_fields if counselor_data.counseling_fields else [],
                 is_approved=False,  # 관리자 승인 대기
                 is_active=True
             )

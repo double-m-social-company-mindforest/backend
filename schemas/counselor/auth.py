@@ -17,8 +17,8 @@ class CounselorRegister(BaseModel):
     phone: str = Field(..., description="휴대폰 번호")
     email: Optional[EmailStr] = Field(None, description="이메일 (선택)")
     
-    # 상담 관련
-    counseling_fields: List[int] = Field(..., min_items=1, max_items=9, description="상담 분야 ID 목록")
+    # 상담 관련 (선택사항으로 변경 - counseling_fields 테이블이 비어있음)
+    counseling_fields: Optional[List[int]] = Field(default=[], description="상담 분야 ID 목록 (선택)")
     
     @validator('password_confirm')
     def passwords_match(cls, v, values, **kwargs):
@@ -65,7 +65,7 @@ class CounselorResponse(BaseModel):
     birth_date: str
     phone: str
     email: Optional[str]
-    counseling_fields: List[int]
+    counseling_fields: Optional[List[int]] = []
     is_approved: bool
     approved_at: Optional[datetime]
     status: str

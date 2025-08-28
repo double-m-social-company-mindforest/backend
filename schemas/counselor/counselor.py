@@ -40,7 +40,7 @@ class CounselorResponse(BaseModel):
     phone: str
     gender: Gender
     birth_date: str
-    counseling_fields: List[int]
+    counseling_fields: Optional[List[int]] = []
     is_approved: bool
     status: CounselorStatus
     max_concurrent_sessions: int
