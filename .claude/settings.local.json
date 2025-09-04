@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx:*)",
+      "mcp__supabase__list_tables",
+      "mcp__supabase__execute_sql",
+      "Bash(python:*)",
+      "Bash(mkdir:*)",
+      "Bash(alembic revision:*)",
+      "Bash(chmod:*)",
+      "Bash(alembic upgrade:*)",
+      "Bash(pip install:*)",
+      "Bash(cat:*)",
+      "Bash(ls:*)",
+      "Bash(curl:*)",
+      "Bash(rm:*)",
+      "Bash(env)",
+      "Bash(aws:*)",
+      "mcp__supabase__apply_migration",
+      "Bash(source:*)",
+      "Bash(uvicorn:*)",
+      "Bash(kill:*)",
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "mcp__supabase__get_advisors",
+      "Bash(alembic current:*)",
+      "Bash(alembic:*)",
+      "Read(/Users/gimjinhyeon/Desktop/DoubleM/project/mindforest/**)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "supabase"
+  ]
+}

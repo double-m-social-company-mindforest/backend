@@ -149,3 +149,4 @@ class CharacterAIService:
         ]
         
         return random.choice(goodbyes)
+    

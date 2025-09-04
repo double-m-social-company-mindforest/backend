@@ -196,14 +196,22 @@ async def websocket_endpoint(
                 
                 elif message_type == "voice_call_accept":
                     # 음성 통화 수락
+                    # 먼저 accept 이벤트를 모든 참가자에게 전송
+                    await VoiceCallService.notify_voice_call_event(
+                        consultation_code=consultation_code,
+                        event_type="accept",
+                        initiator_type=user_type
+                    )
+                    
                     if VoiceCallService.start_voice_call(db, consultation_code, user_type):
                         # WebRTC 세션에 참가자 추가
                         VoiceCallService.add_webrtc_participant(consultation_code, user_type)
                         
+                        # 통화 시작 이벤트 전송
                         await VoiceCallService.notify_voice_call_event(
                             consultation_code=consultation_code,
                             event_type="start",
-                            initiator_type=user_type
+                            initiator_type="system"  # 시스템에서 발생하는 이벤트
                         )
                         logger.info(f"음성 통화 시작: 상담={consultation_code}, 수락자={user_type}")
                     else:

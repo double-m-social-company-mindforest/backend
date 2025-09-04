@@ -17,6 +17,8 @@ from routers.counselor.auth import router as counselor_auth_router
 from routers.admin.auth import router as admin_auth_router
 from routers.admin.counselor_management import router as admin_counselor_router
 from routers.dev import router as dev_router
+from routers.auth.auth import router as auth_router
+from routers.curriculum.curriculum import router as curriculum_router
 
 load_dotenv()
 setup_logging()
@@ -79,6 +81,14 @@ tags_metadata = [
     {
         "name": "dev-tools",
         "description": "🛠️ 개발자 도구 (개발 환경 전용)",
+    },
+    {
+        "name": "auth",
+        "description": "🔑 사용자 인증 - 회원가입, 로그인, JWT 토큰 관리",
+    },
+    {
+        "name": "curriculum",
+        "description": "📚 나를 알아가는 커리큘럼 - 8회차 자기계발 프로그램",
     },
 ]
 
@@ -413,6 +423,8 @@ app.include_router(dashboard_router, tags=["counselor-dashboard"])
 app.include_router(counselor_auth_router, tags=["counselor-auth"])
 app.include_router(admin_auth_router, prefix="/api/v1/admin", tags=["관리자 인증"])
 app.include_router(admin_counselor_router, prefix="/api/v1/admin", tags=["관리자 상담사 관리"])
+app.include_router(auth_router, tags=["auth"])
+app.include_router(curriculum_router, tags=["curriculum"])
 if ENVIRONMENT == "development":
     app.include_router(dev_router, tags=["dev-tools"])
 

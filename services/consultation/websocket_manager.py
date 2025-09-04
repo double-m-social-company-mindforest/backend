@@ -87,20 +87,46 @@ class ConnectionManager:
             websocket: WebSocket 인스턴스
             sender_type: 발신자 유형
             message_type: 메시지 유형
+            voice_data: 음성/WebRTC 관련 데이터
         """
-        data = {
-            "type": "message",
-            "data": {
-                "sender_type": sender_type,
-                "content": message,
-                "message_type": message_type,
-                "timestamp": datetime.utcnow().isoformat() + "Z"
+        # WebRTC 시그널링 메시지인 경우 특별 처리
+        if message_type in ['webrtc_offer', 'webrtc_answer', 'webrtc_ice_candidate']:
+            data = {
+                "type": "message",
+                "data": {
+                    "sender_type": sender_type,
+                    "content": message,
+                    "message_type": message_type,
+                    "timestamp": datetime.utcnow().isoformat() + "Z",
+                    "voice_data": voice_data
+                }
             }
-        }
-        
-        # 음성 데이터가 있으면 추가
-        if voice_data:
-            data["data"]["voice_data"] = voice_data
+        elif message_type == "voice_call_event":
+            # 음성 통화 이벤트 메시지
+            data = {
+                "type": "voice_call_event",
+                "data": {
+                    "message": message,
+                    "sender_type": sender_type,
+                    "timestamp": datetime.utcnow().isoformat() + "Z",
+                    "voice_data": voice_data
+                }
+            }
+        else:
+            # 일반 메시지
+            data = {
+                "type": "message",
+                "data": {
+                    "sender_type": sender_type,
+                    "content": message,
+                    "message_type": message_type,
+                    "timestamp": datetime.utcnow().isoformat() + "Z"
+                }
+            }
+            
+            # 음성 데이터가 있으면 추가
+            if voice_data:
+                data["data"]["voice_data"] = voice_data
         
         try:
             await websocket.send_json(data)

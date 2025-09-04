@@ -1,0 +1,162 @@
+====================================================
+나를 알아가는 커리큘럼 (8회차) 데이터 저장 설계
+====================================================
+
+1. 테이블 구조 설계
+====================================================
+
+단일 테이블로 모든 세션 데이터를 JSON으로 저장하는 구조
+
+테이블명: user_curriculum_sessions
+- id: Integer, Primary Key
+- user_id: Integer, Foreign Key -> users.id
+- session_number: Integer (1~8)
+- session_data: JSON (세션별 다른 데이터 구조)
+- status: String ('not_started', 'in_progress', 'completed')
+- created_at: Timestamp
+- updated_at: Timestamp
+- completed_at: Timestamp (nullable)
+
+인덱스:
+- UNIQUE(user_id, session_number) - 사용자당 세션 하나만
+
+====================================================
+2. 세션별 데이터 구조
+====================================================
+
+### 세션 1: 삶의 목표 설정
+{
+  "future_vision": {
+    "answer1": "유명한 사람이 되고 싶다",  // 5년 후 모습 1
+    "answer2": "새로운 도전을 하고 싶다"   // 5년 후 모습 2
+  },
+  "goals": [
+    {
+      "goal": "자기계발 전문가 되기",
+      "first_step": "매일 책 한 권 읽기"
+    },
+    {
+      "goal": "유튜브 채널 운영",
+      "first_step": "첫 영상 기획하기"
+    },
+    {
+      "goal": "건강한 몸 만들기",
+      "first_step": "매일 30분 운동하기"
+    }
+  ]
+}
+
+### 세션 2-8: (추후 정의 필요)
+각 세션마다 다른 JSON 구조로 저장
+예시:
+- 세션 2: 강점/약점 분석
+- 세션 3: 가치관 탐색
+- 세션 4: 관계 패턴 이해
+- 세션 5: 감정 관리
+- 세션 6: 스트레스 대처
+- 세션 7: 미래 비전 구체화
+- 세션 8: 액션 플랜 수립
+
+====================================================
+3. API 엔드포인트 설계
+====================================================
+
+기본 URL: /api/curriculum
+
+### 세션 관리
+GET /api/curriculum/sessions - 전체 세션 목록 및 진행 상황
+GET /api/curriculum/sessions/{session_number} - 특정 세션 데이터 조회
+POST /api/curriculum/sessions/{session_number} - 세션 데이터 저장/수정
+DELETE /api/curriculum/sessions/{session_number} - 세션 데이터 삭제
+
+### 진행 상황
+GET /api/curriculum/progress - 사용자 전체 진행률
+PUT /api/curriculum/sessions/{session_number}/complete - 세션 완료 처리
+
+====================================================
+4. 요청/응답 예시
+====================================================
+
+### 세션 1 저장 요청
+POST /api/curriculum/sessions/1
+Headers: Authorization: Bearer {access_token}
+Body:
+{
+  "future_vision": {
+    "answer1": "유명한 사람이 되고 싶다",
+    "answer2": "새로운 도전을 하고 싶다"
+  },
+  "goals": [
+    {
+      "goal": "자기계발 전문가 되기",
+      "first_step": "매일 책 한 권 읽기"
+    },
+    {
+      "goal": "유튜브 채널 운영",
+      "first_step": "첫 영상 기획하기"
+    },
+    {
+      "goal": "건강한 몸 만들기",
+      "first_step": "매일 30분 운동하기"
+    }
+  ]
+}
+
+### 응답
+{
+  "status": "success",
+  "message": "세션 1 데이터가 저장되었습니다",
+  "data": {
+    "session_number": 1,
+    "status": "completed",
+    "updated_at": "2025-01-01T10:00:00Z"
+  }
+}
+
+====================================================
+5. 구현 순서
+====================================================
+
+1. 데이터베이스 마이그레이션 생성
+   - user_curriculum_sessions 테이블 생성
+
+2. 모델 생성
+   - UserCurriculumSession SQLAlchemy 모델
+
+3. 스키마 생성
+   - Session1Request, Session1Response
+   - SessionProgressResponse
+   - 기타 필요한 Pydantic 모델
+
+4. 서비스 로직 구현
+   - 세션 데이터 저장/조회
+   - 진행 상황 관리
+   - 데이터 검증
+
+5. API 라우터 구현
+   - 엔드포인트 구현
+   - JWT 인증 미들웨어 적용
+
+6. 테스트
+   - 세션 1 데이터 저장/조회 테스트
+   - 인증 테스트
+
+====================================================
+6. 보안 고려사항
+====================================================
+
+- JWT 토큰으로 사용자 인증
+- 사용자는 자신의 데이터만 접근 가능
+- session_data 필드 크기 제한 (예: 10KB)
+- SQL Injection 방지 (SQLAlchemy ORM 사용)
+
+====================================================
+7. 확장성 고려
+====================================================
+
+- 각 세션별로 다른 JSON 구조 허용
+- 세션 수 증가 가능 (8회차 이상)
+- 버전 관리를 위한 schema_version 필드 추가 고려
+- 백업/복구 기능 고려
+
+====================================================

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CORS Test</title>
+</head>
+<body>
+    <h1>CORS Test</h1>
+    <button onclick="testCors()">Test CORS</button>
+    <div id="result"></div>
+
+    <script>
+        async function testCors() {
+            const resultDiv = document.getElementById('result');
+            
+            try {
+                // GET 요청 테스트
+                const response = await fetch('http://localhost:8000/health', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                resultDiv.innerHTML = `<p style="color: green;">SUCCESS: ${JSON.stringify(data)}</p>`;
+                
+                // POST 요청 테스트
+                const postResponse = await fetch('http://localhost:8000/api/v1/counselors/auth/check-username', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: 'test'
+                    })
+                });
+                
+                const postData = await postResponse.json();
+                resultDiv.innerHTML += `<p style="color: green;">POST SUCCESS: ${JSON.stringify(postData)}</p>`;
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<p style="color: red;">ERROR: ${error.message}</p>`;
+                console.error('CORS Error:', error);
+            }
+        }
+    </script>
+</body>
+</html>
