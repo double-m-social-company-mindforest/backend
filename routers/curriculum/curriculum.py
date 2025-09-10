@@ -106,9 +106,10 @@ async def save_session2_data(
     """
     세션 2 (자기초월) 데이터 저장
     
-    - helping_experience: 도움을 준 경험과 의미
-    - reluctant_help: 내키지 않았지만 도운 경험과 변화
-    - received_help: 도움받은 경험
+    - helping_experience: 도움을 준 경험과 의미 (2개 답변)
+    - reluctant_help: 내키지 않았지만 도운 경험과 변화 (2개 답변)
+    - received_help: 도움받은 경험과 영향 (2개 답변)
+    - kindness_when_lacking: 부족함을 느낄 때 받은 친절과 영감 (2개 답변)
     """
     session_data = request.dict()
     

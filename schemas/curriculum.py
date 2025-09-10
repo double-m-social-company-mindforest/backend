@@ -129,12 +129,19 @@ class ReluctantHelp(BaseModel):
 
 class ReceivedHelp(BaseModel):
     experience: str = Field(..., min_length=1, max_length=1000, description="도움받은 경험")
+    impact: str = Field(..., min_length=1, max_length=1000, description="그 위로가 나의 삶에 미친 영향")
+
+
+class KindnessWhenLacking(BaseModel):
+    experience: str = Field(..., min_length=1, max_length=1000, description="부족함을 느낄 때 받은 친절")
+    inspiration: str = Field(..., min_length=1, max_length=1000, description="그 친절이 준 영감")
 
 
 class Session2Request(BaseModel):
     helping_experience: HelpingExperience
     reluctant_help: ReluctantHelp
     received_help: ReceivedHelp
+    kindness_when_lacking: KindnessWhenLacking
 
     class Config:
         json_schema_extra = {
@@ -148,7 +155,12 @@ class Session2Request(BaseModel):
                     "change": "다른 사람에게 도움이 필요할 때 더 적극적으로 돕고 싶다는 생각이 들었습니다"
                 },
                 "received_help": {
-                    "experience": "취업 실패로 힘들어할 때 선배가 자신의 경험을 나누며 위로해주었습니다"
+                    "experience": "취업 실패로 힘들어할 때 선배가 자신의 경험을 나누며 위로해주었습니다",
+                    "impact": "실패를 겪어도 다시 일어설 수 있다는 용기를 얻었습니다"
+                },
+                "kindness_when_lacking": {
+                    "experience": "발표 준비가 부족했을 때 동료가 자료를 함께 준비해주었습니다",
+                    "inspiration": "나도 누군가에게 그런 따뜻한 도움을 주고 싶다는 마음이 생겼습니다"
                 }
             }
         }

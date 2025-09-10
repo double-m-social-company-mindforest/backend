@@ -20,7 +20,7 @@ class MusicService:
     ) -> Dict[str, Any]:
         """
         상담 중 최근 대화 기반 음원 추천
-        
+
         Args:
             db: Database session
             consultation_code: 9자리 상담 코드

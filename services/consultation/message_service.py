@@ -19,7 +19,6 @@ def convert_utc_to_kst(utc_time):
     kst = pytz.timezone('Asia/Seoul')
     return utc_time.astimezone(kst)
 
-
 class MessageService:
     @staticmethod
     def create_message(
