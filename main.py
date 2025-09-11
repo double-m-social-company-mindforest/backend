@@ -26,7 +26,7 @@ setup_logging()
 # 환경 변수 로드
 ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
 DEBUG = os.getenv("DEBUG", "False").lower() == "true"
-CORS_ORIGINS = os.getenv("CORS_ORIGINS", "*").split(",")
+CORS_ORIGINS = [origin.strip() for origin in os.getenv("CORS_ORIGINS", "*").split(",")]
 
 # API 문서 태그 정의
 tags_metadata = [
