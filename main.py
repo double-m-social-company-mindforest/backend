@@ -16,6 +16,7 @@ from routers.counselor import counselor_router, dashboard_router
 from routers.counselor.auth import router as counselor_auth_router
 from routers.admin.auth import router as admin_auth_router
 from routers.admin.counselor_management import router as admin_counselor_router
+from routers.admin.curriculum_management import router as admin_curriculum_router
 from routers.dev import router as dev_router
 from routers.auth.auth import router as auth_router
 from routers.curriculum.curriculum import router as curriculum_router
@@ -77,6 +78,10 @@ tags_metadata = [
     {
         "name": "관리자 상담사 관리",
         "description": "👨‍💼 관리자 상담사 관리 - 상담사 승인, 목록 조회, 상태 관리",
+    },
+    {
+        "name": "관리자 커리큘럼 관리",
+        "description": "📊 관리자 커리큘럼 관리 - 사용자 스텝 데이터 조회, 진행률 통계",
     },
     {
         "name": "dev-tools",
@@ -423,6 +428,7 @@ app.include_router(dashboard_router, tags=["counselor-dashboard"])
 app.include_router(counselor_auth_router, tags=["counselor-auth"])
 app.include_router(admin_auth_router, prefix="/api/v1/admin", tags=["관리자 인증"])
 app.include_router(admin_counselor_router, prefix="/api/v1/admin", tags=["관리자 상담사 관리"])
+app.include_router(admin_curriculum_router, prefix="/api/v1/admin", tags=["관리자 커리큘럼 관리"])
 app.include_router(auth_router, tags=["auth"])
 app.include_router(curriculum_router, tags=["curriculum"])
 if ENVIRONMENT == "development":

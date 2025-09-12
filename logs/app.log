@@ -69,3 +69,31 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2025-09-10 22:36:20,341 - config.logging - INFO - Logging configured - Debug: False
 2025-09-10 22:36:31,806 - config.logging - INFO - Logging configured - Debug: False
 2025-09-10 22:36:42,919 - config.logging - INFO - Logging configured - Debug: False
+2025-09-12 15:20:15,814 - config.logging - INFO - Logging configured - Debug: False
+2025-09-12 15:20:28,198 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/project/mindforest/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-09-12 15:20:28,460 - services.admin.auth_service - INFO - 관리자 비밀번호 검증 결과 - 사용자: admin, 결과: False
+2025-09-12 15:20:44,719 - config.logging - INFO - Logging configured - Debug: False
+2025-09-12 15:20:54,152 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/project/mindforest/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-09-12 15:20:54,410 - services.admin.auth_service - INFO - 관리자 비밀번호 검증 결과 - 사용자: admin, 결과: True
+2025-09-12 15:20:54,554 - services.admin.auth_service - INFO - 관리자 로그인 성공: admin (역할: super_admin)
+2025-09-12 15:22:08,675 - config.logging - INFO - Logging configured - Debug: False
+2025-09-12 15:22:15,302 - config.logging - INFO - Logging configured - Debug: False
+2025-09-12 15:22:25,747 - config.logging - INFO - Logging configured - Debug: False
+2025-09-12 15:23:02,219 - config.logging - INFO - Logging configured - Debug: False
+2025-09-12 15:24:46,127 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/gimjinhyeon/Desktop/DoubleM/project/mindforest/backend/venv/lib/python3.9/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-09-12 15:26:14,484 - services.admin.auth_service - INFO - 관리자 비밀번호 검증 결과 - 사용자: admin, 결과: True
+2025-09-12 15:26:14,618 - services.admin.auth_service - INFO - 관리자 로그인 성공: admin (역할: super_admin)
+2025-09-12 15:28:40,591 - config.logging - INFO - Logging configured - Debug: False
+2025-09-12 15:28:55,974 - config.logging - INFO - Logging configured - Debug: False
