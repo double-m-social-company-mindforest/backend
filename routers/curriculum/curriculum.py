@@ -176,9 +176,15 @@ async def save_session4_data(
     db: Session = Depends(get_db)
 ):
     """
-    세션 4 (감정 표현 활동) 데이터 저장
+    세션 4 (감정 표현 활동) 데이터 저장 - 총 7개 필드 (14개 답변)
 
-    - answer1: 감정 표현 활동 답변 (단일 값)
+    - answer1: 감정 표현 활동 (배열 2개)
+    - answer2: 창조적 가치 - 단어 (문자열 1개)
+    - answer3: 창조적 가치 - 연결 (문자열 1개)
+    - answer4: 창조적 가치 - 활동 (문자열 1개)
+    - answer5: 자아정체감 - 표현 문장 (배열 3개)
+    - answer6: 자아정체감 - 되고 싶은 나 (배열 3개)
+    - answer7: 자아정체감 - 바라는 것 (배열 3개)
     """
     session_data = request.dict()
     

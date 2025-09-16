@@ -189,12 +189,52 @@ class Session3Request(BaseModel):
 
 # Session 4 schemas
 class Session4Request(BaseModel):
-    answer1: str = Field(..., min_length=1, max_length=2000, description="감정 표현 활동 답변")
+    # 35.png - 감정 표현 활동 (2개)
+    answer1: List[str] = Field(..., min_items=2, max_items=2, description="감정 표현 활동 (2개 답변)")
+
+    # 38.png - 창조적 가치 찾기: 단어 (1개)
+    answer2: str = Field(..., min_length=1, max_length=2000, description="내 삶의 의미를 가장 잘 표현하는 단어")
+
+    # 39.png - 창조적 가치 찾기: 연결 (1개)
+    answer3: str = Field(..., min_length=1, max_length=2000, description="답변한 단어에 내재하고 있다고 생각하는 가치")
+
+    # 40.png - 창조적 가치 찾기: 활동 (1개)
+    answer4: str = Field(..., min_length=1, max_length=2000, description="이 가치를 실현하기 위해 할 수 있는 활동")
+
+    # 41.png - 자아정체감: 나를 표현하는 문장 (3개)
+    answer5: List[str] = Field(..., min_items=3, max_items=3, description="나를 가장 잘 표현하는 문장 (3개 답변)")
+
+    # 42.png - 자아정체감: 되고 싶은 나 (3개)
+    answer6: List[str] = Field(..., min_items=3, max_items=3, description="진실으로 되었으면 하고 바라는 나 자신 (3개 답변)")
+
+    # 43.png - 자아정체감: 바라는 것 (3개)
+    answer7: List[str] = Field(..., min_items=3, max_items=3, description="내가 바라는 나 자신이 되기를 바라는 것 (3개 답변)")
 
     class Config:
         json_schema_extra = {
             "example": {
-                "answer1": "오늘은 친구와 대화로 마음이 따뜻해졌습니다. 이 감정이 나에게 소중한 연결감과 따뜻함을 의미합니다."
+                "answer1": [
+                    "오늘은 친구와 대화로 마음이 따뜻해졌습니다",
+                    "이 감정이 나에게 소중한 연결감과 따뜻함을 의미합니다"
+                ],
+                "answer2": "희망",
+                "answer3": "희망은 나에게 삶의 동력이 되는 의미입니다",
+                "answer4": "매일 감사 일기를 쓰며 긍정적인 마음 유지하기",
+                "answer5": [
+                    "나는 도전을 두려워하지 않는 사람입니다",
+                    "나는 타인의 아픔을 공감할 수 있는 사람입니다",
+                    "나는 끊임없이 성장하려는 사람입니다"
+                ],
+                "answer6": [
+                    "더 용기 있는 사람",
+                    "더 지혜로운 사람",
+                    "더 따뜻한 사람"
+                ],
+                "answer7": [
+                    "많은 사람에게 영감을 주는 사람",
+                    "자신의 분야에서 전문가",
+                    "행복한 가정을 이룬 사람"
+                ]
             }
         }
 
