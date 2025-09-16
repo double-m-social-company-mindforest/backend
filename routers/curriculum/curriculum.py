@@ -143,11 +143,11 @@ async def save_session3_data(
     """
     세션 3 (가치관 탐색) 데이터 저장
 
-    - influential_person: 나의 삶에 가장 큰 영향을 준 사람과 배운 가치
-    - closest_person: 가장 가깝게 느낀 사람과 그 이유
-    - relationship_continuity: 관계의 지속성과 이어가게 한 이유
-    - relationship_meaning: 관계의 지속성이 삶의 의미에 미치는 영향
-    - precious_experience: 가장 소중한 경험과 그를 통해 느낀 점
+    - answer1: 나의 삶에서 가장 큰 영향을 준 사람과 배운 가치
+    - answer2: 가장 가깝게 느낀 사람과 그 이유
+    - answer3: 관계의 지속성과 이어가게 한 이유
+    - answer4: 관계의 지속성이 삶의 의미에 미치는 영향
+    - answer5: 가장 소중한 경험과 그를 통해 느낀 점
     """
     session_data = request.dict()
     

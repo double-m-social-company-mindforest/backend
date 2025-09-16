@@ -167,59 +167,21 @@ class Session2Request(BaseModel):
 
 
 # Session 3 schemas
-class InfluentialPerson(BaseModel):
-    person: str = Field(..., min_length=1, max_length=1000, description="나의 삶에 가장 큰 영향을 준 사람")
-    value_learned: str = Field(..., min_length=1, max_length=1000, description="그 사람에게서 배운 가치")
-
-
-class ClosestPerson(BaseModel):
-    person: str = Field(..., min_length=1, max_length=1000, description="가장 가깝게 느낀 사람")
-    reason: str = Field(..., min_length=1, max_length=1000, description="그 이유")
-
-
-class RelationshipContinuity(BaseModel):
-    is_continuing: str = Field(..., min_length=1, max_length=1000, description="관계가 지금도 이어지고 있는지")
-    reason_for_continuity: str = Field(..., min_length=1, max_length=1000, description="관계를 이어가게 한 이유")
-
-
-class RelationshipMeaning(BaseModel):
-    life_meaning_impact: str = Field(..., min_length=1, max_length=1000, description="관계의 지속성이 삶의 의미에 미치는 영향")
-
-
-class PreciousExperience(BaseModel):
-    experience: str = Field(..., min_length=1, max_length=1000, description="가장 기억에 남는 소중한 경험")
-    lessons_learned: str = Field(..., min_length=1, max_length=1000, description="그 경험을 통해 느낀 점")
-
-
 class Session3Request(BaseModel):
-    influential_person: InfluentialPerson
-    closest_person: ClosestPerson
-    relationship_continuity: RelationshipContinuity
-    relationship_meaning: RelationshipMeaning
-    precious_experience: PreciousExperience
+    answer1: str = Field(..., min_length=1, max_length=2000, description="나의 삶에서 가장 큰 영향을 준 사람과 배운 가치")
+    answer2: str = Field(..., min_length=1, max_length=2000, description="가장 가깝게 느낀 사람과 그 이유")
+    answer3: str = Field(..., min_length=1, max_length=2000, description="관계의 지속성과 이어가게 한 이유")
+    answer4: str = Field(..., min_length=1, max_length=2000, description="관계의 지속성이 삶의 의미에 미치는 영향")
+    answer5: str = Field(..., min_length=1, max_length=2000, description="가장 소중한 경험과 그를 통해 느낀 점")
 
     class Config:
         json_schema_extra = {
             "example": {
-                "influential_person": {
-                    "person": "어머니",
-                    "value_learned": "어떤 상황에서도 포기하지 않는 인내심을 배웠습니다"
-                },
-                "closest_person": {
-                    "person": "형",
-                    "reason": "힘들 때마다 조언과 응원을 아끼지 않았기 때문입니다"
-                },
-                "relationship_continuity": {
-                    "is_continuing": "네, 지금도 좋은 관계를 유지하고 있습니다",
-                    "reason_for_continuity": "서로에 대한 신뢰와 이해, 그리고 진심어린 관심이 관계를 이어가게 합니다"
-                },
-                "relationship_meaning": {
-                    "life_meaning_impact": "이런 지속적인 관계들이 제게는 삶의 든든한 버팀목이 되어주고, 어려움을 극복할 수 있는 힘을 줍니다"
-                },
-                "precious_experience": {
-                    "experience": "대학 시절 교환학생으로 해외에서 생활했던 경험",
-                    "lessons_learned": "새로운 환경에서도 적응할 수 있는 자신감과 다양성을 받아들이는 열린 마음을 가지게 되었습니다"
-                }
+                "answer1": "어머니가 가장 큰 영향을 주었습니다. 어떤 상황에서도 포기하지 않는 인내심을 배웠습니다.",
+                "answer2": "형이 가장 가깝게 느껴집니다. 힘들 때마다 조언과 응원을 아끼지 않았기 때문입니다.",
+                "answer3": "네, 지금도 좋은 관계를 유지하고 있습니다. 서로에 대한 신뢰와 이해, 그리고 진심어린 관심이 관계를 이어가게 합니다.",
+                "answer4": "이런 지속적인 관계들이 제게는 삶의 든든한 버팀목이 되어주고, 어려움을 극복할 수 있는 힘을 줍니다.",
+                "answer5": "대학 시절 교환학생으로 해외에서 생활했던 경험이 가장 소중합니다. 새로운 환경에서도 적응할 수 있는 자신감과 다양성을 받아들이는 열린 마음을 가지게 되었습니다."
             }
         }
 
