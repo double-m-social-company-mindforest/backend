@@ -145,9 +145,8 @@ async def save_session3_data(
 
     - answer1: 나의 삶에서 가장 큰 영향을 준 사람과 배운 가치
     - answer2: 가장 가깝게 느낀 사람과 그 이유
-    - answer3: 관계의 지속성과 이어가게 한 이유
+    - answer3: 관계의 지속성과 이어가게 한 이유 (배열 2개)
     - answer4: 관계의 지속성이 삶의 의미에 미치는 영향
-    - answer5: 가장 소중한 경험과 그를 통해 느낀 점
     """
     session_data = request.dict()
     
@@ -178,10 +177,8 @@ async def save_session4_data(
 ):
     """
     세션 4 (감정 표현 활동) 데이터 저장
-    
-    - emotion_expression: 오늘 느낀 감정과 1문장 표현
-    - creative_value: 창조적 가치 찾기 - 의미 있는 단어, 연결, 활동
-    - self_identity: 자아정체감 - 나를 표현하는 문장, 되고 싶은 나, 바라는 것 각 3개
+
+    - answer1: 감정 표현 활동 답변 (단일 값)
     """
     session_data = request.dict()
     

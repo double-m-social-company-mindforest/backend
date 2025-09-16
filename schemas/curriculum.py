@@ -170,74 +170,31 @@ class Session2Request(BaseModel):
 class Session3Request(BaseModel):
     answer1: str = Field(..., min_length=1, max_length=2000, description="나의 삶에서 가장 큰 영향을 준 사람과 배운 가치")
     answer2: str = Field(..., min_length=1, max_length=2000, description="가장 가깝게 느낀 사람과 그 이유")
-    answer3: str = Field(..., min_length=1, max_length=2000, description="관계의 지속성과 이어가게 한 이유")
+    answer3: List[str] = Field(..., min_items=2, max_items=2, description="관계의 지속성과 이어가게 한 이유 (2개 답변)")
     answer4: str = Field(..., min_length=1, max_length=2000, description="관계의 지속성이 삶의 의미에 미치는 영향")
-    answer5: str = Field(..., min_length=1, max_length=2000, description="가장 소중한 경험과 그를 통해 느낀 점")
 
     class Config:
         json_schema_extra = {
             "example": {
                 "answer1": "어머니가 가장 큰 영향을 주었습니다. 어떤 상황에서도 포기하지 않는 인내심을 배웠습니다.",
                 "answer2": "형이 가장 가깝게 느껴집니다. 힘들 때마다 조언과 응원을 아끼지 않았기 때문입니다.",
-                "answer3": "네, 지금도 좋은 관계를 유지하고 있습니다. 서로에 대한 신뢰와 이해, 그리고 진심어린 관심이 관계를 이어가게 합니다.",
-                "answer4": "이런 지속적인 관계들이 제게는 삶의 든든한 버팀목이 되어주고, 어려움을 극복할 수 있는 힘을 줍니다.",
-                "answer5": "대학 시절 교환학생으로 해외에서 생활했던 경험이 가장 소중합니다. 새로운 환경에서도 적응할 수 있는 자신감과 다양성을 받아들이는 열린 마음을 가지게 되었습니다."
+                "answer3": [
+                    "네, 지금도 좋은 관계를 유지하고 있습니다.",
+                    "서로에 대한 신뢰와 이해, 그리고 진심어린 관심이 관계를 이어가게 합니다."
+                ],
+                "answer4": "이런 지속적인 관계들이 제게는 삶의 든든한 버팀목이 되어주고, 어려움을 극복할 수 있는 힘을 줍니다."
             }
         }
 
 
 # Session 4 schemas
-class EmotionExpression(BaseModel):
-    emotions: str = Field(..., min_length=1, max_length=500, description="오늘 느낀 감정들")
-    sentence: str = Field(..., min_length=1, max_length=500, description="감정을 1문장으로 표현")
-
-
-class CreativeValue(BaseModel):
-    meaningful_word: str = Field(..., min_length=1, max_length=200, description="의미를 가장 잘 표현하는 단어")
-    word_connection: str = Field(..., min_length=1, max_length=500, description="단어의 연결과 생각하는 가치")
-    value_activity: str = Field(..., min_length=1, max_length=500, description="가치 실현을 위해 할 수 있는 활동")
-
-
-class SelfIdentity(BaseModel):
-    expressing_me: List[str] = Field(..., min_items=3, max_items=3, description="나를 가장 잘 표현하는 문장 3개")
-    wish_to_be: List[str] = Field(..., min_items=3, max_items=3, description="되었으면 하는 나 자신 3개")
-    hope_to_become: List[str] = Field(..., min_items=3, max_items=3, description="되기를 바라는 것 3개")
-
-
 class Session4Request(BaseModel):
-    emotion_expression: EmotionExpression
-    creative_value: CreativeValue
-    self_identity: SelfIdentity
+    answer1: str = Field(..., min_length=1, max_length=2000, description="감정 표현 활동 답변")
 
     class Config:
         json_schema_extra = {
             "example": {
-                "emotion_expression": {
-                    "emotions": "오늘은 친구와 대화로 마음이 따뜻해졌습니다",
-                    "sentence": "이 감정이 나에게 어떤 의미인지 문장으로 작성해주세요"
-                },
-                "creative_value": {
-                    "meaningful_word": "희망",
-                    "word_connection": "희망은 나에게 삶의 동력이 되는 의미입니다",
-                    "value_activity": "매일 감사 일기를 쓰며 긍정적인 마음 유지하기"
-                },
-                "self_identity": {
-                    "expressing_me": [
-                        "나는 도전을 두려워하지 않는 사람입니다",
-                        "나는 타인의 아픔을 공감할 수 있는 사람입니다",
-                        "나는 끊임없이 성장하려는 사람입니다"
-                    ],
-                    "wish_to_be": [
-                        "더 용기 있는 사람",
-                        "더 지혜로운 사람",
-                        "더 따뜻한 사람"
-                    ],
-                    "hope_to_become": [
-                        "많은 사람에게 영감을 주는 사람",
-                        "자신의 분야에서 전문가",
-                        "행복한 가정을 이룬 사람"
-                    ]
-                }
+                "answer1": "오늘은 친구와 대화로 마음이 따뜻해졌습니다. 이 감정이 나에게 소중한 연결감과 따뜻함을 의미합니다."
             }
         }
 
