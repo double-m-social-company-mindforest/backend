@@ -166,12 +166,118 @@ class Session2Request(BaseModel):
         }
 
 
+# Session 3 schemas
+class InfluentialPerson(BaseModel):
+    person: str = Field(..., min_length=1, max_length=500, description="나의 삶에 가장 큰 영향을 준 사람")
+    value_learned: str = Field(..., min_length=1, max_length=500, description="그 사람에게서 배운 가치")
+
+
+class ClosestPerson(BaseModel):
+    person: str = Field(..., min_length=1, max_length=500, description="가장 가깝게 느끼는 사람")
+    reason: str = Field(..., min_length=1, max_length=500, description="그 이유")
+
+
+class RelationshipFactors(BaseModel):
+    factor1: str = Field(..., min_length=1, max_length=500, description="관계 지속 요소 1")
+    factor2: str = Field(..., min_length=1, max_length=500, description="관계 지속 요소 2")
+
+
+class ImportantValue(BaseModel):
+    experience: str = Field(..., min_length=1, max_length=500, description="교화생활/경험")
+    value: str = Field(..., min_length=1, max_length=500, description="배운 중요한 가치")
+
+
+class Session3Request(BaseModel):
+    influential_person: InfluentialPerson
+    closest_person: ClosestPerson
+    relationship_factors: RelationshipFactors
+    important_value: ImportantValue
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "influential_person": {
+                    "person": "어머니",
+                    "value_learned": "어떤 상황에서도 포기하지 않는 인내심"
+                },
+                "closest_person": {
+                    "person": "형",
+                    "reason": "힘들 때마다 조언과 응원을 아끼지 않았기 때문"
+                },
+                "relationship_factors": {
+                    "factor1": "서로의 신뢰",
+                    "factor2": "일어설 수 있는 힘"
+                },
+                "important_value": {
+                    "experience": "대학 시절 교환학생 경험",
+                    "value": "새로운 환경에서도 적응할 수 있는 자신감"
+                }
+            }
+        }
+
+
+# Session 4 schemas
+class EmotionExpression(BaseModel):
+    emotions: str = Field(..., min_length=1, max_length=500, description="오늘 느낀 감정들")
+    sentence: str = Field(..., min_length=1, max_length=500, description="감정을 1문장으로 표현")
+
+
+class CreativeValue(BaseModel):
+    meaningful_word: str = Field(..., min_length=1, max_length=200, description="의미를 가장 잘 표현하는 단어")
+    word_connection: str = Field(..., min_length=1, max_length=500, description="단어의 연결과 생각하는 가치")
+    value_activity: str = Field(..., min_length=1, max_length=500, description="가치 실현을 위해 할 수 있는 활동")
+
+
+class SelfIdentity(BaseModel):
+    expressing_me: List[str] = Field(..., min_items=3, max_items=3, description="나를 가장 잘 표현하는 문장 3개")
+    wish_to_be: List[str] = Field(..., min_items=3, max_items=3, description="되었으면 하는 나 자신 3개")
+    hope_to_become: List[str] = Field(..., min_items=3, max_items=3, description="되기를 바라는 것 3개")
+
+
+class Session4Request(BaseModel):
+    emotion_expression: EmotionExpression
+    creative_value: CreativeValue
+    self_identity: SelfIdentity
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "emotion_expression": {
+                    "emotions": "오늘은 친구와 대화로 마음이 따뜻해졌습니다",
+                    "sentence": "이 감정이 나에게 어떤 의미인지 문장으로 작성해주세요"
+                },
+                "creative_value": {
+                    "meaningful_word": "희망",
+                    "word_connection": "희망은 나에게 삶의 동력이 되는 의미입니다",
+                    "value_activity": "매일 감사 일기를 쓰며 긍정적인 마음 유지하기"
+                },
+                "self_identity": {
+                    "expressing_me": [
+                        "나는 도전을 두려워하지 않는 사람입니다",
+                        "나는 타인의 아픔을 공감할 수 있는 사람입니다",
+                        "나는 끊임없이 성장하려는 사람입니다"
+                    ],
+                    "wish_to_be": [
+                        "더 용기 있는 사람",
+                        "더 지혜로운 사람",
+                        "더 따뜻한 사람"
+                    ],
+                    "hope_to_become": [
+                        "많은 사람에게 영감을 주는 사람",
+                        "자신의 분야에서 전문가",
+                        "행복한 가정을 이룬 사람"
+                    ]
+                }
+            }
+        }
+
+
 # Session info
 SESSION_TITLES = {
     1: "삶의 목표 설정",
     2: "자기초월",
     3: "가치관 탐색",
-    4: "관계 패턴 이해",
+    4: "감정 표현 활동",
     5: "감정 관리",
     6: "스트레스 대처",
     7: "미래 비전 구체화",

@@ -7,6 +7,8 @@ from models.user import User
 from schemas.curriculum import (
     Session1Request,
     Session2Request,
+    Session3Request,
+    Session4Request,
     SessionSaveResponse,
     SessionDataResponse,
     UserProgressResponse,
@@ -132,6 +134,75 @@ async def save_session2_data(
     )
 
 
+@router.post("/sessions/3", response_model=SessionSaveResponse)
+async def save_session3_data(
+    request: Session3Request,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """
+    세션 3 (가치관 탐색) 데이터 저장
+    
+    - influential_person: 나의 삶에 가장 큰 영향을 준 사람과 배운 가치
+    - closest_person: 가장 가깝게 느끼는 사람과 그 이유
+    - relationship_factors: 관계가 지속되는 2가지 요소
+    - important_value: 경험에서 배운 중요한 가치
+    """
+    session_data = request.dict()
+    
+    session = CurriculumService.save_session_data(
+        db=db,
+        user_id=current_user.id,
+        session_number=3,
+        session_data=session_data,
+        mark_completed=True
+    )
+    
+    return SessionSaveResponse(
+        status="success",
+        message="세션 3 데이터가 저장되었습니다",
+        data={
+            "session_number": session.session_number,
+            "status": session.status,
+            "updated_at": session.updated_at.isoformat()
+        }
+    )
+
+
+@router.post("/sessions/4", response_model=SessionSaveResponse)
+async def save_session4_data(
+    request: Session4Request,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """
+    세션 4 (감정 표현 활동) 데이터 저장
+    
+    - emotion_expression: 오늘 느낀 감정과 1문장 표현
+    - creative_value: 창조적 가치 찾기 - 의미 있는 단어, 연결, 활동
+    - self_identity: 자아정체감 - 나를 표현하는 문장, 되고 싶은 나, 바라는 것 각 3개
+    """
+    session_data = request.dict()
+    
+    session = CurriculumService.save_session_data(
+        db=db,
+        user_id=current_user.id,
+        session_number=4,
+        session_data=session_data,
+        mark_completed=True
+    )
+    
+    return SessionSaveResponse(
+        status="success",
+        message="세션 4 데이터가 저장되었습니다",
+        data={
+            "session_number": session.session_number,
+            "status": session.status,
+            "updated_at": session.updated_at.isoformat()
+        }
+    )
+
+
 @router.post("/sessions/{session_number}", response_model=SessionSaveResponse)
 async def save_generic_session_data(
     session_number: int,
@@ -140,12 +211,12 @@ async def save_generic_session_data(
     db: Session = Depends(get_db)
 ):
     """
-    세션 3~8 데이터 저장 (제네릭 엔드포인트)
+    세션 5~8 데이터 저장 (제네릭 엔드포인트)
     
-    - session_number: 3~8 세션 번호
+    - session_number: 5~8 세션 번호
     - session_data: 세션별 데이터 (JSON)
     """
-    if session_number in [1, 2]:
+    if session_number in [1, 2, 3, 4]:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"세션 {session_number}는 /sessions/{session_number} 전용 엔드포인트를 사용하세요"

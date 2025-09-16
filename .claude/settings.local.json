@@ -25,7 +25,10 @@
       "mcp__supabase__get_advisors",
       "Bash(alembic current:*)",
       "Bash(alembic:*)",
-      "Read(/Users/gimjinhyeon/Desktop/DoubleM/project/mindforest/**)"
+      "Read(/Users/gimjinhyeon/Desktop/DoubleM/project/mindforest/**)",
+      "Read(//Users/gimjinhyeon/Desktop/DoubleM/project/**)",
+      "Read(//Users/gimjinhyeon/Desktop/DoubleM/**)",
+      "Bash(grep:*)"
     ]
   },
   "enableAllProjectMcpServers": true,
