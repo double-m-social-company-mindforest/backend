@@ -28,7 +28,11 @@
       "Read(/Users/gimjinhyeon/Desktop/DoubleM/project/mindforest/**)",
       "Read(//Users/gimjinhyeon/Desktop/DoubleM/project/**)",
       "Read(//Users/gimjinhyeon/Desktop/DoubleM/**)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "mcp__awslabs_core-mcp-server__prompt_understanding",
+      "Bash(./deploy.sh)",
+      "Bash(ssh:*)",
+      "Bash(scp:*)"
     ]
   },
   "enableAllProjectMcpServers": true,
