@@ -239,6 +239,64 @@ class Session4Request(BaseModel):
         }
 
 
+# Session 5 schemas
+class Session5Request(BaseModel):
+    # 47.png - 바꿀 수 없는 상황 대응
+    unchangeable_situation: str = Field(..., min_length=1, max_length=2000, description="바꿀 수 없는 상황 설명")
+    response_to_situation: str = Field(..., min_length=1, max_length=2000, description="상황 대응 방식")
+
+    # 49.png - 타인의 극복 사례
+    person_or_media: str = Field(..., min_length=1, max_length=2000, description="사람 또는 매체 소개")
+    overcoming_method: str = Field(..., min_length=1, max_length=2000, description="극복 방법 설명")
+
+    # 58.png - 나의 나무 (텍스트 입력)
+    my_tree_thought: str = Field(..., min_length=1, max_length=2000, description="나의 나무에 대한 생각")
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "unchangeable_situation": "직장에서 갑작스럽게 프로젝트가 취소되어 몇 달간의 노력이 물거품이 되었습니다.",
+                "response_to_situation": "처음에는 실망했지만, 이 경험을 통해 배운 점들을 정리하고 다음 프로젝트에 활용할 수 있는 기회로 삼았습니다.",
+                "person_or_media": "스티브 잡스가 애플에서 해고된 후 다시 돌아와 성공한 이야기",
+                "overcoming_method": "실패를 인생의 전환점으로 받아들이고, 그 시간을 자기 성찰과 새로운 도전의 기회로 활용했습니다.",
+                "my_tree_thought": "저 강렬한 뿌리처럼, 나는 내 삶을 단단히 세울 수 있어."
+            }
+        }
+
+
+# Session 6 schemas
+class Session6Request(BaseModel):
+    # 70.png - 유일성 질문 1
+    unique_situation: str = Field(..., min_length=1, max_length=2000, description="당신은 어떤 가정에서 태어났나요? 관련 답변")
+
+    # 71.png - 유일성 질문 2
+    unique_life_path: str = Field(..., min_length=1, max_length=2000, description="지금까지의 삶의 목적/의미 관련 답변")
+
+    # 74.png - 괄호 채우기 (5개)
+    fill_blank_1: str = Field(..., min_length=1, max_length=500, description="첫 번째 괄호 답")
+    fill_blank_2: str = Field(..., min_length=1, max_length=500, description="두 번째 괄호 답")
+    fill_blank_3: str = Field(..., min_length=1, max_length=500, description="세 번째 괄호 답")
+    fill_blank_4: str = Field(..., min_length=1, max_length=500, description="네 번째 괄호 답")
+    fill_blank_5: str = Field(..., min_length=1, max_length=500, description="다섯 번째 괄호 답")
+
+    # 74.png - 추가 질문
+    life_meaning: str = Field(..., min_length=1, max_length=2000, description="이 문장이 보여주는 가치")
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "unique_situation": "평범한 가정에서 태어났지만, 부모님의 노력과 사랑으로 꿈을 키울 수 있었습니다.",
+                "unique_life_path": "지금까지 삶은 도전과 성장의 연속이었고, 이를 통해 더 나은 사람이 되고자 했습니다.",
+                "fill_blank_1": "존재",
+                "fill_blank_2": "나 자신",
+                "fill_blank_3": "빛",
+                "fill_blank_4": "사랑",
+                "fill_blank_5": "영혼",
+                "life_meaning": "이 문장은 제가 추구하는 진정성과 내면의 가치를 보여줍니다."
+            }
+        }
+
+
 # Session info
 SESSION_TITLES = {
     1: "삶의 목표 설정",
