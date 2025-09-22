@@ -9,6 +9,8 @@ from schemas.curriculum import (
     Session2Request,
     Session3Request,
     Session4Request,
+    Session5Request,
+    Session6Request,
     SessionSaveResponse,
     SessionDataResponse,
     UserProgressResponse,
@@ -207,6 +209,77 @@ async def save_session4_data(
     )
 
 
+@router.post("/sessions/5", response_model=SessionSaveResponse)
+async def save_session5_data(
+    request: Session5Request,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """
+    세션 5 (감정 관리) 데이터 저장
+
+    - unchangeable_situation: 바꿀 수 없는 상황 설명
+    - response_to_situation: 상황 대응 방식
+    - person_or_media: 사람 또는 매체 소개
+    - overcoming_method: 극복 방법 설명
+    - my_tree_thought: 나의 나무에 대한 생각
+    """
+    session_data = request.dict()
+
+    session = CurriculumService.save_session_data(
+        db=db,
+        user_id=current_user.id,
+        session_number=5,
+        session_data=session_data,
+        mark_completed=True
+    )
+
+    return SessionSaveResponse(
+        status="success",
+        message="세션 5 데이터가 저장되었습니다",
+        data={
+            "session_number": session.session_number,
+            "status": session.status,
+            "updated_at": session.updated_at.isoformat()
+        }
+    )
+
+
+@router.post("/sessions/6", response_model=SessionSaveResponse)
+async def save_session6_data(
+    request: Session6Request,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """
+    세션 6 (스트레스 대처) 데이터 저장
+
+    - unique_situation: 당신은 어떤 가정에서 태어났나요? 관련 답변
+    - unique_life_path: 지금까지의 삶의 목적/의미 관련 답변
+    - fill_blank_1~5: 괄호 채우기 답변 (5개)
+    - life_meaning: 이 문장이 보여주는 가치
+    """
+    session_data = request.dict()
+
+    session = CurriculumService.save_session_data(
+        db=db,
+        user_id=current_user.id,
+        session_number=6,
+        session_data=session_data,
+        mark_completed=True
+    )
+
+    return SessionSaveResponse(
+        status="success",
+        message="세션 6 데이터가 저장되었습니다",
+        data={
+            "session_number": session.session_number,
+            "status": session.status,
+            "updated_at": session.updated_at.isoformat()
+        }
+    )
+
+
 @router.post("/sessions/{session_number}", response_model=SessionSaveResponse)
 async def save_generic_session_data(
     session_number: int,
@@ -215,12 +288,12 @@ async def save_generic_session_data(
     db: Session = Depends(get_db)
 ):
     """
-    세션 5~8 데이터 저장 (제네릭 엔드포인트)
-    
-    - session_number: 5~8 세션 번호
+    세션 7~8 데이터 저장 (제네릭 엔드포인트)
+
+    - session_number: 7~8 세션 번호
     - session_data: 세션별 데이터 (JSON)
     """
-    if session_number in [1, 2, 3, 4]:
+    if session_number in [1, 2, 3, 4, 5, 6]:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"세션 {session_number}는 /sessions/{session_number} 전용 엔드포인트를 사용하세요"
